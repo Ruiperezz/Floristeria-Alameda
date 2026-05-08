@@ -494,14 +494,43 @@
 </section>
 
 <!-- Footer -->
-<footer class="bg-surface-container-highest w-full px-margin py-lg flex flex-col md:flex-row justify-between items-center gap-md">
-    <span class="font-headline-md text-headline-md text-primary">Floristería Alameda</span>
-    <div class="flex gap-md font-body-md text-body-md">
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidad</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Términos</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Envíos</a>
+<footer class="bg-surface-container-highest w-full px-margin">
+    <!-- Métodos de pago -->
+    <div class="py-md border-b border-outline-variant flex flex-col sm:flex-row items-center justify-center gap-sm">
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Métodos de pago aceptados</span>
+        <div class="flex items-center gap-sm flex-wrap justify-center">
+            <!-- Visa -->
+            <div class="bg-white rounded border border-outline-variant px-sm py-xs flex items-center justify-center h-9 w-16 shadow-sm">
+                <span class="font-bold italic text-[#1A1F71] text-base tracking-wide">VISA</span>
+            </div>
+            <!-- Mastercard -->
+            <div class="bg-white rounded border border-outline-variant px-sm py-xs flex items-center justify-center h-9 w-16 shadow-sm gap-xs">
+                <div class="flex -space-x-2">
+                    <div class="w-5 h-5 rounded-full bg-[#EB001B]"></div>
+                    <div class="w-5 h-5 rounded-full bg-[#F79E1B] opacity-90"></div>
+                </div>
+                <span class="font-bold text-[#252525] text-[9px] leading-tight hidden">MC</span>
+            </div>
+            <!-- PayPal -->
+            <div class="bg-white rounded border border-outline-variant px-sm py-xs flex items-center justify-center h-9 w-16 shadow-sm">
+                <span class="font-extrabold text-sm"><span class="text-[#003087]">Pay</span><span class="text-[#009CDE]">Pal</span></span>
+            </div>
+            <!-- Bizum -->
+            <div class="bg-[#00C2A8] rounded border border-[#00C2A8] px-sm py-xs flex items-center justify-center h-9 w-16 shadow-sm">
+                <span class="font-extrabold text-white text-sm tracking-tight">bizum</span>
+            </div>
+        </div>
     </div>
-    <span class="font-body-md text-body-md text-on-surface-variant">© 2024 Floristería Alameda. Cartagena, España.</span>
+    <!-- Pie de página -->
+    <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
+        <span class="font-headline-md text-headline-md text-primary">Floristería Alameda</span>
+        <div class="flex gap-md font-body-md text-body-md">
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidad</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Términos</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Envíos</a>
+        </div>
+        <span class="font-body-md text-body-md text-on-surface-variant">© 2024 Floristería Alameda. Cartagena, España.</span>
+    </div>
 </footer>
 
 <!-- FAB WhatsApp (Mobile) -->
