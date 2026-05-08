@@ -168,14 +168,18 @@ tailwind.config = {
 
             <div class="flex flex-col gap-xs">
               <label class="font-label-sm text-label-sm text-on-surface-variant">Forma de pago <span class="text-error">*</span></label>
-              <div class="flex gap-sm">
+              <div class="grid grid-cols-3 gap-sm">
                 <button onclick="selectPago(this,'Bizum')" id="pago-bizum"
-                  class="pago-opt active flex-1 flex items-center justify-center gap-xs px-sm py-xs rounded-lg border border-[#00C2A8] bg-[#00C2A8] text-white font-label-sm text-label-sm transition-all">
-                  <span class="font-extrabold">bizum</span>
+                  class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
+                  <span class="font-extrabold tracking-tight">bizum</span>
                 </button>
                 <button onclick="selectPago(this,'Tarjeta')" id="pago-tarjeta"
-                  class="pago-opt flex-1 flex items-center justify-center gap-xs px-sm py-xs rounded-lg border border-outline-variant bg-white text-on-surface font-label-sm text-label-sm transition-all">
+                  class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
                   <span class="material-symbols-outlined text-sm">credit_card</span>Tarjeta
+                </button>
+                <button onclick="selectPago(this,'PayPal')" id="pago-paypal"
+                  class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
+                  <span class="font-extrabold text-sm"><span style="color:#003087">Pay</span><span style="color:#009CDE">Pal</span></span>
                 </button>
               </div>
             </div>
@@ -222,24 +226,25 @@ tailwind.config = {
     updateTotals();
   }
 
+  const PAGO_COLORES = {
+    'Bizum':   { bg: '#00C2A8', text: '#ffffff', border: '#00C2A8' },
+    'Tarjeta': { bg: '#1A1F71', text: '#ffffff', border: '#1A1F71' },
+    'PayPal':  { bg: '#003087', text: '#ffffff', border: '#003087' },
+  };
+
   function selectPago(btn, tipo) {
     pagoType = tipo;
+    // Resetear todos a estado inactivo
     document.querySelectorAll('.pago-opt').forEach(b => {
-      b.classList.remove('active');
-      b.style.background = '';
-      b.style.color = '';
-      b.style.borderColor = '';
+      b.style.background = '#ffffff';
+      b.style.color = '#434842';
+      b.style.borderColor = '#c3c8c0';
     });
-    btn.classList.add('active');
-    if (tipo === 'Bizum') {
-      btn.style.background = '#00C2A8';
-      btn.style.color = '#fff';
-      btn.style.borderColor = '#00C2A8';
-    } else {
-      btn.style.background = '#1A1F71';
-      btn.style.color = '#fff';
-      btn.style.borderColor = '#1A1F71';
-    }
+    // Aplicar color activo al seleccionado
+    const c = PAGO_COLORES[tipo];
+    btn.style.background = c.bg;
+    btn.style.color = c.text;
+    btn.style.borderColor = c.border;
   }
 
   function getDeliveryCost() {
