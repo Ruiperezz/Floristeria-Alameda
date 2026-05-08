@@ -123,8 +123,8 @@ tailwind.config = {
               <span id="subtotal">0€</span>
             </div>
             <div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
-              <span>Entrega</span>
-              <span class="text-primary">Gratuita</span>
+              <span>Envío</span>
+              <span id="delivery-cost" class="text-secondary">2,99€</span>
             </div>
             <div class="flex justify-between font-headline-md text-headline-md text-primary border-t border-outline-variant pt-sm">
               <span>Total</span>
@@ -177,11 +177,17 @@ tailwind.config = {
 <script src="cart.js"></script>
 <script>
   let deliveryType = 'Entrega a domicilio';
+  const DELIVERY_COST = 2.99;
 
   function selectDelivery(btn, tipo) {
     deliveryType = tipo;
     document.querySelectorAll('.delivery-opt').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    updateTotals();
+  }
+
+  function getDeliveryCost() {
+    return deliveryType === 'Entrega a domicilio' ? DELIVERY_COST : 0;
   }
 
   function renderCart() {
@@ -235,7 +241,7 @@ tailwind.config = {
     item.quantity = Math.max(1, item.quantity + delta);
     saveCart(cart);
     document.getElementById(`qty-${id}`).textContent = item.quantity;
-    document.getElementById(`subtotal-${id}`).textContent = (item.price * item.quantity) + '€';
+    document.getElementById(`subtotal-${id}`).textContent = (item.price * item.quantity).toFixed(2) + '€';
     updateTotals();
   }
 
@@ -245,17 +251,30 @@ tailwind.config = {
   }
 
   function updateTotals() {
-    const total = getTotal();
-    document.getElementById('subtotal').textContent = total + '€';
-    document.getElementById('total').textContent = total + '€';
+    const subtotal = getTotal();
+    const delivery = getDeliveryCost();
+    const total = subtotal + delivery;
+    document.getElementById('subtotal').textContent = subtotal.toFixed(2) + '€';
+    const deliveryEl = document.getElementById('delivery-cost');
+    if (delivery === 0) {
+      deliveryEl.textContent = 'Gratuita';
+      deliveryEl.className = 'text-primary';
+    } else {
+      deliveryEl.textContent = delivery.toFixed(2) + '€';
+      deliveryEl.className = 'text-secondary';
+    }
+    document.getElementById('total').textContent = total.toFixed(2) + '€';
   }
 
   function confirmarPedido() {
     const cart = getCart();
     if (cart.items.length === 0) return;
-    const lineas = cart.items.map(i => `• ${i.emoji || '🌸'} *${i.name}* x${i.quantity} — ${i.price * i.quantity}€`).join('\n');
-    const total = getTotal();
-    const msg = `Hola! Me gustaría confirmar el siguiente pedido:\n\n${lineas}\n\n💶 *Total: ${total}€*\n📦 Entrega: ${deliveryType}\n\n¿Podéis confirmármelo? ¡Gracias!`;
+    const subtotal = getTotal();
+    const delivery = getDeliveryCost();
+    const total = subtotal + delivery;
+    const lineas = cart.items.map(i => `• ${i.emoji || '🌸'} *${i.name}* x${i.quantity} — ${(i.price * i.quantity).toFixed(2)}€`).join('\n');
+    const envioTexto = delivery > 0 ? `Envío a domicilio: ${delivery.toFixed(2)}€` : 'Recogida en tienda (gratuita)';
+    const msg = `Hola! Me gustaría confirmar el siguiente pedido:\n\n${lineas}\n\n🚚 ${envioTexto}\n💶 *Total: ${total.toFixed(2)}€*\n\n¿Podéis confirmármelo? ¡Gracias!`;
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
