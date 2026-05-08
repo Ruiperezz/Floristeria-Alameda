@@ -43,6 +43,11 @@ tailwind.config = {
   .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .delivery-opt { transition: all 0.2s; }
   .delivery-opt.active { background: #506352; color: #fff; border-color: #506352; }
+  .pago-opt { transition: all 0.2s; }
+  .pago-opt.active.bizum { background: #00C2A8; color: #fff; border-color: #00C2A8; }
+  .pago-opt.active.tarjeta { background: #1A1F71; color: #fff; border-color: #1A1F71; }
+  input:focus, textarea:focus { border-color: #506352 !important; box-shadow: 0 0 0 2px rgba(80,99,82,0.15); }
+  input.error, textarea.error { border-color: #ba1a1a !important; }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
@@ -132,30 +137,57 @@ tailwind.config = {
             </div>
           </div>
 
+          <!-- Datos de entrega -->
+          <div class="border-t border-outline-variant pt-md flex flex-col gap-sm">
+            <p class="font-label-md text-label-md text-on-surface">Datos del pedido</p>
+
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">Fecha de entrega <span class="text-error">*</span></label>
+              <input id="f-fecha" type="date" class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary"/>
+            </div>
+
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">Nombre del destinatario/a <span class="text-error">*</span></label>
+              <input id="f-nombre" type="text" placeholder="Nombre completo" class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary"/>
+            </div>
+
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">Teléfono del destinatario/a <span class="text-error">*</span></label>
+              <input id="f-telefono" type="tel" placeholder="600 000 000" class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary"/>
+            </div>
+
+            <div id="f-direccion-wrap" class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">Dirección de entrega <span class="text-error">*</span></label>
+              <input id="f-direccion" type="text" placeholder="Calle, número, piso..." class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary"/>
+            </div>
+
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">Dedicatoria (opcional)</label>
+              <textarea id="f-dedicatoria" rows="3" placeholder="Escribe aquí tu mensaje especial..." class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary resize-none"></textarea>
+            </div>
+
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">Forma de pago <span class="text-error">*</span></label>
+              <div class="flex gap-sm">
+                <button onclick="selectPago(this,'Bizum')" id="pago-bizum"
+                  class="pago-opt active flex-1 flex items-center justify-center gap-xs px-sm py-xs rounded-lg border border-[#00C2A8] bg-[#00C2A8] text-white font-label-sm text-label-sm transition-all">
+                  <span class="font-extrabold">bizum</span>
+                </button>
+                <button onclick="selectPago(this,'Tarjeta')" id="pago-tarjeta"
+                  class="pago-opt flex-1 flex items-center justify-center gap-xs px-sm py-xs rounded-lg border border-outline-variant bg-white text-on-surface font-label-sm text-label-sm transition-all">
+                  <span class="material-symbols-outlined text-sm">credit_card</span>Tarjeta
+                </button>
+              </div>
+            </div>
+
+            <p id="form-error" class="hidden font-label-sm text-label-sm text-error bg-error-container px-sm py-xs rounded-lg">Por favor, rellena todos los campos obligatorios.</p>
+          </div>
+
           <button onclick="confirmarPedido()"
             class="bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-sm w-full shadow-md text-base">
             <span class="material-symbols-outlined filled text-sm">chat</span>
             Confirmar pedido por WhatsApp
           </button>
-
-          <!-- Métodos de pago -->
-          <div class="flex gap-xs justify-center flex-wrap pt-xs">
-            <div class="bg-white rounded border border-outline-variant px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
-              <span class="font-bold italic text-[#1A1F71] text-xs tracking-wide">VISA</span>
-            </div>
-            <div class="bg-white rounded border border-outline-variant px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
-              <div class="flex -space-x-1">
-                <div class="w-4 h-4 rounded-full bg-[#EB001B]"></div>
-                <div class="w-4 h-4 rounded-full bg-[#F79E1B] opacity-90"></div>
-              </div>
-            </div>
-            <div class="bg-white rounded border border-outline-variant px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
-              <span class="font-extrabold text-xs"><span class="text-[#003087]">Pay</span><span class="text-[#009CDE]">Pal</span></span>
-            </div>
-            <div class="bg-[#00C2A8] rounded px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
-              <span class="font-extrabold text-white text-xs tracking-tight">bizum</span>
-            </div>
-          </div>
         </div>
 
         <a href="index.html#catalogo" class="flex items-center justify-center gap-xs font-label-md text-label-md text-primary hover:underline">
@@ -177,17 +209,58 @@ tailwind.config = {
 <script src="cart.js"></script>
 <script>
   let deliveryType = 'Entrega a domicilio';
+  let pagoType = 'Bizum';
   const DELIVERY_COST = 2.99;
 
   function selectDelivery(btn, tipo) {
     deliveryType = tipo;
     document.querySelectorAll('.delivery-opt').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    // Mostrar/ocultar campo dirección según tipo de entrega
+    const dirWrap = document.getElementById('f-direccion-wrap');
+    if (dirWrap) dirWrap.style.display = tipo === 'Recogida en tienda' ? 'none' : '';
     updateTotals();
+  }
+
+  function selectPago(btn, tipo) {
+    pagoType = tipo;
+    document.querySelectorAll('.pago-opt').forEach(b => {
+      b.classList.remove('active');
+      b.style.background = '';
+      b.style.color = '';
+      b.style.borderColor = '';
+    });
+    btn.classList.add('active');
+    if (tipo === 'Bizum') {
+      btn.style.background = '#00C2A8';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#00C2A8';
+    } else {
+      btn.style.background = '#1A1F71';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#1A1F71';
+    }
   }
 
   function getDeliveryCost() {
     return deliveryType === 'Entrega a domicilio' ? DELIVERY_COST : 0;
+  }
+
+  function validarFormulario() {
+    const campos = ['f-fecha', 'f-nombre', 'f-telefono'];
+    if (deliveryType === 'Entrega a domicilio') campos.push('f-direccion');
+    let ok = true;
+    campos.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || !el.value.trim()) {
+        el && el.classList.add('error');
+        ok = false;
+      } else {
+        el.classList.remove('error');
+      }
+    });
+    document.getElementById('form-error').classList.toggle('hidden', ok);
+    return ok;
   }
 
   function renderCart() {
@@ -269,16 +342,52 @@ tailwind.config = {
   function confirmarPedido() {
     const cart = getCart();
     if (cart.items.length === 0) return;
+    if (!validarFormulario()) return;
+
     const subtotal = getTotal();
     const delivery = getDeliveryCost();
     const total = subtotal + delivery;
-    const lineas = cart.items.map(i => `• ${i.emoji || '🌸'} *${i.name}* x${i.quantity} — ${(i.price * i.quantity).toFixed(2)}€`).join('\n');
-    const envioTexto = delivery > 0 ? `Envío a domicilio: ${delivery.toFixed(2)}€` : 'Recogida en tienda (gratuita)';
-    const msg = `Hola! Me gustaría confirmar el siguiente pedido:\n\n${lineas}\n\n🚚 ${envioTexto}\n💶 *Total: ${total.toFixed(2)}€*\n\n¿Podéis confirmármelo? ¡Gracias!`;
+
+    const fecha    = document.getElementById('f-fecha').value;
+    const nombre   = document.getElementById('f-nombre').value.trim();
+    const telefono = document.getElementById('f-telefono').value.trim();
+    const direccion = deliveryType === 'Entrega a domicilio'
+      ? document.getElementById('f-direccion').value.trim()
+      : 'Recogida en tienda';
+    const dedicatoria = document.getElementById('f-dedicatoria').value.trim();
+
+    const lineas = cart.items.map(i =>
+      `• ${i.emoji || '🌸'} *${i.name}* x${i.quantity} — ${(i.price * i.quantity).toFixed(2)}€`
+    ).join('\n');
+
+    const envioTexto = delivery > 0
+      ? `Envío a domicilio: ${delivery.toFixed(2)}€`
+      : 'Recogida en tienda (gratuita)';
+
+    const msg =
+`🌸 *NUEVO PEDIDO — Floristería Alameda* 🌸
+
+📦 *Productos:*
+${lineas}
+
+━━━━━━━━━━━━━━━━━━
+📅 *Fecha de entrega:* ${fecha}
+👤 *Destinatario/a:* ${nombre}
+📱 *Teléfono:* ${telefono}
+📍 *Dirección:* ${direccion}${dedicatoria ? `\n✍️ *Dedicatoria:* "${dedicatoria}"` : ''}
+━━━━━━━━━━━━━━━━━━
+🚚 ${envioTexto}
+💶 *Total: ${total.toFixed(2)}€*
+💳 *Pago:* ${pagoType}
+━━━━━━━━━━━━━━━━━━
+¿Podéis confirmarlo? ¡Gracias! 😊`;
+
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   renderCart();
+  const bizumBtn = document.getElementById('pago-bizum');
+  if (bizumBtn) selectPago(bizumBtn, 'Bizum');
 </script>
 </body>
 </html>
