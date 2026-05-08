@@ -179,7 +179,7 @@ tailwind.config = {
                 </button>
                 <button onclick="selectPago(this,'PayPal')" id="pago-paypal"
                   class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
-                  <span class="font-extrabold text-sm"><span style="color:#003087">Pay</span><span style="color:#009CDE">Pal</span></span>
+                  <span class="font-extrabold text-sm paypal-label">PayPal</span>
                 </button>
               </div>
             </div>
@@ -227,23 +227,21 @@ tailwind.config = {
   }
 
   const PAGO_COLORES = {
-    'Bizum':   { bg: '#00C2A8', text: '#ffffff', border: '#00C2A8' },
-    'Tarjeta': { bg: '#1A1F71', text: '#ffffff', border: '#1A1F71' },
-    'PayPal':  { bg: '#003087', text: '#ffffff', border: '#003087' },
+    'Bizum':   { bg: '#00C2A8', border: '#00C2A8' },
+    'Tarjeta': { bg: '#1A1F71', border: '#1A1F71' },
+    'PayPal':  { bg: 'linear-gradient(135deg, #003087 0%, #009CDE 100%)', border: '#0070BA' },
   };
 
   function selectPago(btn, tipo) {
     pagoType = tipo;
-    // Resetear todos a estado inactivo
     document.querySelectorAll('.pago-opt').forEach(b => {
       b.style.background = '#ffffff';
       b.style.color = '#434842';
       b.style.borderColor = '#c3c8c0';
     });
-    // Aplicar color activo al seleccionado
     const c = PAGO_COLORES[tipo];
     btn.style.background = c.bg;
-    btn.style.color = c.text;
+    btn.style.color = '#ffffff';
     btn.style.borderColor = c.border;
   }
 
