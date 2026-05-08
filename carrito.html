@@ -342,48 +342,82 @@ tailwind.config = {
     document.getElementById('total').textContent = total.toFixed(2) + '€';
   }
 
+  function fmtPrecio(n) {
+    return n.toFixed(2).replace('.', ',') + ' €';
+  }
+
+  function fmtFecha(str) {
+    if (!str) return '—';
+    const meses = ['enero','febrero','marzo','abril','mayo','junio',
+      'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const [y, m, d] = str.split('-');
+    return `${parseInt(d)} de ${meses[parseInt(m) - 1]} de ${y}`;
+  }
+
   function confirmarPedido() {
     const cart = getCart();
     if (cart.items.length === 0) return;
     if (!validarFormulario()) return;
 
-    const subtotal = getTotal();
-    const delivery = getDeliveryCost();
-    const total = subtotal + delivery;
+    const subtotal  = getTotal();
+    const delivery  = getDeliveryCost();
+    const total     = subtotal + delivery;
 
-    const fecha    = document.getElementById('f-fecha').value;
-    const nombre   = document.getElementById('f-nombre').value.trim();
-    const telefono = document.getElementById('f-telefono').value.trim();
-    const direccion = deliveryType === 'Entrega a domicilio'
-      ? document.getElementById('f-direccion').value.trim()
-      : 'Recogida en tienda';
+    const fecha       = fmtFecha(document.getElementById('f-fecha').value);
+    const nombre      = document.getElementById('f-nombre').value.trim();
+    const telefono    = document.getElementById('f-telefono').value.trim();
+    const direccion   = deliveryType === 'Entrega a domicilio'
+                          ? document.getElementById('f-direccion').value.trim()
+                          : 'Recogida en tienda';
     const dedicatoria = document.getElementById('f-dedicatoria').value.trim();
 
-    const lineas = cart.items.map(i =>
-      `• ${i.emoji || '🌸'} *${i.name}* x${i.quantity} — ${(i.price * i.quantity).toFixed(2)}€`
-    ).join('\n');
+    const lineas = cart.items.map(i => {
+      const subtotalLinea = fmtPrecio(i.price * i.quantity);
+      return `   ${i.emoji || '🌸'} *${i.name}*\n   Cantidad: ${i.quantity}  ·  ${fmtPrecio(i.price)} / ud.  ·  *${subtotalLinea}*`;
+    }).join('\n\n');
 
-    const envioTexto = delivery > 0
-      ? `Envío a domicilio: ${delivery.toFixed(2)}€`
-      : 'Recogida en tienda (gratuita)';
+    const envioLinea = delivery > 0
+      ? `🚚 Envío a domicilio .......... ${fmtPrecio(delivery)}`
+      : `🏪 Recogida en tienda ......... Gratuita`;
+
+    const pagoIcono = pagoType === 'Bizum' ? '📲' : pagoType === 'PayPal' ? '💻' : '💳';
 
     const msg =
-`🌸 *NUEVO PEDIDO — Floristería Alameda* 🌸
+`╔══════════════════════╗
+   🌸 *FLORISTERÍA ALAMEDA* 🌸
+╚══════════════════════╝
 
-📦 *Productos:*
+✨ _Nuevo pedido recibido_
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+🛒 *PRODUCTOS*
+
 ${lineas}
 
-━━━━━━━━━━━━━━━━━━
-📅 *Fecha de entrega:* ${fecha}
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+📋 *DATOS DE ENTREGA*
+
+📅 *Fecha:* ${fecha}
 👤 *Destinatario/a:* ${nombre}
 📱 *Teléfono:* ${telefono}
-📍 *Dirección:* ${direccion}${dedicatoria ? `\n✍️ *Dedicatoria:* "${dedicatoria}"` : ''}
-━━━━━━━━━━━━━━━━━━
-🚚 ${envioTexto}
-💶 *Total: ${total.toFixed(2)}€*
-💳 *Pago:* ${pagoType}
-━━━━━━━━━━━━━━━━━━
-¿Podéis confirmarlo? ¡Gracias! 😊`;
+📍 *Dirección:* ${direccion}${dedicatoria ? `\n\n✍️ *Dedicatoria:*\n_"${dedicatoria}"_` : ''}
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+💰 *RESUMEN DEL PEDIDO*
+
+🧾 Subtotal .................. ${fmtPrecio(subtotal)}
+${envioLinea}
+
+💶 *TOTAL: ${fmtPrecio(total)}*
+${pagoIcono} *Forma de pago:* ${pagoType}
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+_¡Gracias por confiar en nosotros!_ 🌿
+_Floristería Alameda · Cartagena_`;
 
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
   }
