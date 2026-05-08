@@ -206,6 +206,60 @@ tailwind.config = {
   </div>
 </main>
 
+<!-- Recomendaciones -->
+<section class="px-margin py-xl bg-surface">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-headline-md text-headline-md text-primary mb-lg">También te puede gustar</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+      <a href="ramo-especial-alameda.html" class="block group">
+        <div class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden flex gap-md items-center p-sm hover:shadow-md transition-shadow">
+          <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBExPNgVxUXsnAGFdnJCEdAX-JkSsCWrZayLhSW6n4VblMCrcCmfhqAr8nByT9CxQ4sLi6Jzl_RXwJqwyJXf8aMwPTc5_ZUkycUMis8yOM412c3zVRJF709X58QJpcUdLMPRkGHvlOZgOXDcquGUjJnTAsJBD81HmXH3d2ynIPVq6QTNKXNUfLRWlY0HDSvRyo76CgEQIQJLDrPUf2PkPTMNFdAzZ_8JxtE40XSE9d-M8YeRM3D_EwleOIkctxWkHUGgMFlZf18IA" alt="Ramo Especial" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
+          </div>
+          <div class="flex-grow">
+            <p class="font-label-md text-label-md text-on-surface">Ramo Especial Alameda</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Orquídeas, hortensias y amaranto</p>
+            <p class="font-headline-md text-headline-md text-primary">90€</p>
+          </div>
+          <span class="material-symbols-outlined text-primary">chevron_right</span>
+        </div>
+      </a>
+      <a href="ramo-brisas-alameda.html" class="block group">
+        <div class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden flex gap-md items-center p-sm hover:shadow-md transition-shadow">
+          <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMBW2hfPXAXQO8E-ey4lIq8_RcYm_c7PnsgpHpGKnc-dnMsmoznqpRi2mDjZAXL1ObClTjyPQuB5Y1q41rkdSQFUiTgctn2N6K3GIQIdhF6ASORayESimU-CiyT3QrTnFdEJERI3tddS7LYPtPVdI_d0ygm_COiloEjitnd6C6RUe6h54nb3gWGdzReN9ghGhojkFQ_B8GoktUiaXVHksifOgQO2nZb7s0WO_dEg4TEdSRQALQcmt4p4Qw1n1ZczTabDD4nPrJ_g" alt="Ramo Brisas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
+          </div>
+          <div class="flex-grow">
+            <p class="font-label-md text-label-md text-on-surface">Ramo 'Brisas de Alameda'</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Peonías, pitimini y eucalipto</p>
+            <p class="font-headline-md text-headline-md text-primary">65€</p>
+          </div>
+          <span class="material-symbols-outlined text-primary">chevron_right</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Banner sticky -->
+<div id="sticky-banner" class="fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-md border-t border-outline-variant shadow-xl translate-y-full transition-transform duration-300">
+  <div class="max-w-6xl mx-auto px-margin py-sm flex items-center justify-between gap-md">
+    <div class="flex items-center gap-sm">
+      <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 hidden sm:block">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8nJ0pKMB38u1AVvb67NVdBecpsgEfT7dBjns08hHOueWUleJ12aSBLiFhx61Uk2d7u72JVWy3Ky9lErndBepL5tBZ2snpqWttRYnEpuKi4xoOmBJWRdyLNNJnL-6azgP9rPpP5w9b_QCRBykb6pItmRg2r2Hp3Sh-zZ-gDAFJGa7UIdnxS4vm-S3fQwo8h8t7y_hZjzWtti4h4FP5OjBQ7caZtO8eq44S7rzfPE7XZKbyqj_NrhChSHN9aab5xJu122DOFYY0MA" class="w-full h-full object-cover"/>
+      </div>
+      <div>
+        <p class="font-label-md text-label-md text-on-surface">Flores Preservadas</p>
+        <p class="font-headline-md text-headline-md text-primary" id="banner-precio">180€</p>
+      </div>
+    </div>
+    <button onclick="pedirWhatsApp()" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs flex-shrink-0">
+      <span class="material-symbols-outlined text-sm filled">chat</span>
+      Pedir ahora
+    </button>
+  </div>
+</div>
+
 <footer class="bg-surface-container-highest w-full px-margin">
   <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
     <a href="index.html" class="font-headline-md text-headline-md text-primary">Floristería Alameda</a>
@@ -227,8 +281,10 @@ tailwind.config = {
   function cambiarCantidad(delta) {
     cantidad = Math.max(1, cantidad + delta);
     document.getElementById('cantidad').textContent = cantidad;
-    document.getElementById('total-display').textContent = (cantidad * PRECIO_UNITARIO) + '€';
-    document.getElementById('precio-total').textContent = (cantidad * PRECIO_UNITARIO) + '€';
+    const total = (cantidad * PRECIO_UNITARIO) + '€';
+    document.getElementById('total-display').textContent = total;
+    document.getElementById('precio-total').textContent = total;
+    document.getElementById('banner-precio').textContent = total;
   }
 
   function seleccionarEntrega(btn, tipo) {
@@ -242,6 +298,16 @@ tailwind.config = {
     const msg = `Hola! Me gustaría hacer el siguiente pedido:\n\n🌾 *Flores Preservadas* x${cantidad}\n💶 Total: ${total}€\n📦 Entrega: ${tipoEntrega}\n\n¿Podéis confirmármelo?`;
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
   }
+
+  const banner = document.getElementById('sticky-banner');
+  const precioEl = document.getElementById('precio-total');
+  window.addEventListener('scroll', () => {
+    if (precioEl.getBoundingClientRect().bottom < 0) {
+      banner.classList.remove('translate-y-full');
+    } else {
+      banner.classList.add('translate-y-full');
+    }
+  });
 </script>
 </body>
 </html>
