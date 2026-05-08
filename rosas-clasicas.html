@@ -62,9 +62,15 @@ tailwind.config = {
     <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#resenas">Reseñas</a>
     <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
   </div>
-  <a href="https://wa.me/34627546360" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
-    Pedir por WhatsApp
-  </a>
+  <div class="flex items-center gap-sm">
+    <a href="carrito.html" class="relative flex items-center text-primary">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      <span class="cart-count hidden absolute -top-2 -right-2 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+    </a>
+    <a href="https://wa.me/34627546360" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors hidden sm:flex items-center gap-xs">
+      WhatsApp
+    </a>
+  </div>
 </nav>
 
 <!-- Breadcrumb -->
@@ -170,7 +176,11 @@ tailwind.config = {
         </div>
       </div>
 
-      <button onclick="pedirWhatsApp()" class="bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-sm text-base w-full shadow-md">
+      <button onclick="añadirAlCarrito()" class="bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-sm text-base w-full shadow-md">
+        <span class="material-symbols-outlined filled">shopping_cart</span>
+        Añadir al carrito
+      </button>
+      <button onclick="pedirWhatsApp()" class="border border-primary text-primary font-label-md text-label-md px-lg py-sm rounded-full hover:bg-primary-fixed transition-colors flex items-center justify-center gap-sm w-full">
         <span class="material-symbols-outlined filled">chat</span>
         Confirmar pedido por WhatsApp
       </button>
@@ -262,9 +272,9 @@ tailwind.config = {
         <p class="font-headline-md text-headline-md text-primary" id="banner-precio">50€</p>
       </div>
     </div>
-    <button onclick="pedirWhatsApp()" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs flex-shrink-0">
-      <span class="material-symbols-outlined text-sm filled">chat</span>
-      Pedir ahora
+    <button onclick="añadirAlCarrito()" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs flex-shrink-0">
+      <span class="material-symbols-outlined text-sm filled">shopping_cart</span>
+      Añadir al carrito
     </button>
   </div>
 </div>
@@ -302,12 +312,32 @@ tailwind.config = {
     btn.classList.add('active');
   }
 
+  function añadirAlCarrito() {
+    addToCart({
+      id: 'rosas-clasicas',
+      name: 'Rosas Clásicas',
+      price: PRECIO_UNITARIO,
+      quantity: cantidad,
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAfJIXKsoCGH7HGHe4BOeTVZPRLWIilK81riZWvoJP8H2lX-MzgGL7WBqFeFT00Tg4-7pasiIz5bH7X9D3Pc0EMa22vZEOeXZbOFAyFGjk84T0VjVGk12aYU6V5f5sDnY5k16-kDC0sFU0-apV8kOjS3W3wQ9nNIajBl9geQ7ddMyWkvCWMT1OjzPeqk7kcbK67KhswIAO9wOiRXdybr4xlNHOMgGrGhhUtwQvOiOQIAi5wIsY7_6pMMsY2yfwFkGq2hZT4r6_T8Q',
+      emoji: '🌹'
+    });
+    showToast('Rosas Clásicas');
+  }
+
   function pedirWhatsApp() {
     const total = cantidad * PRECIO_UNITARIO;
     const msg = `Hola! Me gustaría hacer el siguiente pedido:\n\n🌹 *Rosas Clásicas* x${cantidad} docena(s)\n💶 Total: ${total}€\n📦 Entrega: ${tipoEntrega}\n\n¿Podéis confirmármelo?`;
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
+<!-- Toast -->
+<div id="cart-toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-on-surface text-surface font-label-md text-label-md px-md py-sm rounded-full shadow-lg flex items-center gap-xs translate-y-24 opacity-0 transition-all duration-300">
+  <span class="material-symbols-outlined text-sm filled" style="color:#d3e8d3">check_circle</span>
+  <span id="toast-msg"></span>
+  <a href="carrito.html" class="underline ml-xs" style="color:#b7ccb8">Ver carrito</a>
+</div>
+<script src="cart.js"></script>
+<script>
   const banner = document.getElementById('sticky-banner');
   const precioEl = document.getElementById('precio-total');
   window.addEventListener('scroll', () => {

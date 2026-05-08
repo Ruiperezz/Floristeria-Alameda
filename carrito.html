@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carrito | Floristería Alameda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      "surface":"#f9f9f7","surface-variant":"#e2e3e1","primary":"#506352","secondary-container":"#fecad4",
+      "surface-container-highest":"#e2e3e1","primary-fixed-dim":"#b7ccb8","outline":"#737872",
+      "on-secondary-container":"#7a525b","primary-fixed":"#d3e8d3","surface-dim":"#dadad8",
+      "primary-container":"#8da18e","secondary":"#7b535c","outline-variant":"#c3c8c0",
+      "surface-container":"#eeeeec","on-surface-variant":"#434842","on-surface":"#1a1c1b",
+      "on-primary-container":"#263829","tertiary":"#775a19","tertiary-container":"#bb9751",
+      "on-tertiary-container":"#453000","background":"#f9f9f7","surface-container-low":"#f4f4f2",
+      "surface-container-lowest":"#ffffff","on-background":"#1a1c1b","on-primary":"#ffffff",
+      "error":"#ba1a1a","tertiary-fixed":"#ffdea5","on-tertiary":"#ffffff"
+    },
+    borderRadius: { "DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" },
+    spacing: { "base":"8px","margin":"32px","sm":"12px","xs":"4px","xl":"80px","gutter":"24px","md":"24px","lg":"48px" },
+    fontFamily: { "headline-lg":["Playfair Display"],"headline-md":["Playfair Display"],"headline-xl":["Playfair Display"],"body-lg":["Montserrat"],"body-md":["Montserrat"],"label-md":["Montserrat"],"label-sm":["Montserrat"] },
+    fontSize: {
+      "headline-xl":["48px",{"lineHeight":"1.2","fontWeight":"700"}],
+      "headline-lg":["32px",{"lineHeight":"1.3","fontWeight":"600"}],
+      "headline-md":["24px",{"lineHeight":"1.4","fontWeight":"500"}],
+      "body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],
+      "body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],
+      "label-md":["14px",{"lineHeight":"1.2","letterSpacing":"0.05em","fontWeight":"600"}],
+      "label-sm":["12px",{"lineHeight":"1.2","letterSpacing":"0.03em","fontWeight":"500"}]
+    }
+  }}
+}
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .delivery-opt { transition: all 0.2s; }
+  .delivery-opt.active { background: #506352; color: #fff; border-color: #506352; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
+
+<!-- Nav -->
+<nav class="bg-surface/90 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin py-4">
+  <a href="index.html" class="font-headline-md text-headline-md font-semibold text-primary">Floristería Alameda</a>
+  <div class="hidden md:flex items-center gap-md font-label-md text-label-md">
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#inicio">Inicio</a>
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#catalogo">Catálogo</a>
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
+  </div>
+  <div class="flex items-center gap-md">
+    <a href="carrito.html" class="relative flex items-center text-primary">
+      <span class="material-symbols-outlined filled">shopping_cart</span>
+      <span class="cart-count hidden absolute -top-2 -right-2 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+    </a>
+    <a href="https://wa.me/34627546360" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors hidden sm:flex items-center gap-xs">
+      WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="px-margin pt-lg pb-sm bg-surface border-b border-outline-variant">
+  <div class="max-w-5xl mx-auto flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant">
+    <a href="index.html" class="hover:text-primary transition-colors">Inicio</a>
+    <span class="material-symbols-outlined text-sm">chevron_right</span>
+    <span class="text-primary">Carrito</span>
+  </div>
+</div>
+
+<main class="px-margin py-xl bg-surface-container-low min-h-screen">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="font-headline-lg text-headline-lg text-primary mb-xl">Tu carrito</h1>
+
+    <!-- Estado vacío -->
+    <div id="empty-cart" class="hidden flex-col items-center justify-center py-xl text-center gap-md">
+      <span class="text-7xl">🛒</span>
+      <p class="font-headline-md text-headline-md text-on-surface">Tu carrito está vacío</p>
+      <p class="font-body-md text-body-md text-on-surface-variant">Añade algunos productos para continuar</p>
+      <a href="index.html#catalogo" class="bg-primary text-on-primary font-label-md text-label-md px-lg py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors">
+        Ver catálogo
+      </a>
+    </div>
+
+    <!-- Carrito con productos -->
+    <div id="cart-content" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-lg">
+
+      <!-- Lista de productos -->
+      <div class="lg:col-span-2 flex flex-col gap-md" id="cart-items">
+        <!-- Generado por JS -->
+      </div>
+
+      <!-- Resumen del pedido -->
+      <div class="lg:sticky lg:top-28 flex flex-col gap-md self-start">
+        <div class="bg-surface rounded-xl border border-outline-variant p-md flex flex-col gap-md">
+          <h2 class="font-headline-md text-headline-md text-on-surface">Resumen del pedido</h2>
+
+          <!-- Tipo de entrega -->
+          <div>
+            <p class="font-label-md text-label-md text-on-surface mb-sm">Tipo de entrega</p>
+            <div class="flex gap-sm">
+              <button onclick="selectDelivery(this,'Entrega a domicilio')"
+                class="delivery-opt active flex-1 flex items-center justify-center gap-xs px-sm py-xs rounded-full border border-primary font-label-sm text-label-sm">
+                <span class="material-symbols-outlined text-sm">local_shipping</span>Domicilio
+              </button>
+              <button onclick="selectDelivery(this,'Recogida en tienda')"
+                class="delivery-opt flex-1 flex items-center justify-center gap-xs px-sm py-xs rounded-full border border-primary font-label-sm text-label-sm text-primary">
+                <span class="material-symbols-outlined text-sm">storefront</span>Tienda
+              </button>
+            </div>
+          </div>
+
+          <div class="border-t border-outline-variant pt-md flex flex-col gap-sm">
+            <div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+              <span>Subtotal</span>
+              <span id="subtotal">0€</span>
+            </div>
+            <div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
+              <span>Entrega</span>
+              <span class="text-primary">Gratuita</span>
+            </div>
+            <div class="flex justify-between font-headline-md text-headline-md text-primary border-t border-outline-variant pt-sm">
+              <span>Total</span>
+              <span id="total">0€</span>
+            </div>
+          </div>
+
+          <button onclick="confirmarPedido()"
+            class="bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-sm w-full shadow-md text-base">
+            <span class="material-symbols-outlined filled text-sm">chat</span>
+            Confirmar pedido por WhatsApp
+          </button>
+
+          <!-- Métodos de pago -->
+          <div class="flex gap-xs justify-center flex-wrap pt-xs">
+            <div class="bg-white rounded border border-outline-variant px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
+              <span class="font-bold italic text-[#1A1F71] text-xs tracking-wide">VISA</span>
+            </div>
+            <div class="bg-white rounded border border-outline-variant px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
+              <div class="flex -space-x-1">
+                <div class="w-4 h-4 rounded-full bg-[#EB001B]"></div>
+                <div class="w-4 h-4 rounded-full bg-[#F79E1B] opacity-90"></div>
+              </div>
+            </div>
+            <div class="bg-white rounded border border-outline-variant px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
+              <span class="font-extrabold text-xs"><span class="text-[#003087]">Pay</span><span class="text-[#009CDE]">Pal</span></span>
+            </div>
+            <div class="bg-[#00C2A8] rounded px-xs py-xs flex items-center justify-center h-7 w-12 shadow-sm">
+              <span class="font-extrabold text-white text-xs tracking-tight">bizum</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="index.html#catalogo" class="flex items-center justify-center gap-xs font-label-md text-label-md text-primary hover:underline">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          Seguir comprando
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-surface-container-highest w-full px-margin">
+  <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary">Floristería Alameda</a>
+    <span class="font-body-md text-body-md text-on-surface-variant">© 2024 Floristería Alameda. Cartagena, España.</span>
+  </div>
+</footer>
+
+<script src="cart.js"></script>
+<script>
+  let deliveryType = 'Entrega a domicilio';
+
+  function selectDelivery(btn, tipo) {
+    deliveryType = tipo;
+    document.querySelectorAll('.delivery-opt').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const emptyEl = document.getElementById('empty-cart');
+    const contentEl = document.getElementById('cart-content');
+
+    if (cart.items.length === 0) {
+      emptyEl.classList.remove('hidden');
+      emptyEl.classList.add('flex');
+      contentEl.classList.add('hidden');
+      return;
+    }
+
+    emptyEl.classList.add('hidden');
+    emptyEl.classList.remove('flex');
+    contentEl.classList.remove('hidden');
+    contentEl.classList.add('grid');
+
+    const itemsEl = document.getElementById('cart-items');
+    itemsEl.innerHTML = cart.items.map(item => `
+      <div class="bg-surface rounded-xl border border-outline-variant overflow-hidden flex gap-md p-sm items-center" id="item-${item.id}">
+        <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+          <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover"/>
+        </div>
+        <div class="flex-grow flex flex-col gap-xs">
+          <p class="font-label-md text-label-md text-on-surface">${item.name}</p>
+          <p class="font-headline-md text-headline-md text-primary">${item.price}€ <span class="font-body-md text-body-md text-on-surface-variant">/ ud.</span></p>
+          <div class="flex items-center gap-sm mt-xs">
+            <div class="flex items-center border border-outline-variant rounded-full overflow-hidden">
+              <button onclick="changeQty('${item.id}', -1)" class="px-sm py-xs font-bold text-primary hover:bg-primary-fixed transition-colors">−</button>
+              <span class="px-sm font-label-md text-label-md text-on-surface min-w-[2rem] text-center" id="qty-${item.id}">${item.quantity}</span>
+              <button onclick="changeQty('${item.id}', 1)" class="px-sm py-xs font-bold text-primary hover:bg-primary-fixed transition-colors">+</button>
+            </div>
+            <span class="font-label-md text-label-md text-primary" id="subtotal-${item.id}">${item.price * item.quantity}€</span>
+          </div>
+        </div>
+        <button onclick="eliminarItem('${item.id}')" class="flex-shrink-0 p-xs text-on-surface-variant hover:text-error transition-colors rounded-full hover:bg-surface-container" title="Eliminar">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
+      </div>
+    `).join('');
+
+    updateTotals();
+  }
+
+  function changeQty(id, delta) {
+    const cart = getCart();
+    const item = cart.items.find(i => i.id === id);
+    if (!item) return;
+    item.quantity = Math.max(1, item.quantity + delta);
+    saveCart(cart);
+    document.getElementById(`qty-${id}`).textContent = item.quantity;
+    document.getElementById(`subtotal-${id}`).textContent = (item.price * item.quantity) + '€';
+    updateTotals();
+  }
+
+  function eliminarItem(id) {
+    removeFromCart(id);
+    renderCart();
+  }
+
+  function updateTotals() {
+    const total = getTotal();
+    document.getElementById('subtotal').textContent = total + '€';
+    document.getElementById('total').textContent = total + '€';
+  }
+
+  function confirmarPedido() {
+    const cart = getCart();
+    if (cart.items.length === 0) return;
+    const lineas = cart.items.map(i => `• ${i.emoji || '🌸'} *${i.name}* x${i.quantity} — ${i.price * i.quantity}€`).join('\n');
+    const total = getTotal();
+    const msg = `Hola! Me gustaría confirmar el siguiente pedido:\n\n${lineas}\n\n💶 *Total: ${total}€*\n📦 Entrega: ${deliveryType}\n\n¿Podéis confirmármelo? ¡Gracias!`;
+    window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  renderCart();
+</script>
+</body>
+</html>
