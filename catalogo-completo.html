@@ -288,8 +288,13 @@ function renderizarProductos(prods) {
   prods.forEach(p => renderImg(p, `wrap-${p.id}`, `spin-${p.id}`));
 }
 
-// Arranque
-renderizarProductos(PRODUCTOS);
+// Arranque — aplica filtro si viene en la URL (?cat=rosas)
+const _urlCat = new URLSearchParams(window.location.search).get('cat');
+if (_urlCat && ['rosas','mixtos','orquideas','primavera'].includes(_urlCat)) {
+  filtrar(_urlCat);
+} else {
+  renderizarProductos(PRODUCTOS);
+}
 
 function añadirAlCarrito(id) {
   const p = PRODUCTOS.find(x => x.id === id);

@@ -9,7 +9,6 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -125,9 +124,6 @@
         transition: transform 0.12s ease-out;
         transform: scale(1.06);
     }
-    .pdf-wrap { background:#f4f4f2; aspect-ratio:1/1; overflow:hidden; position:relative; }
-    .pdf-wrap canvas { position:absolute; inset:0; width:100% !important; height:100% !important; object-fit:cover; }
-    .pdf-spin { border:3px solid #c3c8c0; border-top-color:#506352; border-radius:50%; width:28px; height:28px; animation:spin 0.8s linear infinite; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
     @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
 </style>
 </head>
@@ -197,61 +193,61 @@
         <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-xl">Nuestro Catálogo</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
             <!-- Categoria 1: Rosas -->
-            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=rosas" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
-                        <div class="pdf-wrap" id="cat-wrap-1"><div class="pdf-spin" id="cat-spin-1"></div></div>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden" style="aspect-ratio:1/1">
+                        <img src="imgs/p04.jpg" alt="Rosas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Rosas</h3>
-                        <span class="font-body-md text-body-md text-secondary">desde 25€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">🌹 Rosas</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 15€</span>
                     </div>
                 </div>
             </a>
             <!-- Categoria 2: Mixtos -->
-            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=mixtos" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
-                        <div class="pdf-wrap" id="cat-wrap-10"><div class="pdf-spin" id="cat-spin-10"></div></div>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden" style="aspect-ratio:1/1">
+                        <img src="imgs/p19.jpg" alt="Ramos Mixtos" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Ramos Mixtos</h3>
-                        <span class="font-body-md text-body-md text-secondary">desde 40€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">💐 Mixtos</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 55€</span>
                     </div>
                 </div>
             </a>
             <!-- Categoria 3: Orquídeas -->
-            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=orquideas" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
-                        <div class="pdf-wrap" id="cat-wrap-12"><div class="pdf-spin" id="cat-spin-12"></div></div>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden" style="aspect-ratio:1/1">
+                        <img src="imgs/p22.jpg" alt="Orquídeas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Orquídeas</h3>
-                        <span class="font-body-md text-body-md text-secondary">desde 35€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">🌸 Orquídeas</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 45€</span>
                     </div>
                 </div>
             </a>
-            <!-- Categoria 4: Silvestres -->
-            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
+            <!-- Categoria 4: Primavera -->
+            <a href="catalogo-completo.html?cat=primavera" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
-                        <div class="pdf-wrap" id="cat-wrap-18"><div class="pdf-spin" id="cat-spin-18"></div></div>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden" style="aspect-ratio:1/1">
+                        <img src="imgs/p12.jpg" alt="Primavera" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Silvestres</h3>
-                        <span class="font-body-md text-body-md text-secondary">desde 40€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">🌷 Primavera</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 45€</span>
                     </div>
                 </div>
             </a>
         </div>
         <div class="mt-lg text-center">
             <a href="catalogo-completo.html" class="bg-surface-container-high text-primary font-label-md text-label-md px-lg py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors inline-flex items-center gap-xs">
-                Ver catálogo completo (19 productos)
+                Ver catálogo completo (30 productos)
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
             </a>
         </div>
@@ -263,72 +259,75 @@
     <div class="max-w-7xl mx-auto">
         <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-xl">Los Más Elegidos</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
-            <!-- Producto 1 -->
-            <div class="block rounded-xl overflow-hidden">
+            <!-- Producto 1: 12 Rosas Rojas -->
+            <a href="producto.html?id=p04" class="block rounded-xl overflow-hidden" style="text-decoration:none">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
                     <div class="relative overflow-hidden" style="aspect-ratio:4/3">
-                        <div class="pdf-wrap" id="prod-wrap-2" style="aspect-ratio:4/3"><div class="pdf-spin" id="prod-spin-2"></div></div>
+                        <img src="imgs/p04.jpg" alt="12 Rosas Rojas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
                         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm px-sm py-xs rounded-full">
-                            <span class="font-label-sm text-label-sm text-secondary">Más vendido</span>
+                            <span class="font-label-sm text-label-sm text-secondary">⭐ Más vendido</span>
                         </div>
                     </div>
                     <div class="p-md flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Ramo Rosas Blancas con Eucalipto</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Docena de rosas blancas con paniculata cobre y eucalipto.</p>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">12 Rosas Rojas</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">La declaración de amor más clásica. Doce rosas rojas en presentación premium con paniculata y eucalipto.</p>
                         </div>
                         <div class="flex items-center justify-between mt-auto">
-                            <span class="font-headline-md text-headline-md text-primary">50€</span>
-                            <button onclick="abrirPedido('Ramo Rosas Blancas con Eucalipto', 50, '🤍')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
+                            <span class="font-headline-md text-headline-md text-primary">95€</span>
+                            <button onclick="event.preventDefault();abrirPedido('12 Rosas Rojas', 95, '🌹')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
                                 <span class="material-symbols-outlined text-sm">chat</span>Pedir
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Producto 2 -->
-            <div class="block rounded-xl overflow-hidden">
+            </a>
+            <!-- Producto 2: Centro Colores Variados -->
+            <a href="producto.html?id=p19" class="block rounded-xl overflow-hidden" style="text-decoration:none">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
                     <div class="relative overflow-hidden" style="aspect-ratio:4/3">
-                        <div class="pdf-wrap" id="prod-wrap-14" style="aspect-ratio:4/3"><div class="pdf-spin" id="prod-spin-14"></div></div>
-                    </div>
-                    <div class="p-md flex-grow flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Gran Ramo Celebración</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Gerberas, crisantemos, tulipanes y liliums. Ideal para celebraciones.</p>
-                        </div>
-                        <div class="flex items-center justify-between mt-auto">
-                            <span class="font-headline-md text-headline-md text-primary">65€</span>
-                            <button onclick="abrirPedido('Gran Ramo Celebración', 65, '🎉')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
-                                <span class="material-symbols-outlined text-sm">chat</span>Pedir
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Producto 3 -->
-            <div class="block rounded-xl overflow-hidden">
-                <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
-                    <div class="relative overflow-hidden" style="aspect-ratio:4/3">
-                        <div class="pdf-wrap" id="prod-wrap-7" style="aspect-ratio:4/3"><div class="pdf-spin" id="prod-spin-7"></div></div>
+                        <img src="imgs/p19.jpg" alt="Centro Colores Variados" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
                         <div class="absolute top-sm right-sm bg-tertiary-container/90 backdrop-blur-sm px-sm py-xs rounded-full">
-                            <span class="font-label-sm text-label-sm text-on-tertiary-container">Premium</span>
+                            <span class="font-label-sm text-label-sm text-on-tertiary-container">✨ Premium</span>
                         </div>
                     </div>
                     <div class="p-md flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Gran Ramo Rosas Blancas</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">15 rosas blancas con eucalipto y helecho, envoltorio rústico.</p>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Centro Colores Variados</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Exuberante centro floral de gran formato con flores premium. Perfecto para bodas y celebraciones.</p>
                         </div>
                         <div class="flex items-center justify-between mt-auto">
-                            <span class="font-headline-md text-headline-md text-primary">60€</span>
-                            <button onclick="abrirPedido('Gran Ramo Rosas Blancas', 60, '🤍')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
+                            <span class="font-headline-md text-headline-md text-primary">125€</span>
+                            <button onclick="event.preventDefault();abrirPedido('Centro Colores Variados', 125, '💐')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
                                 <span class="material-symbols-outlined text-sm">chat</span>Pedir
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
+            <!-- Producto 3: 12 Rosas Azules -->
+            <a href="producto.html?id=p09" class="block rounded-xl overflow-hidden" style="text-decoration:none">
+                <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
+                    <div class="relative overflow-hidden" style="aspect-ratio:4/3">
+                        <img src="imgs/p09.jpg" alt="12 Rosas Azules" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
+                        <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm px-sm py-xs rounded-full">
+                            <span class="font-label-sm text-label-sm text-secondary">💙 Exclusivo</span>
+                        </div>
+                    </div>
+                    <div class="p-md flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">12 Rosas Azules</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Docena exclusiva de rosas pintadas en azul profundo. Una pieza de lujo para los regalos más memorables.</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="font-headline-md text-headline-md text-primary">120€</span>
+                            <button onclick="event.preventDefault();abrirPedido('12 Rosas Azules', 120, '💙')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
+                                <span class="material-symbols-outlined text-sm">chat</span>Pedir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </section>
@@ -582,33 +581,6 @@
 <script src="cart.js"></script>
 <script src="pedido-modal.js"></script>
 <script>
-    // PDF.js - render catalog pages
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    let _pdfDoc = null;
-    pdfjsLib.getDocument('catalogo.pdf').promise.then(doc => {
-        _pdfDoc = doc;
-        [[1,'cat-wrap-1','cat-spin-1'],[10,'cat-wrap-10','cat-spin-10'],[12,'cat-wrap-12','cat-spin-12'],[18,'cat-wrap-18','cat-spin-18'],
-         [2,'prod-wrap-2','prod-spin-2'],[14,'prod-wrap-14','prod-spin-14'],[7,'prod-wrap-7','prod-spin-7']].forEach(([page,wrap,spin]) => {
-            renderPdfPage(page, wrap, spin);
-        });
-    }).catch(e => console.warn('PDF no cargado:', e));
-
-    async function renderPdfPage(pageNum, wrapId, spinId) {
-        if (!_pdfDoc) return;
-        try {
-            const page = await _pdfDoc.getPage(pageNum);
-            const wrap = document.getElementById(wrapId);
-            if (!wrap) return;
-            const viewport = page.getViewport({ scale: 1.0 });
-            const canvas = document.createElement('canvas');
-            canvas.width = viewport.width; canvas.height = viewport.height;
-            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-            const sp = document.getElementById(spinId);
-            if (sp) sp.remove();
-            wrap.appendChild(canvas);
-        } catch(e) { console.warn('Error página', pageNum, e); }
-    }
-
     // 3D Tilt Effect on cards
     document.querySelectorAll('.tilt-card').forEach(card => {
         card.style.position = 'relative';
