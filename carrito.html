@@ -48,25 +48,49 @@ tailwind.config = {
   .pago-opt.active.tarjeta { background: #1A1F71; color: #fff; border-color: #1A1F71; }
   input:focus, textarea:focus { border-color: #506352 !important; box-shadow: 0 0 0 2px rgba(80,99,82,0.15); }
   input.error, textarea.error { border-color: #ba1a1a !important; }
+  input, textarea { padding: 12px !important; font-size: 16px !important; } /* 16px evita zoom en iOS */
+  @media (max-width:639px){
+    body { padding-top:68px; }
+    .px-margin { padding-left:18px !important; padding-right:18px !important; }
+    .py-xl { padding-top:40px !important; padding-bottom:40px !important; }
+    .gap-lg { gap:16px !important; }
+    .pago-grid { grid-template-columns:1fr !important; }
+  }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
 
 <!-- Nav -->
-<nav class="bg-surface/90 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin py-4">
-  <a href="index.html"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-20 w-auto rounded-full ml-md"/></a>
-  <div class="hidden md:flex items-center gap-md font-label-md text-label-md">
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#inicio">Inicio</a>
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#catalogo">Catálogo</a>
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
+<nav class="bg-surface/95 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50" id="main-nav">
+  <div class="flex justify-between items-center px-margin py-3">
+    <a href="index.html"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-14 sm:h-16 w-auto rounded-full"/></a>
+    <div class="hidden md:flex items-center gap-md font-label-md text-label-md">
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#inicio">Inicio</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="catalogo-completo.html">Catálogo</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
+    </div>
+    <div class="flex items-center gap-sm">
+      <a href="carrito.html" class="relative flex items-center text-primary p-2">
+        <span class="material-symbols-outlined filled">shopping_cart</span>
+        <span class="cart-count hidden absolute -top-1 -right-1 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+      </a>
+      <a href="https://wa.me/34627546360" class="hidden sm:flex bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container transition-colors items-center gap-xs">WhatsApp</a>
+      <button id="mob-btn" onclick="toggleMobNav()" class="md:hidden flex flex-col justify-center gap-1.5 p-2 rounded-lg" aria-label="Menú">
+        <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham1"></span>
+        <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham2"></span>
+        <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham3"></span>
+      </button>
+    </div>
   </div>
-  <div class="flex items-center gap-md">
-    <a href="carrito.html" class="relative flex items-center text-primary">
-      <span class="material-symbols-outlined filled">shopping_cart</span>
-      <span class="cart-count hidden absolute -top-2 -right-2 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+  <div id="mob-menu" class="hidden md:hidden border-t border-outline-variant bg-surface/98 px-margin pb-md flex-col gap-xs">
+    <a href="index.html" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Inicio</a>
+    <a href="catalogo-completo.html" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Catálogo</a>
+    <a href="index.html#contacto" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Contacto</a>
+    <a href="tel:627546360" class="flex items-center gap-2 py-3 font-semibold text-primary border-b border-outline-variant/30" style="font-size:15px">
+      <span class="material-symbols-outlined text-lg">call</span>627 54 63 60
     </a>
-    <a href="https://wa.me/34627546360" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors hidden sm:flex items-center gap-xs">
-      WhatsApp
+    <a href="https://wa.me/34627546360" target="_blank" class="mt-2 bg-primary text-on-primary rounded-full py-3 text-center font-semibold flex items-center justify-center gap-2" style="font-size:14px">
+      <span class="material-symbols-outlined text-sm">chat</span>Pedir por WhatsApp
     </a>
   </div>
 </nav>
@@ -171,7 +195,7 @@ tailwind.config = {
 
             <div class="flex flex-col gap-xs">
               <label class="font-label-sm text-label-sm text-on-surface-variant">Forma de pago <span class="text-error">*</span></label>
-              <div class="grid grid-cols-3 gap-sm">
+              <div class="pago-grid grid grid-cols-3 sm:grid-cols-3 gap-sm">
                 <button onclick="selectPago(this,'Bizum')" id="pago-bizum"
                   class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
                   <span class="font-extrabold tracking-tight">bizum</span>
@@ -214,6 +238,21 @@ tailwind.config = {
 </footer>
 
 <script src="cart.js"></script>
+<script>
+function toggleMobNav() {
+  const m = document.getElementById('mob-menu');
+  const h1 = document.getElementById('ham1'), h2 = document.getElementById('ham2'), h3 = document.getElementById('ham3');
+  const open = m.classList.toggle('hidden');
+  m.classList.toggle('flex', !open);
+  h1.style.transform = open ? '' : 'translateY(8px) rotate(45deg)';
+  h2.style.opacity = open ? '1' : '0';
+  h3.style.transform = open ? '' : 'translateY(-8px) rotate(-45deg)';
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('main-nav'), menu = document.getElementById('mob-menu');
+  if (nav && menu && !nav.contains(e.target) && !menu.classList.contains('hidden')) toggleMobNav();
+});
+</script>
 <script>
   let deliveryType = 'Entrega a domicilio';
   let pagoType = 'Bizum';

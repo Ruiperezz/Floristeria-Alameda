@@ -44,29 +44,54 @@ tailwind.config = {
   .spinner { border:3px solid #c3c8c0; border-top-color:#506352; border-radius:50%; width:32px; height:32px; animation:spin 0.8s linear infinite; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
   @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
   .filtro-btn.active { background:#506352; color:#fff; border-color:#506352; }
-  .prod-card { background:#fff; border-radius:0.75rem; overflow:hidden; border:1px solid #c3c8c0; display:flex; flex-direction:column; transition:box-shadow 0.2s; }
-  .prod-card:hover { box-shadow:0 8px 32px rgba(0,0,0,0.10); }
+  @media (max-width:639px){
+    body { padding-top:68px; }
+    .px-margin { padding-left:18px !important; padding-right:18px !important; }
+    .py-xl { padding-top:40px !important; padding-bottom:40px !important; }
+    .mb-xl { margin-bottom:28px !important; }
+    .gap-lg { gap:16px !important; }
+    .cat-h1 { font-size:24px !important; }
+    .filtro-btn { padding:8px 14px !important; font-size:13px !important; }
+  }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
 
 <!-- Nav -->
-<nav class="bg-surface/90 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin py-4">
-  <a href="index.html"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-20 w-auto rounded-full ml-md"/></a>
-  <div class="hidden md:flex items-center gap-md font-label-md text-label-md" style="font-size:14px;font-weight:600;letter-spacing:0.05em">
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#inicio">Inicio</a>
-    <a class="text-primary border-b-2 border-primary pb-1" href="#">Catálogo</a>
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#nosotros">Sobre Nosotros</a>
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#resenas">Reseñas</a>
-    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
+<nav class="bg-surface/95 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50" id="main-nav">
+  <div class="flex justify-between items-center px-margin py-3">
+    <a href="index.html"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-14 sm:h-16 w-auto rounded-full"/></a>
+    <div class="hidden md:flex items-center gap-md font-label-md text-label-md" style="font-size:14px;font-weight:600;letter-spacing:0.05em">
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#inicio">Inicio</a>
+      <a class="text-primary border-b-2 border-primary pb-1" href="#">Catálogo</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#nosotros">Sobre Nosotros</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#resenas">Reseñas</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
+    </div>
+    <div class="flex items-center gap-sm">
+      <a href="carrito.html" class="relative flex items-center text-primary p-2">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span class="cart-count hidden absolute -top-1 -right-1 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+      </a>
+      <a href="https://wa.me/34627546360" class="hidden sm:flex bg-primary text-on-primary px-md py-sm rounded-full hover:bg-primary-container transition-colors items-center gap-xs" style="font-size:14px;font-weight:600">WhatsApp</a>
+      <button id="mob-btn" onclick="toggleMobNav()" class="md:hidden flex flex-col justify-center gap-1.5 p-2 rounded-lg" aria-label="Menú">
+        <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham1"></span>
+        <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham2"></span>
+        <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham3"></span>
+      </button>
+    </div>
   </div>
-  <div class="flex items-center gap-md">
-    <a href="carrito.html" class="relative flex items-center text-primary">
-      <span class="material-symbols-outlined">shopping_cart</span>
-      <span class="cart-count hidden absolute -top-2 -right-2 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+  <div id="mob-menu" class="hidden md:hidden border-t border-outline-variant bg-surface/98 px-margin pb-md flex-col gap-xs">
+    <a href="index.html" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Inicio</a>
+    <a href="#" class="block py-3 font-semibold text-primary border-b border-outline-variant/30" style="font-size:15px">Catálogo</a>
+    <a href="index.html#nosotros" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Sobre Nosotros</a>
+    <a href="index.html#resenas" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Reseñas</a>
+    <a href="index.html#contacto" class="block py-3 font-semibold text-on-surface border-b border-outline-variant/30 hover:text-primary transition-colors" style="font-size:15px">Contacto</a>
+    <a href="tel:627546360" class="flex items-center gap-2 py-3 font-semibold text-primary border-b border-outline-variant/30" style="font-size:15px">
+      <span class="material-symbols-outlined text-lg">call</span>627 54 63 60
     </a>
-    <a href="https://wa.me/34627546360" class="bg-primary text-on-primary px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors hidden sm:flex items-center gap-xs" style="font-size:14px;font-weight:600">
-      WhatsApp
+    <a href="https://wa.me/34627546360" target="_blank" class="mt-2 bg-primary text-on-primary rounded-full py-3 text-center font-semibold flex items-center justify-center gap-2" style="font-size:14px">
+      <span class="material-symbols-outlined text-sm">chat</span>Pedir por WhatsApp
     </a>
   </div>
 </nav>
@@ -86,7 +111,7 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-xl">
       <p style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">Elaborado artesanalmente</p>
-      <h1 style="font-family:'Playfair Display';font-size:36px;font-weight:600;color:#506352;margin-bottom:12px">Nuestro Catálogo</h1>
+      <h1 class="cat-h1" style="font-family:'Playfair Display';font-size:clamp(22px,5vw,36px);font-weight:600;color:#506352;margin-bottom:12px">Nuestro Catálogo</h1>
       <p style="font-family:'Montserrat';font-size:16px;color:#434842;max-width:600px;margin:0 auto">Flores frescas de primera calidad, elaboradas a mano y entregadas a domicilio en Cartagena. Portes incluidos en todos los arreglos.</p>
     </div>
 
@@ -100,7 +125,7 @@ tailwind.config = {
     </div>
 
     <!-- Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-lg" id="productos-grid"></div>
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md lg:gap-lg" id="productos-grid"></div>
   </div>
 </main>
 
@@ -122,6 +147,21 @@ tailwind.config = {
 <script src="cart.js"></script>
 <script src="pedido-modal.js"></script>
 <script src="fx3d.js"></script>
+<script>
+function toggleMobNav() {
+  const m = document.getElementById('mob-menu');
+  const h1 = document.getElementById('ham1'), h2 = document.getElementById('ham2'), h3 = document.getElementById('ham3');
+  const open = m.classList.toggle('hidden');
+  m.classList.toggle('flex', !open);
+  h1.style.transform = open ? '' : 'translateY(8px) rotate(45deg)';
+  h2.style.opacity = open ? '1' : '0';
+  h3.style.transform = open ? '' : 'translateY(-8px) rotate(-45deg)';
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('main-nav'), menu = document.getElementById('mob-menu');
+  if (nav && menu && !nav.contains(e.target) && !menu.classList.contains('hidden')) toggleMobNav();
+});
+</script>
 <script>
 // Cada producto indica la página del PDF y las coordenadas de recorte (0-1, relativo al tamaño de página)
 // cropX, cropY = esquina superior izquierda; cropW, cropH = ancho y alto del recorte
@@ -258,30 +298,27 @@ function renderizarProductos(prods) {
           <div class="spinner" id="spin-${p.id}"></div>
         </div>
       </a>
-      <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;gap:8px">
-        <p style="font-family:'Montserrat';font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#7b535c;margin:0">${{rosas:'🌹 Rosas',mixtos:'💐 Mixtos',orquideas:'🌸 Orquídeas',primavera:'🌷 Primavera'}[p.categoria]||p.categoria}</p>
+      <div style="padding:clamp(12px,3vw,20px);flex-grow:1;display:flex;flex-direction:column;gap:6px">
+        <p style="font-family:'Montserrat';font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#7b535c;margin:0">${{rosas:'🌹 Rosas',mixtos:'💐 Mixtos',orquideas:'🌸 Orquídeas',primavera:'🌷 Primavera'}[p.categoria]||p.categoria}</p>
         <a href="producto.html?id=${p.id}" style="text-decoration:none">
-          <h3 style="font-family:'Playfair Display';font-size:17px;font-weight:500;line-height:1.3;color:#1a1c1b;margin:0;cursor:pointer;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#1a1c1b'">${p.nombre}</h3>
+          <h3 style="font-family:'Playfair Display';font-size:clamp(14px,3vw,17px);font-weight:500;line-height:1.3;color:#1a1c1b;margin:0;cursor:pointer;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#1a1c1b'">${p.nombre}</h3>
         </a>
-        <p style="font-family:'Montserrat';font-size:13px;color:#434842;line-height:1.55;flex-grow:1;margin:0">${p.descripcion.slice(0,120)}…</p>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
-          <span style="font-family:'Playfair Display';font-size:24px;font-weight:600;color:#506352;transition:transform 0.2s" onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform=''">${p.precio}€</span>
+        <p class="hidden sm:block" style="font-family:'Montserrat';font-size:13px;color:#434842;line-height:1.55;flex-grow:1;margin:0">${p.descripcion.slice(0,100)}…</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+          <span style="font-family:'Playfair Display';font-size:clamp(18px,4vw,24px);font-weight:600;color:#506352">${p.precio}€</span>
           <button class="mag-btn ripple" onclick="añadirAlCarrito('${p.id}')"
-            style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:8px 16px;font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.04em;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background 0.2s"
+            style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:10px 14px;font-family:'Montserrat';font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:3px;transition:background 0.2s;min-height:44px"
             onmouseover="this.style.background='#8da18e'" onmouseout="this.style.background='#506352'">
-            <span class="material-symbols-outlined filled" style="font-size:14px">shopping_cart</span>
-            Añadir
+            <span class="material-symbols-outlined filled" style="font-size:16px">shopping_cart</span>
+            <span class="hidden sm:inline">Añadir</span>
           </button>
         </div>
         <button class="mag-btn ripple" onclick="abrirPedido('${p.nombre}', ${p.precio}, '${p.emoji}')"
-          style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:12px;font-weight:600;color:#506352;background:transparent;border:1.5px solid #506352;border-radius:9999px;padding:8px 12px;margin-top:2px;transition:all 0.2s;cursor:pointer;width:100%"
+          style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:12px;font-weight:600;color:#506352;background:transparent;border:1.5px solid #506352;border-radius:9999px;padding:10px 12px;margin-top:4px;transition:all 0.2s;cursor:pointer;width:100%;min-height:44px"
           onmouseover="this.style.background='#d3e8d3'" onmouseout="this.style.background='transparent'">
           <span class="material-symbols-outlined" style="font-size:14px">chat</span>
-          Pedir por WhatsApp
+          Pedir
         </button>
-        <a href="producto.html?id=${p.id}" style="display:flex;align-items:center;justify-content:center;gap:3px;font-family:'Montserrat';font-size:11px;font-weight:500;color:#737872;text-decoration:none;margin-top:2px;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#737872'">
-          Ver detalles <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
-        </a>
       </div>
     </div>
   `).join('');

@@ -146,11 +146,27 @@
     .material-symbols-outlined.filled {
         font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-    .hero-parallax {
-        transition: transform 0.12s ease-out;
-        transform: scale(1.06);
-    }
+    .hero-parallax { transition: transform 0.12s ease-out; transform: scale(1.06); }
     @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+
+    /* ── Mobile responsive overrides ── */
+    @media (max-width: 639px) {
+      body { padding-top: 72px; }
+      .px-margin { padding-left: 18px !important; padding-right: 18px !important; }
+      .py-xl { padding-top: 48px !important; padding-bottom: 48px !important; }
+      .mb-xl { margin-bottom: 36px !important; }
+      .gap-lg { gap: 20px !important; }
+      .p-lg { padding: 24px !important; }
+      .mob-h1 { font-size: clamp(22px, 6vw, 36px) !important; line-height: 1.25 !important; }
+      .mob-logo { height: 52px !important; }
+      .hero-min { min-height: 100svh !important; }
+      .trust-bar { overflow-x: auto; flex-wrap: nowrap !important; justify-content: flex-start !important; padding-left: 18px; padding-right: 18px; gap: 20px !important; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .trust-bar::-webkit-scrollbar { display: none; }
+      .trust-bar > div { flex-shrink: 0; }
+    }
+    @media (max-width: 480px) {
+      .mob-price { font-size: 36px !important; }
+    }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
@@ -159,7 +175,7 @@
 <nav class="bg-surface/95 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50" id="main-nav">
   <!-- Barra principal -->
   <div class="flex justify-between items-center px-margin py-4">
-    <a href="#inicio"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-20 w-auto rounded-full ml-md"/></a>
+    <a href="#inicio"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="mob-logo h-20 w-auto rounded-full ml-md"/></a>
     <div class="hidden md:flex items-center gap-md font-label-md text-label-md">
         <a class="text-primary border-b-2 border-primary pb-1 hover:bg-primary-container/20 transition-all duration-300" href="#inicio">Inicio</a>
         <a class="text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300" href="#catalogo">Catálogo</a>
@@ -211,13 +227,13 @@
 </nav>
 
 <!-- Hero Section -->
-<header class="relative w-full min-h-[819px] flex items-center justify-center px-margin py-xl bg-surface-container-low overflow-hidden" id="inicio">
+<header class="relative w-full hero-min flex items-center justify-center px-margin py-xl bg-surface-container-low overflow-hidden" style="min-height:100svh" id="inicio">
     <div class="absolute inset-0 z-0 w-full h-full">
         <img alt="Arreglo floral elegante con orquídeas blancas, rosas rosa y eucalipto" class="hero-parallax w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvofILJjPcdzbazcXOz9X2E1MJVrHIVbnxmoxHmKuUR9m-uuYPZOrxK9aqEKv0rcRagNkSIRrnXqwdIJEGjevNpKlEuZRCNOKqYFl1r1JFI5CyULb4J4AHUgS1YvONjwcLIm3jVInXZ_NufSezdGyAH9ZMvbWX4kyUJgGD1CitPYR9r-q8Linb_MX_X9Rmy7rZ5h7EbCFOOCZHSO2rwrmps9h9V_JbOXvkru92P4h7uvz9qRY6XENK2_YZ3EU7sjKjbRd3fSZ0KQ"/>
     </div>
     <div class="relative z-10 max-w-4xl text-center bg-surface/80 backdrop-blur-md p-lg rounded-xl shadow-lg border border-primary/10">
-        <h1 class="font-headline-xl text-headline-xl text-primary mb-md">Flores frescas con entrega a domicilio en Cartagena</h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant mb-lg max-w-2xl mx-auto">Ramos artesanales, rosas, orquídeas y mucho más. Con la calidad y el cariño de siempre.</p>
+        <h1 class="mob-h1 font-headline-xl text-primary mb-md" style="font-size:clamp(24px,5vw,48px);line-height:1.2;font-weight:700">Flores frescas con entrega a domicilio en Cartagena</h1>
+        <p class="font-body-md text-on-surface-variant mb-lg max-w-2xl mx-auto" style="font-size:clamp(15px,2.5vw,18px)">Ramos artesanales, rosas, orquídeas y mucho más. Con la calidad y el cariño de siempre.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-md mb-xl">
             <a class="mag-btn ripple pulse-ring bg-primary text-on-primary font-label-md text-label-md px-lg py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors w-full sm:w-auto text-center" href="#catalogo">Ver Catálogo</a>
             <a class="mag-btn border border-secondary text-secondary font-label-md text-label-md px-lg py-sm rounded-full hover:bg-secondary-container hover:text-on-secondary-container transition-colors w-full sm:w-auto text-center bg-surface/50" href="tel:627546360">Llamar ahora: 627 54 63 60</a>
@@ -242,8 +258,8 @@
 </header>
 
 <!-- Barra de confianza y urgencia -->
-<div style="background:#506352" class="w-full py-3 px-margin">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+<div style="background:#506352" class="w-full py-3">
+    <div class="trust-bar max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-2 px-margin">
         <div class="flex items-center gap-2 text-white" style="font-family:'Montserrat';font-size:13px;font-weight:600">
             <span style="font-size:16px">⏰</span>
             <span>Pide antes de las 12h → <strong>entrega hoy</strong></span>
@@ -421,7 +437,7 @@
                     <img alt="Taller artesanal de Floristería Alameda en Cartagena" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSHxORHuECkrAtdwi6Fr-OWgQiSp7ZGFGyakPMmQPM5nsmwr4qVKVNYpQ6lh9VjtMItKTtvnRDb6kEwfXPuwiIH88x0wEoW9ZehsyoDTikxCvCMYUl-Qfalh8NYVVKK2L6Q09y2iFp_Q6zm4GvnwtmTVxWFgH71_rEj31PBeEikqQUeaV_Hx5coLWy8xKYgNXVibuc03HhncVxAg83IVPLzE9mVcyHpxdJJNvU1OlDmgyZfOp0FRKZ0Hd5y4frcMo84nFJh7zlFg"/>
                 </div>
                 <!-- Tarjeta flotante -->
-                <div class="absolute -bottom-6 -right-4 bg-surface rounded-xl shadow-lg border border-outline-variant px-md py-sm flex items-center gap-sm hidden md:flex">
+                <div class="absolute -bottom-6 -right-4 bg-surface rounded-xl shadow-lg border border-outline-variant px-md py-sm flex items-center gap-sm">
                     <span class="text-3xl">🌿</span>
                     <div>
                         <p class="font-label-md text-label-md text-primary">Empresa familiar</p>
@@ -730,7 +746,7 @@
 </footer>
 
 <!-- FAB WhatsApp (Mobile) -->
-<div class="fixed bottom-base right-base z-50 md:hidden">
+<div class="fixed bottom-20 right-base z-50 md:hidden">
     <a class="bg-primary text-on-primary rounded-full p-4 shadow-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://wa.me/34627546360">
         <span class="material-symbols-outlined filled">chat</span>
     </a>
