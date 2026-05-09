@@ -102,7 +102,7 @@ tailwind.config = {
 
       <!-- Imagen principal -->
       <div class="lg:w-5/12 flex-shrink-0">
-        <div class="main-img-wrap shadow-lg" id="main-img-wrap">
+        <div class="main-img-wrap shadow-lg tilt-card card-img-par" id="main-img-wrap">
           <div class="spinner" id="main-spinner" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
         </div>
         <!-- Entrega info bajo imagen -->
@@ -128,7 +128,7 @@ tailwind.config = {
         </div>
 
         <div>
-          <p id="prod-precio" style="font-family:'Playfair Display';font-size:52px;font-weight:700;color:#506352;line-height:1;margin:0"></p>
+          <p id="prod-precio" class="float-anim" style="font-family:'Playfair Display';font-size:52px;font-weight:700;color:#506352;line-height:1;margin:0"></p>
           <p style="font-family:'Montserrat';font-size:12px;color:#737872;margin-top:4px">IVA incluido · Portes incluidos</p>
         </div>
 
@@ -136,11 +136,11 @@ tailwind.config = {
 
         <!-- Botones de acción -->
         <div style="display:flex;flex-direction:column;gap:10px">
-          <button class="btn-primary" onclick="handleAddToCart()">
+          <button class="btn-primary mag-btn ripple" onclick="handleAddToCart()">
             <span class="material-symbols-outlined filled" style="font-size:18px">shopping_cart</span>
             Añadir al carrito
           </button>
-          <button class="btn-outline" id="btn-pedir">
+          <button class="btn-outline mag-btn ripple" id="btn-pedir">
             <svg style="width:18px;height:18px;fill:#506352" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.121.556 4.11 1.528 5.832L.057 23.786c-.094.317.204.599.517.492l5.82-1.886A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.374l-.36-.213-3.723 1.207 1.19-3.646-.234-.376A9.818 9.818 0 1112 21.818z"/></svg>
             Pedir por WhatsApp
           </button>
@@ -214,6 +214,7 @@ tailwind.config = {
 
 <script src="cart.js"></script>
 <script src="pedido-modal.js"></script>
+<script src="fx3d.js"></script>
 <script>
 const PRODUCTOS = [
   { id:'p01', img:'imgs/p01.jpg', categoria:'rosas', nombre:'12 Rosas Rosa', emoji:'🌸', precio:95,
@@ -419,8 +420,8 @@ function renderReseñas(idx) {
 function renderRecomendados(idx) {
   const recomendados = getRecomendados(idx);
   document.getElementById('recomendados-grid').innerHTML = recomendados.map((p, i) => `
-    <div class="rec-card" onclick="window.location.href='producto.html?id=${p.id}'">
-      <div class="rec-img-wrap" id="rec-wrap-${i}">
+    <div class="rec-card tilt-card" onclick="window.location.href='producto.html?id=${p.id}'">
+      <div class="rec-img-wrap card-img-par" id="rec-wrap-${i}">
         <div class="spinner" id="rec-spin-${i}"></div>
       </div>
       <div style="padding:16px">
@@ -443,6 +444,7 @@ function renderRecomendados(idx) {
     const wrap = document.getElementById(`rec-wrap-${i}`);
     if (wrap) renderImg(p, wrap, `rec-spin-${i}`);
   });
+  if (window.fx3d) { window.fx3d.initTiltCards(); window.fx3d.initCardImageParallax(); }
 }
 
 function handleAddToCart() {
