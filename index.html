@@ -3,7 +3,45 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Floristería Alameda | Flores frescas en Cartagena</title>
+<title>Floristería Alameda | Flores frescas con entrega en Cartagena</title>
+<meta name="description" content="Floristería Alameda en Cartagena — Ramos artesanales, rosas, orquídeas y flores frescas con entrega a domicilio. Portes incluidos. ⭐ 4,9/5 · 311 reseñas en Google. Pide por WhatsApp."/>
+<meta name="keywords" content="floristería Cartagena, flores Cartagena, ramos a domicilio Cartagena, envío flores Cartagena, floristería alameda Cartagena, rosas Cartagena, orquídeas Cartagena"/>
+<meta name="robots" content="index, follow"/>
+<meta property="og:title" content="Floristería Alameda | Flores frescas en Cartagena"/>
+<meta property="og:description" content="Ramos artesanales, rosas, orquídeas y flores frescas con entrega a domicilio en Cartagena. Portes incluidos. ⭐ 4,9/5 en Google (311 reseñas)."/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="es_ES"/>
+<meta property="og:image" content="imgs/p04.jpg"/>
+<link rel="canonical" href="https://floristeria-alameda.vercel.app/"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Florist",
+  "name": "Floristería Alameda",
+  "description": "Floristería artesanal en Cartagena especializada en ramos frescos, rosas, orquídeas y flores de temporada con entrega a domicilio.",
+  "url": "https://floristeria-alameda.vercel.app",
+  "telephone": "+34627546360",
+  "image": "https://floristeria-alameda.vercel.app/logo-floristeria.jpg",
+  "sameAs": ["https://www.facebook.com/alamedafloristeria"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Alameda de San Antón, 15",
+    "addressLocality": "Cartagena",
+    "addressRegion": "Murcia",
+    "postalCode": "30205",
+    "addressCountry": "ES"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 37.6062, "longitude": -0.9885 },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:30", "closes": "13:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "17:30", "closes": "20:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:30", "closes": "13:30" }
+  ],
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "311", "bestRating": "5" },
+  "priceRange": "€€",
+  "servesCuisine": "Flores y arreglos florales"
+}
+</script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -130,10 +168,10 @@
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
 
 <!-- TopNavBar -->
-<nav class="bg-surface/90 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin py-4">
-    <div class="flex items-center gap-md">
-        <a href="#inicio"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-20 w-auto rounded-full ml-md"/></a>
-    </div>
+<nav class="bg-surface/95 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50" id="main-nav">
+  <!-- Barra principal -->
+  <div class="flex justify-between items-center px-margin py-4">
+    <a href="#inicio"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-20 w-auto rounded-full ml-md"/></a>
     <div class="hidden md:flex items-center gap-md font-label-md text-label-md">
         <a class="text-primary border-b-2 border-primary pb-1 hover:bg-primary-container/20 transition-all duration-300" href="#inicio">Inicio</a>
         <a class="text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300" href="#catalogo">Catálogo</a>
@@ -144,7 +182,7 @@
     <div class="flex items-center gap-md">
         <div class="hidden lg:flex items-center gap-xs text-on-surface-variant font-label-md text-label-md">
             <span class="material-symbols-outlined text-xl">call</span>
-            <span>627 54 63 60</span>
+            <a href="tel:627546360" class="hover:text-primary transition-colors">627 54 63 60</a>
         </div>
         <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" title="Facebook" class="hidden sm:flex items-center justify-center transition-opacity hover:opacity-75" style="width:34px;height:34px;background:#1877F2;border-radius:50%">
             <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -153,10 +191,35 @@
             <span class="material-symbols-outlined">shopping_cart</span>
             <span class="cart-count hidden absolute -top-2 -right-2 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
         </a>
-        <a href="https://wa.me/34627546360" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
+        <a href="https://wa.me/34627546360" class="hidden sm:flex bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors items-center gap-xs">
             Pedir por WhatsApp
         </a>
+        <!-- Hamburguesa (solo mobile) -->
+        <button id="mob-btn" onclick="toggleMobNav()" class="md:hidden flex flex-col justify-center gap-1.5 p-2 rounded-lg hover:bg-surface-container transition-colors" aria-label="Abrir menú">
+            <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham1"></span>
+            <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham2"></span>
+            <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham3"></span>
+        </button>
     </div>
+  </div>
+  <!-- Menú mobile desplegable -->
+  <div id="mob-menu" class="hidden md:hidden border-t border-outline-variant bg-surface/98 backdrop-blur-md px-margin pb-md flex-col gap-sm">
+    <a href="#inicio" onclick="toggleMobNav()" class="block py-sm font-label-md text-label-md text-on-surface border-b border-outline-variant/40 hover:text-primary transition-colors">Inicio</a>
+    <a href="#catalogo" onclick="toggleMobNav()" class="block py-sm font-label-md text-label-md text-on-surface border-b border-outline-variant/40 hover:text-primary transition-colors">Catálogo</a>
+    <a href="#nosotros" onclick="toggleMobNav()" class="block py-sm font-label-md text-label-md text-on-surface border-b border-outline-variant/40 hover:text-primary transition-colors">Sobre Nosotros</a>
+    <a href="#resenas" onclick="toggleMobNav()" class="block py-sm font-label-md text-label-md text-on-surface border-b border-outline-variant/40 hover:text-primary transition-colors">Reseñas</a>
+    <a href="#contacto" onclick="toggleMobNav()" class="block py-sm font-label-md text-label-md text-on-surface border-b border-outline-variant/40 hover:text-primary transition-colors">Contacto</a>
+    <a href="tel:627546360" class="flex items-center gap-xs py-sm font-label-md text-label-md text-primary border-b border-outline-variant/40">
+        <span class="material-symbols-outlined text-lg">call</span>627 54 63 60
+    </a>
+    <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" class="flex items-center gap-xs py-sm font-label-md text-label-md border-b border-outline-variant/40" style="color:#1877F2">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Síguenos en Facebook
+    </a>
+    <a href="https://wa.me/34627546360?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank" class="mt-xs bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full text-center flex items-center justify-center gap-xs">
+        <span class="material-symbols-outlined text-sm">chat</span>Pedir por WhatsApp
+    </a>
+  </div>
 </nav>
 
 <!-- Hero Section -->
@@ -179,7 +242,7 @@
             <div class="hidden sm:block text-outline-variant">|</div>
             <div class="flex items-center gap-xs">
                 <span class="text-lg">🚚</span>
-                <span>Repartos solo en Cartagena · Portes incluidos</span>
+                <span>Repartos en Cartagena · Portes incluidos</span>
             </div>
             <div class="hidden sm:block text-outline-variant">|</div>
             <div class="flex items-center gap-xs">
@@ -189,6 +252,31 @@
         </div>
     </div>
 </header>
+
+<!-- Barra de confianza y urgencia -->
+<div style="background:#506352" class="w-full py-3 px-margin">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+        <div class="flex items-center gap-2 text-white" style="font-family:'Montserrat';font-size:13px;font-weight:600">
+            <span style="font-size:16px">⏰</span>
+            <span>Pide antes de las 12h → <strong>entrega hoy</strong></span>
+        </div>
+        <div class="hidden sm:block w-px h-4 bg-white/30"></div>
+        <div class="flex items-center gap-2 text-white" style="font-family:'Montserrat';font-size:13px;font-weight:600">
+            <span style="font-size:16px">⭐</span>
+            <span>4,9/5 · 311 valoraciones reales en Google</span>
+        </div>
+        <div class="hidden sm:block w-px h-4 bg-white/30"></div>
+        <div class="flex items-center gap-2 text-white" style="font-family:'Montserrat';font-size:13px;font-weight:600">
+            <span style="font-size:16px">🌿</span>
+            <span>Empresa familiar · Flores frescas cada mañana</span>
+        </div>
+        <div class="hidden md:block w-px h-4 bg-white/30"></div>
+        <div class="flex items-center gap-2 text-white" style="font-family:'Montserrat';font-size:13px;font-weight:600">
+            <span style="font-size:16px">🚚</span>
+            <span>Portes incluidos en todos los arreglos</span>
+        </div>
+    </div>
+</div>
 
 <!-- Categorías -->
 <section class="px-margin py-xl bg-surface" id="categorias">
@@ -413,58 +501,93 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
             <!-- Reseña 1 -->
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant flex flex-col gap-sm">
-                <div class="flex items-center gap-sm">
-                    <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">M</div>
-                    <div>
-                        <p class="font-label-md text-label-md text-on-surface">Miriam Caravaca Lopez</p>
-                        <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                <div class="flex items-center justify-between gap-sm">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">M</div>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-surface">Miriam Caravaca Lopez</p>
+                            <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                        </div>
                     </div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant text-right flex-shrink-0">Hace 3 días</span>
                 </div>
-                <p class="font-body-md text-body-md text-on-surface-variant">"Maravillosa floristería en Cartagena. Super amable y atento el personal."</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">"Maravillosa floristería en Cartagena. Super amable y atento el personal. El ramo llegó precioso y muy fresco."</p>
+                <div class="flex items-center gap-xs mt-xs">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" alt="Google" class="w-4 h-4"/>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Reseña verificada en Google</span>
+                </div>
             </div>
             <!-- Reseña 2 -->
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant flex flex-col gap-sm">
-                <div class="flex items-center gap-sm">
-                    <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">L</div>
-                    <div>
-                        <p class="font-label-md text-label-md text-on-surface">Lola Morata</p>
-                        <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                <div class="flex items-center justify-between gap-sm">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">L</div>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-surface">Lola Morata</p>
+                            <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                        </div>
                     </div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant text-right flex-shrink-0">Hace 1 semana</span>
                 </div>
-                <p class="font-body-md text-body-md text-on-surface-variant">"La mejor floristería de Cartagena. Servicio muy profesional y flores de primera calidad."</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">"La mejor floristería de Cartagena sin duda. Servicio muy profesional y flores de primera calidad. Repetiré."</p>
+                <div class="flex items-center gap-xs mt-xs">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" alt="Google" class="w-4 h-4"/>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Reseña verificada en Google</span>
+                </div>
             </div>
             <!-- Reseña 3 -->
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant flex flex-col gap-sm">
-                <div class="flex items-center gap-sm">
-                    <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">L</div>
-                    <div>
-                        <p class="font-label-md text-label-md text-on-surface">Lucía Gómez Tejedo</p>
-                        <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                <div class="flex items-center justify-between gap-sm">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">L</div>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-surface">Lucía Gómez Tejedo</p>
+                            <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                        </div>
                     </div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant text-right flex-shrink-0">Hace 2 semanas</span>
                 </div>
-                <p class="font-body-md text-body-md text-on-surface-variant">"Excelente servicio, arreglos con mucho gusto y tienda preciosa. Totalmente recomendable."</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">"Excelente servicio, arreglos con mucho gusto y tienda preciosa. El trato es cercano y muy personalizado. Totalmente recomendable."</p>
+                <div class="flex items-center gap-xs mt-xs">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" alt="Google" class="w-4 h-4"/>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Reseña verificada en Google</span>
+                </div>
             </div>
             <!-- Reseña 4 -->
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant flex flex-col gap-sm">
-                <div class="flex items-center gap-sm">
-                    <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">F</div>
-                    <div>
-                        <p class="font-label-md text-label-md text-on-surface">Fatima A.M.</p>
-                        <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                <div class="flex items-center justify-between gap-sm">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">F</div>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-surface">Fatima A.M.</p>
+                            <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                        </div>
                     </div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant text-right flex-shrink-0">Hace 1 mes</span>
                 </div>
-                <p class="font-body-md text-body-md text-on-surface-variant">"Se nota el cuidado y la pasión por las flores en cada arreglo. Una floristería excepcional."</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">"Se nota el cuidado y la pasión por las flores en cada arreglo. Pedí para el cumpleaños de mi madre y quedó encantada. Una floristería excepcional."</p>
+                <div class="flex items-center gap-xs mt-xs">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" alt="Google" class="w-4 h-4"/>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Reseña verificada en Google</span>
+                </div>
             </div>
             <!-- Reseña 5 -->
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant flex flex-col gap-sm">
-                <div class="flex items-center gap-sm">
-                    <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">B</div>
-                    <div>
-                        <p class="font-label-md text-label-md text-on-surface">Blanca Ortega</p>
-                        <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                <div class="flex items-center justify-between gap-sm">
+                    <div class="flex items-center gap-sm">
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-label-md text-primary flex-shrink-0">B</div>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-surface">Blanca Ortega</p>
+                            <div class="flex text-tertiary-container text-sm">⭐⭐⭐⭐⭐</div>
+                        </div>
                     </div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant text-right flex-shrink-0">Hace 1 mes</span>
                 </div>
-                <p class="font-body-md text-body-md text-on-surface-variant">"Personal muy amable y flores preciosas. Sin duda la mejor opción en Cartagena."</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">"Personal muy amable y flores preciosas. El pedido por WhatsApp fue comodísimo y llegó puntual. Sin duda la mejor opción en Cartagena."</p>
+                <div class="flex items-center gap-xs mt-xs">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" alt="Google" class="w-4 h-4"/>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Reseña verificada en Google</span>
+                </div>
             </div>
             <!-- QR + Ver más en Google -->
             <div class="bg-primary-fixed/40 rounded-xl p-md border border-primary/20 flex flex-col items-center justify-center gap-sm text-center">
@@ -508,14 +631,17 @@
                     <span class="material-symbols-outlined text-primary mt-1">call</span>
                     <div>
                         <p class="font-label-md text-label-md text-on-surface mb-xs">Teléfono</p>
-                        <a href="tel:627546360" class="font-body-md text-body-md text-primary hover:underline">627 54 63 60</a>
+                        <a href="tel:627546360" class="font-body-md text-body-md text-primary hover:underline font-semibold">627 54 63 60</a>
+                        <span class="font-body-md text-body-md text-on-surface-variant"> · </span>
+                        <a href="https://wa.me/34627546360" class="font-body-md text-body-md text-primary hover:underline">WhatsApp</a>
                     </div>
                 </div>
                 <div class="bg-surface rounded-xl p-md border border-outline-variant flex items-start gap-sm">
                     <span class="material-symbols-outlined text-primary mt-1">schedule</span>
                     <div>
                         <p class="font-label-md text-label-md text-on-surface mb-xs">Horario</p>
-                        <p class="font-body-md text-body-md text-on-surface-variant">Lunes a viernes: 9:30–13:30 · 17:30–20:00</p>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Lun–Vie: 9:30–13:30 y 17:30–20:00</p>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Sábados: 9:30–13:30</p>
                     </div>
                 </div>
                 <div class="bg-surface rounded-xl p-md border border-outline-variant flex items-start gap-sm">
@@ -532,16 +658,20 @@
                         <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" class="font-body-md text-body-md text-primary hover:underline">Síguenos en Facebook</a>
                     </div>
                 </div>
-                <div class="flex gap-sm">
+                <div class="flex gap-sm flex-wrap">
                     <a href="https://wa.me/34627546360?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank" class="bg-primary text-on-primary font-label-md text-label-md px-lg py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-xs flex-1 text-center">
                         <span class="material-symbols-outlined text-sm">chat</span>
                         WhatsApp
                     </a>
-                    <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" style="background:#1877F2" class="text-white font-label-md text-label-md px-lg py-sm rounded-full flex items-center justify-center gap-xs flex-1 text-center transition-opacity hover:opacity-90">
-                        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;flex-shrink:0"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        Facebook
+                    <a href="https://maps.google.com/?q=Floristería+Alameda,+Alameda+de+San+Antón+15,+Cartagena" target="_blank" rel="noopener" class="bg-surface-container text-on-surface font-label-md text-label-md px-lg py-sm rounded-full hover:bg-surface-container-high transition-colors flex items-center justify-center gap-xs flex-1 text-center border border-outline-variant">
+                        <span class="material-symbols-outlined text-sm">near_me</span>
+                        Cómo llegar
                     </a>
                 </div>
+                <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" style="background:#1877F2" class="text-white font-label-md text-label-md px-lg py-sm rounded-full flex items-center justify-center gap-xs text-center transition-opacity hover:opacity-90">
+                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;flex-shrink:0"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    Síguenos en Facebook
+                </a>
             </div>
         </div>
     </div>
@@ -576,16 +706,38 @@
         </div>
     </div>
     <!-- Pie de página -->
-    <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
-        <span class="font-headline-md text-headline-md text-primary">Floristería Alameda</span>
-        <div class="flex items-center gap-md">
-            <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" title="Facebook Floristería Alameda"
-               style="width:38px;height:38px;background:#1877F2;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s"
-               onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-                <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
+    <div class="py-lg grid grid-cols-1 md:grid-cols-3 gap-lg items-start">
+        <!-- Identidad -->
+        <div class="flex flex-col gap-sm">
+            <span class="font-headline-md text-headline-md text-primary">Floristería Alameda</span>
+            <p class="font-body-md text-body-md text-on-surface-variant">Alameda de San Antón, 15<br/>30205 Cartagena, Murcia</p>
+            <a href="tel:627546360" class="font-body-md text-body-md text-primary hover:underline">627 54 63 60</a>
+            <div class="flex items-center gap-sm mt-xs">
+                <a href="https://www.facebook.com/alamedafloristeria" target="_blank" rel="noopener" title="Facebook"
+                   style="width:36px;height:36px;background:#1877F2;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s"
+                   onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://wa.me/34627546360" target="_blank" style="width:36px;height:36px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="WhatsApp">
+                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.121.556 4.11 1.528 5.832L.057 23.786c-.094.317.204.599.517.492l5.82-1.886A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.374l-.36-.213-3.723 1.207 1.19-3.646-.234-.376A9.818 9.818 0 1112 21.818z"/></svg>
+                </a>
+            </div>
         </div>
-        <span class="font-body-md text-body-md text-on-surface-variant">© 2024 Floristería Alameda. Cartagena, España.</span>
+        <!-- Horario -->
+        <div class="flex flex-col gap-xs">
+            <p class="font-label-md text-label-md text-on-surface mb-xs">Horario de atención</p>
+            <p class="font-body-md text-body-md text-on-surface-variant">Lun–Vie: 9:30–13:30 · 17:30–20:00</p>
+            <p class="font-body-md text-body-md text-on-surface-variant">Sábados: 9:30–13:30</p>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-xs">⭐ 4,9/5 · 311 reseñas en Google</p>
+        </div>
+        <!-- Legal -->
+        <div class="flex flex-col gap-xs">
+            <p class="font-label-md text-label-md text-on-surface mb-xs">Legal</p>
+            <a href="privacidad.html" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">Política de Privacidad</a>
+            <a href="aviso-legal.html" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">Aviso Legal</a>
+            <a href="envios.html" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">Política de Envíos</a>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-sm text-xs">© 2024 Floristería Alameda · Cartagena, España</p>
+        </div>
     </div>
 </footer>
 
@@ -599,6 +751,25 @@
 <script src="cart.js"></script>
 <script src="pedido-modal.js"></script>
 <script>
+    // Mobile hamburger menu
+    function toggleMobNav() {
+        const menu = document.getElementById('mob-menu');
+        const h1 = document.getElementById('ham1');
+        const h2 = document.getElementById('ham2');
+        const h3 = document.getElementById('ham3');
+        const open = menu.classList.toggle('hidden');
+        menu.classList.toggle('flex', !open);
+        h1.style.transform = open ? '' : 'translateY(8px) rotate(45deg)';
+        h2.style.opacity = open ? '1' : '0';
+        h3.style.transform = open ? '' : 'translateY(-8px) rotate(-45deg)';
+    }
+    // Cerrar menu al hacer click fuera
+    document.addEventListener('click', e => {
+        const nav = document.getElementById('main-nav');
+        const menu = document.getElementById('mob-menu');
+        if (!nav.contains(e.target) && !menu.classList.contains('hidden')) toggleMobNav();
+    });
+
     // 3D Tilt Effect on cards
     document.querySelectorAll('.tilt-card').forEach(card => {
         card.style.position = 'relative';
