@@ -16,12 +16,11 @@ tailwind.config = {
     colors: {
       "surface":"#f9f9f7","primary":"#506352","secondary":"#7b535c","secondary-container":"#fecad4",
       "surface-container-highest":"#e2e3e1","primary-fixed":"#d3e8d3","primary-fixed-dim":"#b7ccb8",
-      "surface-dim":"#dadad8","primary-fixed-dim":"#b7ccb8",
+      "surface-dim":"#dadad8","primary-container":"#8da18e","outline-variant":"#c3c8c0",
       "surface-container":"#eeeeec","on-surface-variant":"#434842","on-surface":"#1a1c1b",
       "tertiary":"#775a19","tertiary-container":"#bb9751","background":"#f9f9f7",
       "surface-container-low":"#f4f4f2","on-background":"#1a1c1b","on-primary":"#ffffff",
-      "outline":"#737872","outline-variant":"#c3c8c0","on-primary-container":"#263829",
-      "error":"#ba1a1a"
+      "outline":"#737872","on-primary-container":"#263829","error":"#ba1a1a"
     },
     borderRadius: { "DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" },
     spacing: { "base":"8px","margin":"32px","sm":"12px","xs":"4px","xl":"80px","gutter":"24px","md":"24px","lg":"48px" },
@@ -40,20 +39,25 @@ tailwind.config = {
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .canvas-wrap { background: #f4f4f2; aspect-ratio: 3/4; overflow: hidden; position: relative; border-radius: 0.75rem; }
-  .canvas-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
-  .spinner { border: 3px solid #c3c8c0; border-top-color: #506352; border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-  .star-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; color: #775a19; }
-  .star-empty { color: #c3c8c0; }
-  .btn-primary { background:#506352;color:#fff;border:none;border-radius:9999px;padding:14px 28px;font-family:'Montserrat';font-size:14px;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px; }
+
+  /* Imagen principal del producto */
+  .main-img-wrap { background:#f4f4f2; border-radius:0.75rem; overflow:hidden; position:relative; min-height:340px; max-height:560px; }
+  .main-img-wrap canvas { width:100%; height:auto; display:block; }
+
+  /* Imagen en tarjeta recomendado */
+  .rec-img-wrap { background:#f4f4f2; overflow:hidden; position:relative; height:180px; }
+  .rec-img-wrap canvas { position:absolute; inset:0; width:100%; height:100%; }
+
+  .spinner { border:3px solid #c3c8c0; border-top-color:#506352; border-radius:50%; width:32px; height:32px; animation:spin 0.8s linear infinite; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+  @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+
+  .btn-primary { background:#506352;color:#fff;border:none;border-radius:9999px;padding:14px 28px;font-family:'Montserrat';font-size:14px;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;width:100%; }
   .btn-primary:hover { background:#8da18e; }
-  .btn-outline { background:transparent;color:#506352;border:1.5px solid #506352;border-radius:9999px;padding:13px 28px;font-family:'Montserrat';font-size:14px;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px; }
+  .btn-outline { background:transparent;color:#506352;border:1.5px solid #506352;border-radius:9999px;padding:13px 28px;font-family:'Montserrat';font-size:14px;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;width:100%; }
   .btn-outline:hover { background:#d3e8d3; }
-  .rec-card { background:#fff;border-radius:0.75rem;overflow:hidden;border:1px solid #c3c8c0;transition:box-shadow 0.2s;cursor:pointer; }
-  .rec-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.10); }
-  .rec-canvas-wrap { background: #f4f4f2; aspect-ratio: 3/4; overflow: hidden; position: relative; }
-  .rec-canvas-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
+
+  .rec-card { background:#fff;border-radius:0.75rem;overflow:hidden;border:1px solid #c3c8c0;transition:box-shadow 0.2s,transform 0.2s;cursor:pointer; }
+  .rec-card:hover { box-shadow:0 6px 24px rgba(0,0,0,0.10);transform:translateY(-2px); }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
@@ -95,45 +99,44 @@ tailwind.config = {
 <!-- Product Section -->
 <main class="px-margin py-xl bg-surface-container-low">
   <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col lg:flex-row gap-xl lg:gap-margin" style="gap:64px">
+    <div class="flex flex-col lg:flex-row gap-xl" style="gap:60px">
 
-      <!-- Image -->
+      <!-- Imagen principal -->
       <div class="lg:w-5/12 flex-shrink-0">
-        <div class="canvas-wrap shadow-lg" id="main-img-wrap">
-          <div class="spinner" id="main-spinner"></div>
+        <div class="main-img-wrap shadow-lg" id="main-img-wrap">
+          <div class="spinner" id="main-spinner" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        </div>
+        <!-- Entrega info bajo imagen -->
+        <div style="margin-top:16px;background:#d3e8d3;border-radius:0.75rem;padding:14px 18px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:22px">🚚</span>
+          <div>
+            <p style="font-family:'Montserrat';font-size:12px;font-weight:700;color:#263829;margin:0">Repartos solo en Cartagena</p>
+            <p style="font-family:'Montserrat';font-size:11px;color:#506352;margin:3px 0 0">Portes incluidos · Entrega a domicilio o recogida en tienda</p>
+          </div>
         </div>
       </div>
 
-      <!-- Info -->
-      <div class="lg:w-7/12 flex flex-col gap-md" style="gap:20px">
+      <!-- Info del producto -->
+      <div class="lg:w-7/12 flex flex-col" style="gap:20px">
 
         <div>
-          <p id="prod-categoria" style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px"></p>
-          <h1 id="prod-nombre" style="font-family:'Playfair Display';font-size:36px;font-weight:600;line-height:1.25;color:#1a1c1b;margin-bottom:8px"></h1>
-          <div class="flex items-center gap-sm" style="margin-bottom:4px">
+          <p id="prod-categoria" style="font-family:'Montserrat';font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:6px"></p>
+          <h1 id="prod-nombre" style="font-family:'Playfair Display';font-size:34px;font-weight:600;line-height:1.2;color:#1a1c1b;margin-bottom:10px"></h1>
+          <div class="flex items-center gap-sm" style="margin-bottom:6px">
             <div id="prod-estrellas" class="flex items-center gap-xs"></div>
             <span id="prod-num-resenas" style="font-family:'Montserrat';font-size:12px;color:#737872"></span>
           </div>
         </div>
 
         <div>
-          <p id="prod-precio" style="font-family:'Playfair Display';font-size:48px;font-weight:700;color:#506352;line-height:1"></p>
-          <p style="font-family:'Montserrat';font-size:13px;color:#737872;margin-top:4px">IVA incluido</p>
+          <p id="prod-precio" style="font-family:'Playfair Display';font-size:52px;font-weight:700;color:#506352;line-height:1;margin:0"></p>
+          <p style="font-family:'Montserrat';font-size:12px;color:#737872;margin-top:4px">IVA incluido · Portes incluidos</p>
         </div>
 
-        <p id="prod-descripcion" style="font-family:'Montserrat';font-size:16px;color:#434842;line-height:1.7;border-left:3px solid #b7ccb8;padding-left:16px"></p>
+        <p id="prod-descripcion" style="font-family:'Montserrat';font-size:15px;color:#434842;line-height:1.75;border-left:3px solid #b7ccb8;padding-left:16px;margin:0"></p>
 
-        <!-- Delivery info -->
-        <div style="background:#d3e8d3;border-radius:0.75rem;padding:16px 20px;display:flex;align-items:center;gap:12px">
-          <span style="font-size:24px">🚚</span>
-          <div>
-            <p style="font-family:'Montserrat';font-size:13px;font-weight:600;color:#263829">Repartos solo en Cartagena</p>
-            <p style="font-family:'Montserrat';font-size:12px;color:#506352;margin-top:2px">Portes incluidos en todos los arreglos · Entrega a domicilio</p>
-          </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="flex flex-col gap-sm" style="gap:10px">
+        <!-- Botones de acción -->
+        <div style="display:flex;flex-direction:column;gap:10px">
           <button class="btn-primary" onclick="handleAddToCart()">
             <span class="material-symbols-outlined filled" style="font-size:18px">shopping_cart</span>
             Añadir al carrito
@@ -144,38 +147,39 @@ tailwind.config = {
           </button>
         </div>
 
-        <!-- Features -->
+        <!-- Garantías -->
         <div style="border-top:1px solid #c3c8c0;padding-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div class="flex items-center gap-xs">
+          <div style="display:flex;align-items:center;gap:8px">
             <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">verified</span>
             <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Flores frescas garantizadas</span>
           </div>
-          <div class="flex items-center gap-xs">
+          <div style="display:flex;align-items:center;gap:8px">
             <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">local_florist</span>
             <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Elaborado a mano</span>
           </div>
-          <div class="flex items-center gap-xs">
+          <div style="display:flex;align-items:center;gap:8px">
             <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">schedule</span>
             <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Entrega el mismo día</span>
           </div>
-          <div class="flex items-center gap-xs">
+          <div style="display:flex;align-items:center;gap:8px">
             <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">redeem</span>
             <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Dedicatoria incluida</span>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </main>
 
-<!-- Reviews Section -->
+<!-- Reseñas -->
 <section class="px-margin py-xl bg-surface">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-xl" style="margin-bottom:48px">
-      <p style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">Opiniones verificadas</p>
-      <h2 style="font-family:'Playfair Display';font-size:28px;font-weight:600;color:#1a1c1b;margin-bottom:8px">Lo que dicen nuestros clientes</h2>
-      <div class="flex items-center justify-center gap-sm">
-        <div class="flex" id="resumen-estrellas"></div>
+    <div class="text-center" style="margin-bottom:44px">
+      <p style="font-family:'Montserrat';font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">Opiniones verificadas</p>
+      <h2 style="font-family:'Playfair Display';font-size:28px;font-weight:600;color:#1a1c1b;margin-bottom:10px">Lo que dicen nuestros clientes</h2>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px">
+        <div id="resumen-estrellas" style="display:flex"></div>
         <span style="font-family:'Montserrat';font-size:14px;color:#434842;font-weight:600">5.0 · Excelente</span>
       </div>
     </div>
@@ -183,14 +187,14 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- Recommended Products -->
+<!-- Productos recomendados -->
 <section class="px-margin py-xl bg-surface-container-low">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-xl" style="margin-bottom:48px">
-      <p style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">También te puede gustar</p>
+    <div class="text-center" style="margin-bottom:44px">
+      <p style="font-family:'Montserrat';font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">También te puede gustar</p>
       <h2 style="font-family:'Playfair Display';font-size:28px;font-weight:600;color:#1a1c1b">Otros arreglos florales</h2>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-lg" id="recomendados-grid" style="gap:28px"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-lg" id="recomendados-grid" style="gap:24px"></div>
   </div>
 </section>
 
@@ -215,32 +219,53 @@ tailwind.config = {
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 const PRODUCTOS = [
-  { id:'p01', pagina:1,  categoria:'rosas',    nombre:'Ramo Rosas Rosa con Paniculata',       descripcion:'Docena de rosas rosa rodeadas de paniculata blanca y helecho, envueltas en encaje rosa con lazo de arpillera. Ideal para cumpleaños y aniversarios.',                    precio:45,  emoji:'🌸' },
-  { id:'p02', pagina:2,  categoria:'rosas',    nombre:'Ramo Rosas Blancas con Eucalipto',     descripcion:'Docena de rosas blancas premium acompañadas de paniculata cobre, eucalipto y helecho. Envoltorio de arpillera rústica con lazo de encaje. Elegancia atemporal.',      precio:50,  emoji:'🤍' },
-  { id:'p03', pagina:3,  categoria:'rosas',    nombre:'Ramo Rosas Rosa Fucsia',               descripcion:'Docena de rosas en intenso rosa fucsia con paniculata blanca y helecho, presentadas en envoltorio de malla rosa con lazo de arpillera. Muy romántico.',               precio:45,  emoji:'🌺' },
-  { id:'p04', pagina:4,  categoria:'rosas',    nombre:'Ramo Rosas Blancas Clásico',           descripcion:'Docena de rosas blancas puras con paniculata y helecho, envueltas en arpillera natural con lazo blanco de encaje. Pureza y sofisticación para cualquier ocasión.',    precio:45,  emoji:'🤍' },
-  { id:'p05', pagina:5,  categoria:'rosas',    nombre:'Ramo Pequeño 6 Rosas Rosa',            descripcion:'Seis rosas rosa con eucalipto y paniculata blanca, envoltorio de arpillera con lazo rosa. Perfecto para un detalle especial o un primer regalo romántico.',           precio:25,  emoji:'🌸' },
-  { id:'p06', pagina:6,  categoria:'rosas',    nombre:'Ramo Rosas Amarillas Alegría',         descripcion:'Docena de rosas amarillas con hypericum rosa, paniculata y helecho. Envoltorio de arpillera con malla rosa. El color de la amistad y la alegría.',                     precio:40,  emoji:'💛' },
-  { id:'p07', pagina:7,  categoria:'rosas',    nombre:'Gran Ramo Rosas Blancas y Eucalipto',  descripcion:'Gran ramo de 15 rosas blancas con abundante eucalipto, paniculata y helecho. Envoltorio de arpillera con lazo de rafia natural. Voluminoso y espectacular.',         precio:60,  emoji:'🤍' },
-  { id:'p08', pagina:8,  categoria:'primavera',nombre:'Ramo Primaveral de Tulipanes',         descripcion:'Composición de temporada con tulipanes amarillos y rosas, brotes de lilium, hypericum y helecho. Envoltorio papel lunares. Frescura y color de la primavera.',      precio:35,  emoji:'🌷' },
-  { id:'p09', pagina:9,  categoria:'mixtos',   nombre:'Ramo Multicolor Premium',              descripcion:'Lujosa composición con gerberas naranja, lirios rosas, iris azules, rosas blancas y alstroemeria. Para ocasiones especiales que merecen lo más llamativo.',           precio:55,  emoji:'🌼' },
-  { id:'p10', pagina:10, categoria:'mixtos',   nombre:'Gran Ramo Exótico de Temporada',      descripcion:'Voluminosa composición con liliums blancos, gerberas naranja, crisantemos amarillos y lilas, iris azules, envueltos en arpillera. Impresionante y festivo.',          precio:65,  emoji:'💐' },
-  { id:'p11', pagina:11, categoria:'orquideas',nombre:'Orquídea Blanca Dos Tallos',           descripcion:'Planta de orquídea Phalaenopsis blanca con dos tallos en flor, decorada con ramas blancas y encaje, lazo de arpillera. Elegante regalo para el hogar o la oficina.',precio:35,  emoji:'🌸' },
-  { id:'p12', pagina:12, categoria:'orquideas',nombre:'Orquídea Blanca Premium con Ramas',   descripcion:'Orquídea Phalaenopsis de múltiples flores con exuberantes ramas blancas decorativas. Presentación en jarrón con arpillera y encaje. Regalo de alto impacto visual.',  precio:55,  emoji:'🌸' },
-  { id:'p13', pagina:13, categoria:'orquideas',nombre:'Orquídea Lila Dos Tallos',             descripcion:'Planta de orquídea Phalaenopsis en tonos lilas con dos tallos, ramas decorativas y envoltorio de encaje rosa y arpillera. Delicadeza y romanticismo.',               precio:45,  emoji:'💜' },
-  { id:'p14', pagina:14, categoria:'mixtos',   nombre:'Gran Ramo Celebración Colorido',      descripcion:'Gran ramo festivo con gerberas rosas, crisantemos lilas, tulipanes naranja, liliums y crisantemos verdes. Envoltorio blanco. Para bodas, bautizos y celebraciones.',  precio:65,  emoji:'🎉' },
-  { id:'p15', pagina:15, categoria:'mixtos',   nombre:'Ramo Rosa Romántico',                  descripcion:'Composición rosa en tonos pastel con gerberas, rosas, liliums, crisantemos y margaritas. Envoltorio arpillera con encaje. Suavidad y delicadeza femenina.',           precio:55,  emoji:'🌸' },
-  { id:'p16', pagina:16, categoria:'orquideas',nombre:'Orquídea Blanca Doble Vara Elegante', descripcion:'Elegante orquídea blanca de doble vara con abundantes flores, presentada en tul blanco y arpillera con lazo de rafia. Símbolo de pureza y distinción.',               precio:50,  emoji:'🤍' },
-  { id:'p17', pagina:17, categoria:'mixtos',   nombre:'Ramo Gerberas y Crisantemos Rosa',    descripcion:'Ramo primaveralmente vistoso con gerberas rosas, crisantemos lilas, alstroemeria e hypericum. Envoltorio de encaje blanco artesanal. Alegre y colorido.',            precio:45,  emoji:'🌺' },
-  { id:'p18', pagina:18, categoria:'mixtos',   nombre:'Ramo Silvestre Bohemio',               descripcion:'Composición natural y romántica de eucalipto, lavanda, paniculata, hypericum y flores silvestres amarillas. Papel kraft rústico. Estilo boho y mediterráneo.',       precio:50,  emoji:'🌿' },
-  { id:'p19', pagina:19, categoria:'mixtos',   nombre:'Ramo Campo Rosa y Lila',               descripcion:'Alegre mezcla de rosas rosa, gerberas, crisantemos lilas y solidago amarillo. Envoltorio encaje blanco. Un ramo fresco y lleno de vida, perfecto para cualquier día.',precio:40,  emoji:'🌼' },
+  { id:'p01', pdfPage:1, cropX:0, cropY:0.03, cropW:0.48, cropH:0.34,
+    categoria:'rosas', nombre:'12 Rosas Rosa', emoji:'🌸', precio:95,
+    descripcion:'Docena de rosas en el más delicado tono rosa, presentadas con paniculata blanca y helecho fresco. Envueltas artesanalmente con encaje rosa y lazo de arpillera. El regalo romántico por excelencia para cumpleaños, aniversarios o cualquier declaración especial.' },
+
+  { id:'p02', pdfPage:1, cropX:0, cropY:0.37, cropW:0.48, cropH:0.31,
+    categoria:'rosas', nombre:'12 Rosas Blancas', emoji:'🤍', precio:95,
+    descripcion:'Doce rosas blancas de primera calidad acompañadas de paniculata cobre, eucalipto y helecho. Presentación en arpillera rústica con lazo de encaje. Sinónimo de pureza, admiración y elegancia atemporal para las ocasiones más significativas.' },
+
+  { id:'p03', pdfPage:1, cropX:0, cropY:0.68, cropW:0.48, cropH:0.32,
+    categoria:'rosas', nombre:'12 Rosas Amarillas', emoji:'💛', precio:95,
+    descripcion:'Docena de luminosas rosas amarillas con hypericum rosa y helecho, envueltas en papel kraft con lazo. El color de la alegría, la amistad y la energía positiva. Un regalo que ilumina cualquier espacio y saca una sonrisa garantizada.' },
+
+  { id:'p04', pdfPage:2, cropX:0, cropY:0.00, cropW:0.48, cropH:0.27,
+    categoria:'rosas', nombre:'12 Rosas Rojas', emoji:'🌹', precio:95,
+    descripcion:'La declaración de amor más clásica y apasionada: doce rosas rojas de tallo largo con paniculata blanca y presentación premium. El gesto más romántico del mundo para San Valentín, aniversarios o cualquier ocasión que merezca lo mejor.' },
+
+  { id:'p05', pdfPage:2, cropX:0, cropY:0.27, cropW:0.48, cropH:0.25,
+    categoria:'rosas', nombre:'6 Rosas Rosa', emoji:'🌸', precio:55,
+    descripcion:'Seis rosas rosa en plena madurez, con eucalipto y paniculata, presentadas en elegante arpillera con lazo rosa. Una opción más íntima y personal para sorprender con un detalle cargado de ternura y cariño sincero.' },
+
+  { id:'p06', pdfPage:2, cropX:0, cropY:0.52, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'6 Rosas Azules Pintadas', emoji:'💙', precio:75,
+    descripcion:'Seis rosas pintadas a mano en un hipnótico azul intenso, con paniculata blanca. Presentación en papel traslúcido con lazo dorado. Una pieza única e irrepetible para quienes buscan un regalo verdaderamente diferente y extraordinario.' },
+
+  { id:'p07', pdfPage:2, cropX:0, cropY:0.76, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'6 Rosas Rojas', emoji:'🌹', precio:55,
+    descripcion:'Seis rosas rojas de tallo largo con eucalipto y paniculata, pasión hecha flor. El regalo clásico para una ocasión íntima y romántica. Presentadas con lazo y envoltorio artesanal que realza su belleza natural.' },
+
+  { id:'p08', pdfPage:3, cropX:0, cropY:0.00, cropW:0.48, cropH:0.26,
+    categoria:'rosas', nombre:'6 Rosas Amarillas', emoji:'💛', precio:55,
+    descripcion:'Seis rosas amarillas envueltas en papel satinado con lazo de rafia, con el sello de Floristería Alameda. El regalo perfecto para transmitir alegría, agradecimiento, amistad sincera o simplemente dar un poco de luz a alguien especial.' },
+
+  { id:'p09', pdfPage:3, cropX:0, cropY:0.26, cropW:0.48, cropH:0.26,
+    categoria:'rosas', nombre:'12 Rosas Azules', emoji:'💙', precio:120,
+    descripcion:'Exclusiva docena de rosas pintadas en un azul profundo e intenso, presentadas en papel negro elegante con lazo dorado. Una pieza de lujo, completamente única y extraordinaria, reservada para los regalos más especiales y memorables de la vida.' },
+
+  { id:'p10', pdfPage:3, cropX:0, cropY:0.52, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'Rosa Roja con Arreglo', emoji:'🌹', precio:25,
+    descripcion:'Una única rosa roja de tallo largo acompañada de eucalipto, helecho y paniculata, envuelta en malla roja con lazo de arpillera artesanal. El gesto más íntimo y romántico, simple en su forma pero cargado de profundo significado y emoción.' },
+
+  { id:'p11', pdfPage:3, cropX:0, cropY:0.76, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'Rosa Roja Clásica', emoji:'🌹', precio:15,
+    descripcion:'Una rosa roja elegante y sencilla, presentada con hojas verdes naturales. El gesto más puro y directo para expresar amor, pensamiento o afecto sincero. Porque a veces, una sola flor perfecta dice más que mil palabras.' },
 ];
 
 const CATEGORIAS = {
-  'rosas':     '🌹 Rosas',
-  'mixtos':    '💐 Mixtos',
-  'orquideas': '🌸 Orquídeas',
-  'primavera': '🌷 Primavera',
+  'rosas':'🌹 Rosas', 'mixtos':'💐 Mixtos', 'orquideas':'🌸 Orquídeas', 'primavera':'🌷 Primavera'
 };
 
 const RESEÑAS_POOL = [
@@ -254,7 +279,7 @@ const RESEÑAS_POOL = [
   { autor:'Isabel Moreno',   avatar:'IM', nota:5, texto:'Ramo espectacular para el aniversario. Mi pareja se quedó sin palabras. La presentación es de nivel boutique. ¡Genial!', fecha:'Hace 2 meses' },
   { autor:'Cristina Jiménez',avatar:'CJ', nota:5, texto:'El detalle de la dedicatoria fue un toque muy especial. Las flores duraron mucho tiempo. Excelente floristería.', fecha:'Hace 3 meses' },
   { autor:'Beatriz Díaz',    avatar:'BD', nota:5, texto:'Muy profesionales y atentos. El ramo era exactamente lo que buscaba. Trato cercano y entrega impecable.', fecha:'Hace 3 meses' },
-  { autor:'Marta Pérez',     avatar:'MP', nota:5, texto:'Las orquídeas llegaron en un estado perfecto, muy bien embaladas. Un regalo espectacular que duró semanas en casa.', fecha:'Hace 4 meses' },
+  { autor:'Marta Pérez',     avatar:'MP', nota:5, texto:'Las rosas llegaron en un estado perfecto, muy bien embaladas. Un regalo espectacular que llenó de alegría toda la casa.', fecha:'Hace 4 meses' },
   { autor:'Rosa Navarro',    avatar:'RN', nota:5, texto:'Precio muy razonable para la calidad que ofrecen. Ramo grandioso, mucho más bonito en persona. Muy recomendable.', fecha:'Hace 4 meses' },
   { autor:'Lucía Vega',      avatar:'LV', nota:5, texto:'Sorprendí a mi madre en su cumpleaños y se emocionó muchísimo. Las flores frescas y preciosas. ¡Qué profesionales!', fecha:'Hace 5 meses' },
   { autor:'Sandra Romero',   avatar:'SR', nota:5, texto:'Primera vez que pedía por WhatsApp y fue súper sencillo. El ramo llegó perfecto y puntual. Definitivamente repetiré.', fecha:'Hace 5 meses' },
@@ -268,8 +293,57 @@ const RESEÑAS_POOL = [
 
 function estrellas(n) {
   return Array(5).fill(0).map((_, i) =>
-    `<span class="material-symbols-outlined ${i < n ? 'filled' : ''}" style="font-size:16px;color:${i < n ? '#775a19' : '#c3c8c0'}">${i < n ? 'star' : 'star'}</span>`
+    `<span class="material-symbols-outlined ${i < n ? 'filled' : ''}" style="font-size:16px;color:${i < n ? '#775a19' : '#c3c8c0'}">star</span>`
   ).join('');
+}
+
+// --- PDF caché compartido ---
+const _pageCache = {};
+let _pdfDoc = null;
+
+async function getPdf() {
+  if (_pdfDoc) return _pdfDoc;
+  _pdfDoc = await pdfjsLib.getDocument('catalogo-nuevo.pdf').promise;
+  return _pdfDoc;
+}
+
+async function getPageSrc(pageNum) {
+  if (_pageCache[pageNum]) return _pageCache[pageNum];
+  const doc = await getPdf();
+  const page = await doc.getPage(pageNum);
+  const vp = page.getViewport({ scale: 2.5 });
+  const c = document.createElement('canvas');
+  c.width = vp.width; c.height = vp.height;
+  await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+  _pageCache[pageNum] = c;
+  return c;
+}
+
+async function renderCropTo(producto, wrapEl, spinId, stretch) {
+  try {
+    const src = await getPageSrc(producto.pdfPage);
+    const sx = Math.round(producto.cropX * src.width);
+    const sy = Math.round(producto.cropY * src.height);
+    const sw = Math.round(producto.cropW * src.width);
+    const sh = Math.round(producto.cropH * src.height);
+    const dest = document.createElement('canvas');
+    dest.width = sw; dest.height = sh;
+    dest.getContext('2d').drawImage(src, sx, sy, sw, sh, 0, 0, sw, sh);
+    const spin = document.getElementById(spinId); if (spin) spin.remove();
+    if (stretch) {
+      dest.style.position = 'absolute';
+      dest.style.inset = '0';
+      dest.style.width = '100%';
+      dest.style.height = '100%';
+    } else {
+      dest.style.width = '100%';
+      dest.style.height = 'auto';
+      dest.style.display = 'block';
+    }
+    wrapEl.appendChild(dest);
+  } catch {
+    wrapEl.innerHTML = `<div style="font-size:64px;display:flex;align-items:center;justify-content:center;height:100%;padding:32px">${producto.emoji}</div>`;
+  }
 }
 
 // --- Init ---
@@ -284,14 +358,15 @@ if (!producto) {
 }
 
 function initPage() {
+  const idx = PRODUCTOS.indexOf(producto);
+
   document.getElementById('page-title').textContent = `${producto.nombre} | Floristería Alameda`;
   document.getElementById('breadcrumb-product').textContent = producto.nombre;
-  document.getElementById('prod-categoria').textContent = CATEGORIAS[producto.categoria] || producto.categoria;
+  document.getElementById('prod-categoria').textContent = CATEGORIAS[producto.categoria] || '🌹 Rosas';
   document.getElementById('prod-nombre').textContent = producto.nombre;
   document.getElementById('prod-precio').textContent = producto.precio + '€';
   document.getElementById('prod-descripcion').textContent = producto.descripcion;
 
-  const idx = PRODUCTOS.indexOf(producto);
   const numResenas = 18 + (idx % 7);
   document.getElementById('prod-num-resenas').textContent = `(${numResenas} reseñas)`;
   document.getElementById('prod-estrellas').innerHTML = estrellas(5);
@@ -302,84 +377,33 @@ function initPage() {
   renderReseñas(idx);
   renderRecomendados(idx);
 
-  let pdfDoc = null;
-  pdfjsLib.getDocument('catalogo.pdf').promise.then(doc => {
-    pdfDoc = doc;
-    renderMainImg(pdfDoc);
-    renderRecImgs(pdfDoc);
-  }).catch(() => {
-    document.getElementById('main-img-wrap').innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:96px">${producto.emoji}</div>`;
-  });
-}
-
-async function renderMainImg(pdfDoc) {
-  try {
-    const page = await pdfDoc.getPage(producto.pagina);
-    const viewport = page.getViewport({ scale: 2 });
-    const canvas = document.createElement('canvas');
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-    const spinner = document.getElementById('main-spinner');
-    if (spinner) spinner.remove();
-    document.getElementById('main-img-wrap').appendChild(canvas);
-  } catch {
-    document.getElementById('main-img-wrap').innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:96px">${producto.emoji}</div>`;
-  }
-}
-
-async function renderRecImgs(pdfDoc) {
-  const idx = PRODUCTOS.indexOf(producto);
-  const recomendados = getRecomendados(idx);
-  for (let i = 0; i < recomendados.length; i++) {
-    const p = recomendados[i];
-    try {
-      const page = await pdfDoc.getPage(p.pagina);
-      const viewport = page.getViewport({ scale: 1.2 });
-      const canvas = document.createElement('canvas');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-      const spinner = document.getElementById(`rec-spin-${i}`);
-      if (spinner) spinner.remove();
-      const wrap = document.getElementById(`rec-wrap-${i}`);
-      if (wrap) wrap.appendChild(canvas);
-    } catch {
-      const wrap = document.getElementById(`rec-wrap-${i}`);
-      if (wrap) wrap.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:48px">${p.emoji}</div>`;
-    }
-  }
+  // Cargar imagen principal
+  const wrap = document.getElementById('main-img-wrap');
+  renderCropTo(producto, wrap, 'main-spinner', false);
 }
 
 function getRecomendados(idx) {
-  const mismaCategoria = PRODUCTOS.filter(p => p.categoria === producto.categoria && p.id !== producto.id);
-  const otros = PRODUCTOS.filter(p => p.categoria !== producto.categoria && p.id !== producto.id);
-  const pool = [...mismaCategoria, ...otros];
+  const pool = PRODUCTOS.filter(p => p.id !== producto.id);
   const start = (idx * 3) % pool.length;
-  const result = [];
-  for (let i = 0; i < 3; i++) {
-    result.push(pool[(start + i) % pool.length]);
-  }
-  return result;
+  return Array(3).fill(0).map((_, i) => pool[(start + i) % pool.length]);
 }
 
 function renderReseñas(idx) {
   const start = (idx * 4) % RESEÑAS_POOL.length;
   const reseñas = Array(4).fill(0).map((_, i) => RESEÑAS_POOL[(start + i) % RESEÑAS_POOL.length]);
-
   document.getElementById('resenas-grid').innerHTML = reseñas.map(r => `
     <div style="background:#f9f9f7;border-radius:0.75rem;padding:24px;border:1px solid #c3c8c0">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:40px;height:40px;border-radius:50%;background:#d3e8d3;display:flex;align-items:center;justify-content:center;font-family:'Montserrat';font-size:13px;font-weight:700;color:#506352">${r.avatar}</div>
+          <div style="width:40px;height:40px;border-radius:50%;background:#d3e8d3;display:flex;align-items:center;justify-content:center;font-family:'Montserrat';font-size:13px;font-weight:700;color:#506352;flex-shrink:0">${r.avatar}</div>
           <div>
-            <p style="font-family:'Montserrat';font-size:13px;font-weight:600;color:#1a1c1b">${r.autor}</p>
-            <p style="font-family:'Montserrat';font-size:11px;color:#737872">${r.fecha}</p>
+            <p style="font-family:'Montserrat';font-size:13px;font-weight:600;color:#1a1c1b;margin:0">${r.autor}</p>
+            <p style="font-family:'Montserrat';font-size:11px;color:#737872;margin:2px 0 0">Compra verificada · ${r.fecha}</p>
           </div>
         </div>
         <div style="display:flex">${estrellas(r.nota)}</div>
       </div>
-      <p style="font-family:'Montserrat';font-size:14px;color:#434842;line-height:1.6">"${r.texto}"</p>
+      <p style="font-family:'Montserrat';font-size:14px;color:#434842;line-height:1.65;margin:0">"${r.texto}"</p>
     </div>
   `).join('');
 }
@@ -388,15 +412,17 @@ function renderRecomendados(idx) {
   const recomendados = getRecomendados(idx);
   document.getElementById('recomendados-grid').innerHTML = recomendados.map((p, i) => `
     <div class="rec-card" onclick="window.location.href='producto.html?id=${p.id}'">
-      <div class="rec-canvas-wrap" id="rec-wrap-${i}">
+      <div class="rec-img-wrap" id="rec-wrap-${i}">
         <div class="spinner" id="rec-spin-${i}"></div>
       </div>
       <div style="padding:16px">
-        <p style="font-family:'Montserrat';font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#7b535c;margin-bottom:4px">${CATEGORIAS[p.categoria] || ''}</p>
-        <h3 style="font-family:'Playfair Display';font-size:16px;font-weight:500;color:#1a1c1b;margin-bottom:8px;line-height:1.3">${p.nombre}</h3>
+        <p style="font-family:'Montserrat';font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#7b535c;margin:0 0 4px">🌹 Rosas</p>
+        <h3 style="font-family:'Playfair Display';font-size:16px;font-weight:500;color:#1a1c1b;margin:0 0 10px;line-height:1.3">${p.nombre}</h3>
         <div style="display:flex;align-items:center;justify-content:space-between">
           <span style="font-family:'Playfair Display';font-size:20px;font-weight:600;color:#506352">${p.precio}€</span>
-          <button onclick="event.stopPropagation();addRecToCart('${p.id}')" style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:6px 14px;font-family:'Montserrat';font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background 0.2s" onmouseover="this.style.background='#8da18e'" onmouseout="this.style.background='#506352'">
+          <button onclick="event.stopPropagation();addRecToCart('${p.id}')"
+            style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:6px 14px;font-family:'Montserrat';font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background 0.2s"
+            onmouseover="this.style.background='#8da18e'" onmouseout="this.style.background='#506352'">
             <span class="material-symbols-outlined filled" style="font-size:13px">shopping_cart</span>
             Añadir
           </button>
@@ -404,6 +430,11 @@ function renderRecomendados(idx) {
       </div>
     </div>
   `).join('');
+
+  recomendados.forEach((p, i) => {
+    const wrap = document.getElementById(`rec-wrap-${i}`);
+    if (wrap) renderCropTo(p, wrap, `rec-spin-${i}`, true);
+  });
 }
 
 function handleAddToCart() {

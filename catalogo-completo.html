@@ -40,11 +40,13 @@ tailwind.config = {
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .product-canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .canvas-wrap { background: #f4f4f2; aspect-ratio: 3/4; overflow: hidden; position: relative; }
-  .canvas-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
-  .spinner { border: 3px solid #c3c8c0; border-top-color: #506352; border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+  .canvas-wrap { background:#f4f4f2; overflow:hidden; position:relative; height:260px; border-radius:0.75rem 0.75rem 0 0; }
+  .canvas-wrap canvas { position:absolute; inset:0; width:100%; height:100%; }
+  .spinner { border:3px solid #c3c8c0; border-top-color:#506352; border-radius:50%; width:32px; height:32px; animation:spin 0.8s linear infinite; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+  @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+  .filtro-btn.active { background:#506352; color:#fff; border-color:#506352; }
+  .prod-card { background:#fff; border-radius:0.75rem; overflow:hidden; border:1px solid #c3c8c0; display:flex; flex-direction:column; transition:box-shadow 0.2s; }
+  .prod-card:hover { box-shadow:0 8px 32px rgba(0,0,0,0.10); }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
@@ -70,7 +72,7 @@ tailwind.config = {
   </div>
 </nav>
 
-<!-- Header -->
+<!-- Breadcrumb -->
 <div class="px-margin pt-lg pb-sm bg-surface border-b border-outline-variant">
   <div class="max-w-7xl mx-auto">
     <div class="flex items-center gap-xs" style="font-size:12px;font-weight:500;letter-spacing:0.03em;color:#434842">
@@ -84,22 +86,22 @@ tailwind.config = {
 <main class="px-margin py-xl bg-surface-container-low min-h-screen">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-xl">
-      <h1 class="font-headline-lg text-headline-lg text-primary mb-md">Nuestro Catálogo</h1>
-      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Todos nuestros arreglos florales, elaborados a mano con flores frescas de temporada. Entrega a domicilio en Cartagena.</p>
+      <p style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">Elaborado artesanalmente</p>
+      <h1 style="font-family:'Playfair Display';font-size:36px;font-weight:600;color:#506352;margin-bottom:12px">Nuestro Catálogo</h1>
+      <p style="font-family:'Montserrat';font-size:16px;color:#434842;max-width:600px;margin:0 auto">Flores frescas de primera calidad, elaboradas a mano y entregadas a domicilio en Cartagena. Portes incluidos en todos los arreglos.</p>
     </div>
 
     <!-- Filtros -->
     <div class="flex flex-wrap gap-sm justify-center mb-xl" id="filtros">
-      <button onclick="filtrar('todos')" class="filtro-btn active px-md py-xs rounded-full border border-primary bg-primary text-on-primary font-label-sm text-label-sm transition-all">Todos</button>
-      <button onclick="filtrar('rosas')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all">🌹 Rosas</button>
-      <button onclick="filtrar('mixtos')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all">💐 Mixtos</button>
-      <button onclick="filtrar('orquideas')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all">🌸 Orquídeas</button>
-      <button onclick="filtrar('primavera')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all">🌷 Primavera</button>
+      <button onclick="filtrar('todos')" class="filtro-btn active px-md py-xs rounded-full border border-primary font-label-sm text-label-sm transition-all" style="font-family:'Montserrat';font-size:12px;font-weight:600">Todos</button>
+      <button onclick="filtrar('rosas')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all" style="font-family:'Montserrat';font-size:12px;font-weight:600">🌹 Rosas</button>
+      <button onclick="filtrar('mixtos')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all" style="font-family:'Montserrat';font-size:12px;font-weight:600">💐 Mixtos</button>
+      <button onclick="filtrar('orquideas')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all" style="font-family:'Montserrat';font-size:12px;font-weight:600">🌸 Orquídeas</button>
+      <button onclick="filtrar('primavera')" class="filtro-btn px-md py-xs rounded-full border border-outline text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary transition-all" style="font-family:'Montserrat';font-size:12px;font-weight:600">🌷 Primavera</button>
     </div>
 
-    <!-- Grid de productos -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-lg" id="productos-grid">
-    </div>
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-lg" id="productos-grid"></div>
   </div>
 </main>
 
@@ -123,50 +125,109 @@ tailwind.config = {
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
+// Cada producto indica la página del PDF y las coordenadas de recorte (0-1, relativo al tamaño de página)
+// cropX, cropY = esquina superior izquierda; cropW, cropH = ancho y alto del recorte
 const PRODUCTOS = [
-  { id:'p01', pagina:1,  categoria:'rosas',    nombre:'Ramo Rosas Rosa con Paniculata',       descripcion:'Docena de rosas rosa rodeadas de paniculata blanca y helecho, envueltas en encaje rosa con lazo de arpillera. Ideal para cumpleaños y aniversarios.',                    precio:45,  emoji:'🌸' },
-  { id:'p02', pagina:2,  categoria:'rosas',    nombre:'Ramo Rosas Blancas con Eucalipto',     descripcion:'Docena de rosas blancas premium acompañadas de paniculata cobre, eucalipto y helecho. Envoltorio de arpillera rústica con lazo de encaje. Elegancia atemporal.',      precio:50,  emoji:'🤍' },
-  { id:'p03', pagina:3,  categoria:'rosas',    nombre:'Ramo Rosas Rosa Fucsia',               descripcion:'Docena de rosas en intenso rosa fucsia con paniculata blanca y helecho, presentadas en envoltorio de malla rosa con lazo de arpillera. Muy romántico.',               precio:45,  emoji:'🌺' },
-  { id:'p04', pagina:4,  categoria:'rosas',    nombre:'Ramo Rosas Blancas Clásico',           descripcion:'Docena de rosas blancas puras con paniculata y helecho, envueltas en arpillera natural con lazo blanco de encaje. Pureza y sofisticación para cualquier ocasión.',    precio:45,  emoji:'🤍' },
-  { id:'p05', pagina:5,  categoria:'rosas',    nombre:'Ramo Pequeño 6 Rosas Rosa',            descripcion:'Seis rosas rosa con eucalipto y paniculata blanca, envoltorio de arpillera con lazo rosa. Perfecto para un detalle especial o un primer regalo romántico.',           precio:25,  emoji:'🌸' },
-  { id:'p06', pagina:6,  categoria:'rosas',    nombre:'Ramo Rosas Amarillas Alegría',         descripcion:'Docena de rosas amarillas con hypericum rosa, paniculata y helecho. Envoltorio de arpillera con malla rosa. El color de la amistad y la alegría.',                     precio:40,  emoji:'💛' },
-  { id:'p07', pagina:7,  categoria:'rosas',    nombre:'Gran Ramo Rosas Blancas y Eucalipto',  descripcion:'Gran ramo de 15 rosas blancas con abundante eucalipto, paniculata y helecho. Envoltorio de arpillera con lazo de rafia natural. Voluminoso y espectacular.',         precio:60,  emoji:'🤍' },
-  { id:'p08', pagina:8,  categoria:'primavera',nombre:'Ramo Primaveral de Tulipanes',         descripcion:'Composición de temporada con tulipanes amarillos y rosas, brotes de lilium, hypericum y helecho. Envoltorio papel lunares. Frescura y color de la primavera.',      precio:35,  emoji:'🌷' },
-  { id:'p09', pagina:9,  categoria:'mixtos',   nombre:'Ramo Multicolor Premium',              descripcion:'Lujosa composición con gerberas naranja, lirios rosas, iris azules, rosas blancas y alstroemeria. Para ocasiones especiales que merecen lo más llamativo.',           precio:55,  emoji:'🌼' },
-  { id:'p10', pagina:10, categoria:'mixtos',   nombre:'Gran Ramo Exótico de Temporada',      descripcion:'Voluminosa composición con liliums blancos, gerberas naranja, crisantemos amarillos y lilas, iris azules, envueltos en arpillera. Impresionante y festivo.',          precio:65,  emoji:'💐' },
-  { id:'p11', pagina:11, categoria:'orquideas',nombre:'Orquídea Blanca Dos Tallos',           descripcion:'Planta de orquídea Phalaenopsis blanca con dos tallos en flor, decorada con ramas blancas y encaje, lazo de arpillera. Elegante regalo para el hogar o la oficina.',precio:35,  emoji:'🌸' },
-  { id:'p12', pagina:12, categoria:'orquideas',nombre:'Orquídea Blanca Premium con Ramas',   descripcion:'Orquídea Phalaenopsis de múltiples flores con exuberantes ramas blancas decorativas. Presentación en jarrón con arpillera y encaje. Regalo de alto impacto visual.',  precio:55,  emoji:'🌸' },
-  { id:'p13', pagina:13, categoria:'orquideas',nombre:'Orquídea Lila Dos Tallos',             descripcion:'Planta de orquídea Phalaenopsis en tonos lilas con dos tallos, ramas decorativas y envoltorio de encaje rosa y arpillera. Delicadeza y romanticismo.',               precio:45,  emoji:'💜' },
-  { id:'p14', pagina:14, categoria:'mixtos',   nombre:'Gran Ramo Celebración Colorido',      descripcion:'Gran ramo festivo con gerberas rosas, crisantemos lilas, tulipanes naranja, liliums y crisantemos verdes. Envoltorio blanco. Para bodas, bautizos y celebraciones.',  precio:65,  emoji:'🎉' },
-  { id:'p15', pagina:15, categoria:'mixtos',   nombre:'Ramo Rosa Romántico',                  descripcion:'Composición rosa en tonos pastel con gerberas, rosas, liliums, crisantemos y margaritas. Envoltorio arpillera con encaje. Suavidad y delicadeza femenina.',           precio:55,  emoji:'🌸' },
-  { id:'p16', pagina:16, categoria:'orquideas',nombre:'Orquídea Blanca Doble Vara Elegante', descripcion:'Elegante orquídea blanca de doble vara con abundantes flores, presentada en tul blanco y arpillera con lazo de rafia. Símbolo de pureza y distinción.',               precio:50,  emoji:'🤍' },
-  { id:'p17', pagina:17, categoria:'mixtos',   nombre:'Ramo Gerberas y Crisantemos Rosa',    descripcion:'Ramo primaveralmente vistoso con gerberas rosas, crisantemos lilas, alstroemeria e hypericum. Envoltorio de encaje blanco artesanal. Alegre y colorido.',            precio:45,  emoji:'🌺' },
-  { id:'p18', pagina:18, categoria:'mixtos',   nombre:'Ramo Silvestre Bohemio',               descripcion:'Composición natural y romántica de eucalipto, lavanda, paniculata, hypericum y flores silvestres amarillas. Papel kraft rústico. Estilo boho y mediterráneo.',       precio:50,  emoji:'🌿' },
-  { id:'p19', pagina:19, categoria:'mixtos',   nombre:'Ramo Campo Rosa y Lila',               descripcion:'Alegre mezcla de rosas rosa, gerberas, crisantemos lilas y solidago amarillo. Envoltorio encaje blanco. Un ramo fresco y lleno de vida, perfecto para cualquier día.',precio:40,  emoji:'🌼' },
+  // Página 1 del PDF (título ROSAS + 3 productos)
+  { id:'p01', pdfPage:1, cropX:0, cropY:0.03, cropW:0.48, cropH:0.34,
+    categoria:'rosas', nombre:'12 Rosas Rosa', emoji:'🌸', precio:95,
+    descripcion:'Docena de rosas en el más delicado tono rosa, presentadas con paniculata blanca y helecho fresco. Envueltas artesanalmente con encaje rosa y lazo de arpillera. El regalo romántico por excelencia para cumpleaños, aniversarios o cualquier declaración especial.' },
+
+  { id:'p02', pdfPage:1, cropX:0, cropY:0.37, cropW:0.48, cropH:0.31,
+    categoria:'rosas', nombre:'12 Rosas Blancas', emoji:'🤍', precio:95,
+    descripcion:'Doce rosas blancas de primera calidad acompañadas de paniculata cobre, eucalipto y helecho. Presentación en arpillera rústica con lazo de encaje. Sinónimo de pureza, admiración y elegancia atemporal para las ocasiones más significativas.' },
+
+  { id:'p03', pdfPage:1, cropX:0, cropY:0.68, cropW:0.48, cropH:0.32,
+    categoria:'rosas', nombre:'12 Rosas Amarillas', emoji:'💛', precio:95,
+    descripcion:'Docena de luminosas rosas amarillas con hypericum rosa y helecho, envueltas en papel kraft con lazo. El color de la alegría, la amistad y la energía positiva. Un regalo que ilumina cualquier espacio y saca una sonrisa garantizada.' },
+
+  // Página 2 del PDF (4 productos)
+  { id:'p04', pdfPage:2, cropX:0, cropY:0.00, cropW:0.48, cropH:0.27,
+    categoria:'rosas', nombre:'12 Rosas Rojas', emoji:'🌹', precio:95,
+    descripcion:'La declaración de amor más clásica y apasionada: doce rosas rojas de tallo largo con paniculata blanca y presentación premium. El gesto más romantic del mundo para San Valentín, aniversarios o cualquier ocasión que merezca lo mejor.' },
+
+  { id:'p05', pdfPage:2, cropX:0, cropY:0.27, cropW:0.48, cropH:0.25,
+    categoria:'rosas', nombre:'6 Rosas Rosa', emoji:'🌸', precio:55,
+    descripcion:'Seis rosas rosa en plena madurez, con eucalipto y paniculata, presentadas en elegante arpillera con lazo rosa. Una opción más íntima y personal para sorprender con un detalle cargado de ternura y cariño sincero.' },
+
+  { id:'p06', pdfPage:2, cropX:0, cropY:0.52, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'6 Rosas Azules Pintadas', emoji:'💙', precio:75,
+    descripcion:'Seis rosas pintadas a mano en un hipnótico azul intenso, con paniculata blanca. Presentación en papel traslúcido con lazo dorado. Una pieza única e irrepetible para quienes buscan un regalo verdaderamente diferente y extraordinario.' },
+
+  { id:'p07', pdfPage:2, cropX:0, cropY:0.76, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'6 Rosas Rojas', emoji:'🌹', precio:55,
+    descripcion:'Seis rosas rojas de tallo largo con eucalipto y paniculata, pasión hecha flor. El regalo clásico para una ocasión íntima y romántica. Presentadas con lazo y envoltorio artesanal que realza su belleza natural.' },
+
+  // Página 3 del PDF (4 productos)
+  { id:'p08', pdfPage:3, cropX:0, cropY:0.00, cropW:0.48, cropH:0.26,
+    categoria:'rosas', nombre:'6 Rosas Amarillas', emoji:'💛', precio:55,
+    descripcion:'Seis rosas amarillas envueltas en papel satinado con lazo de rafia, con el sello de Floristería Alameda. El regalo perfecto para transmitir alegría, agradecimiento, amistad sincera o simplemente dar un poco de luz a alguien especial.' },
+
+  { id:'p09', pdfPage:3, cropX:0, cropY:0.26, cropW:0.48, cropH:0.26,
+    categoria:'rosas', nombre:'12 Rosas Azules', emoji:'💙', precio:120,
+    descripcion:'Exclusiva docena de rosas pintadas en un azul profundo e intenso, presentadas en papel negro elegante con lazo dorado. Una pieza de lujo, completamente única y extraordinaria, reservada para los regalos más especiales y memorables de la vida.' },
+
+  { id:'p10', pdfPage:3, cropX:0, cropY:0.52, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'Rosa Roja con Arreglo', emoji:'🌹', precio:25,
+    descripcion:'Una única rosa roja de tallo largo acompañada de eucalipto, helecho y paniculata, envuelta en malla roja con lazo de arpillera artesanal. El gesto más íntimo y romántico, simple en su forma pero cargado de profundo significado y emoción.' },
+
+  { id:'p11', pdfPage:3, cropX:0, cropY:0.76, cropW:0.48, cropH:0.24,
+    categoria:'rosas', nombre:'Rosa Roja Clásica', emoji:'🌹', precio:15,
+    descripcion:'Una rosa roja elegante y sencilla, presentada con hojas verdes naturales. El gesto más puro y directo para expresar amor, pensamiento o afecto sincero. Porque a veces, una sola flor perfecta dice más que mil palabras.' },
 ];
 
-let pdfDoc = null;
-let categoriaActual = 'todos';
+// --- PDF con caché por página ---
+const _pageCache = {};
+let _pdfDoc = null;
 
-// Cargar PDF
-pdfjsLib.getDocument('catalogo.pdf').promise.then(doc => {
-  pdfDoc = doc;
-  renderizarProductos(PRODUCTOS);
-}).catch(err => {
-  console.error('Error cargando PDF:', err);
-  renderizarProductos(PRODUCTOS);
-});
+async function getPdf() {
+  if (_pdfDoc) return _pdfDoc;
+  _pdfDoc = await pdfjsLib.getDocument('catalogo-nuevo.pdf').promise;
+  return _pdfDoc;
+}
+
+async function getPageSrc(pageNum) {
+  if (_pageCache[pageNum]) return _pageCache[pageNum];
+  const doc = await getPdf();
+  const page = await doc.getPage(pageNum);
+  const vp = page.getViewport({ scale: 2.5 });
+  const c = document.createElement('canvas');
+  c.width = vp.width; c.height = vp.height;
+  await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+  _pageCache[pageNum] = c;
+  return c;
+}
+
+async function renderCrop(producto, wrapId, spinId) {
+  try {
+    const src = await getPageSrc(producto.pdfPage);
+    const sx = Math.round(producto.cropX * src.width);
+    const sy = Math.round(producto.cropY * src.height);
+    const sw = Math.round(producto.cropW * src.width);
+    const sh = Math.round(producto.cropH * src.height);
+    const dest = document.createElement('canvas');
+    dest.width = sw; dest.height = sh;
+    dest.getContext('2d').drawImage(src, sx, sy, sw, sh, 0, 0, sw, sh);
+    const spin = document.getElementById(spinId); if (spin) spin.remove();
+    const wrap = document.getElementById(wrapId);
+    if (wrap) wrap.appendChild(dest);
+  } catch {
+    const wrap = document.getElementById(wrapId);
+    if (wrap) wrap.innerHTML = `<div style="font-size:56px;display:flex;align-items:center;justify-content:center;height:100%">${producto.emoji}</div>`;
+  }
+}
+
+// --- Filtro y renderizado ---
+let categoriaActual = 'todos';
 
 function filtrar(cat) {
   categoriaActual = cat;
   document.querySelectorAll('.filtro-btn').forEach(b => {
-    b.classList.remove('active','bg-primary','text-on-primary');
-    b.classList.add('text-on-surface-variant');
+    b.classList.remove('active');
+    b.style.background = ''; b.style.color = ''; b.style.borderColor = '';
   });
   const btn = document.querySelector(`[onclick="filtrar('${cat}')"]`);
-  btn.classList.add('active','bg-primary','text-on-primary');
-  btn.classList.remove('text-on-surface-variant');
-
+  if (btn) btn.classList.add('active');
   const prods = cat === 'todos' ? PRODUCTOS : PRODUCTOS.filter(p => p.categoria === cat);
   renderizarProductos(prods);
 }
@@ -174,69 +235,45 @@ function filtrar(cat) {
 function renderizarProductos(prods) {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = prods.map(p => `
-    <div class="bg-surface rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border" style="border-color:#c3c8c0;display:flex;flex-direction:column;">
+    <div class="prod-card">
       <a href="producto.html?id=${p.id}" style="display:block;text-decoration:none">
         <div class="canvas-wrap" id="wrap-${p.id}" style="cursor:pointer">
           <div class="spinner" id="spin-${p.id}"></div>
         </div>
       </a>
-      <div style="padding:24px;flex-grow:1;display:flex;flex-direction:column;gap:8px;">
+      <div style="padding:20px;flex-grow:1;display:flex;flex-direction:column;gap:8px">
+        <p style="font-family:'Montserrat';font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#7b535c;margin:0">🌹 Rosas</p>
         <a href="producto.html?id=${p.id}" style="text-decoration:none">
-          <h3 style="font-family:'Playfair Display';font-size:18px;font-weight:500;line-height:1.4;color:#1a1c1b;cursor:pointer" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#1a1c1b'">${p.nombre}</h3>
+          <h3 style="font-family:'Playfair Display';font-size:17px;font-weight:500;line-height:1.3;color:#1a1c1b;margin:0;cursor:pointer" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#1a1c1b'">${p.nombre}</h3>
         </a>
-        <p style="font-family:'Montserrat';font-size:14px;color:#434842;line-height:1.6;flex-grow:1">${p.descripcion}</p>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
-          <span style="font-family:'Playfair Display';font-size:24px;font-weight:500;color:#506352">${p.precio}€</span>
+        <p style="font-family:'Montserrat';font-size:13px;color:#434842;line-height:1.55;flex-grow:1;margin:0">${p.descripcion.slice(0,120)}…</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <span style="font-family:'Playfair Display';font-size:24px;font-weight:600;color:#506352">${p.precio}€</span>
           <button onclick="añadirAlCarrito('${p.id}')"
-            style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:8px 16px;font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.05em;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background 0.2s"
-            onmouseover="this.style.background='#8da18e';this.style.color='#263829'"
-            onmouseout="this.style.background='#506352';this.style.color='#fff'">
+            style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:8px 16px;font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.04em;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background 0.2s"
+            onmouseover="this.style.background='#8da18e'" onmouseout="this.style.background='#506352'">
             <span class="material-symbols-outlined filled" style="font-size:14px">shopping_cart</span>
             Añadir
           </button>
         </div>
         <button onclick="abrirPedido('${p.nombre}', ${p.precio}, '${p.emoji}')"
-          style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:12px;font-weight:600;color:#506352;background:transparent;border:1px solid #506352;border-radius:9999px;padding:6px 12px;margin-top:4px;transition:all 0.2s;cursor:pointer;width:100%"
+          style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:12px;font-weight:600;color:#506352;background:transparent;border:1.5px solid #506352;border-radius:9999px;padding:8px 12px;margin-top:2px;transition:all 0.2s;cursor:pointer;width:100%"
           onmouseover="this.style.background='#d3e8d3'" onmouseout="this.style.background='transparent'">
           <span class="material-symbols-outlined" style="font-size:14px">chat</span>
           Pedir por WhatsApp
         </button>
-        <a href="producto.html?id=${p.id}" style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:11px;font-weight:500;color:#737872;text-decoration:none;margin-top:2px" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#737872'">
+        <a href="producto.html?id=${p.id}" style="display:flex;align-items:center;justify-content:center;gap:3px;font-family:'Montserrat';font-size:11px;font-weight:500;color:#737872;text-decoration:none;margin-top:2px;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#737872'">
           Ver detalles <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
         </a>
       </div>
     </div>
   `).join('');
 
-  // Renderizar páginas PDF
-  if (pdfDoc) {
-    prods.forEach(p => renderPagina(p));
-  }
+  prods.forEach(p => renderCrop(p, `wrap-${p.id}`, `spin-${p.id}`));
 }
 
-async function renderPagina(producto) {
-  if (!pdfDoc) return;
-  try {
-    const page = await pdfDoc.getPage(producto.pagina);
-    const wrap = document.getElementById(`wrap-${producto.id}`);
-    if (!wrap) return;
-
-    const scale = 1.2;
-    const viewport = page.getViewport({ scale });
-    const canvas = document.createElement('canvas');
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-
-    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-
-    const spinner = document.getElementById(`spin-${producto.id}`);
-    if (spinner) spinner.remove();
-    wrap.appendChild(canvas);
-  } catch (e) {
-    const wrap = document.getElementById(`wrap-${producto.id}`);
-    if (wrap) wrap.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:48px">${producto.emoji}</div>`;
-  }
-}
+// Arranque
+renderizarProductos(PRODUCTOS);
 
 function añadirAlCarrito(id) {
   const p = PRODUCTOS.find(x => x.id === id);
