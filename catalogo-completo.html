@@ -175,11 +175,15 @@ function renderizarProductos(prods) {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = prods.map(p => `
     <div class="bg-surface rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border" style="border-color:#c3c8c0;display:flex;flex-direction:column;">
-      <div class="canvas-wrap" id="wrap-${p.id}">
-        <div class="spinner" id="spin-${p.id}"></div>
-      </div>
+      <a href="producto.html?id=${p.id}" style="display:block;text-decoration:none">
+        <div class="canvas-wrap" id="wrap-${p.id}" style="cursor:pointer">
+          <div class="spinner" id="spin-${p.id}"></div>
+        </div>
+      </a>
       <div style="padding:24px;flex-grow:1;display:flex;flex-direction:column;gap:8px;">
-        <h3 style="font-family:'Playfair Display';font-size:18px;font-weight:500;line-height:1.4;color:#1a1c1b">${p.nombre}</h3>
+        <a href="producto.html?id=${p.id}" style="text-decoration:none">
+          <h3 style="font-family:'Playfair Display';font-size:18px;font-weight:500;line-height:1.4;color:#1a1c1b;cursor:pointer" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#1a1c1b'">${p.nombre}</h3>
+        </a>
         <p style="font-family:'Montserrat';font-size:14px;color:#434842;line-height:1.6;flex-grow:1">${p.descripcion}</p>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
           <span style="font-family:'Playfair Display';font-size:24px;font-weight:500;color:#506352">${p.precio}€</span>
@@ -197,6 +201,9 @@ function renderizarProductos(prods) {
           <span class="material-symbols-outlined" style="font-size:14px">chat</span>
           Pedir por WhatsApp
         </button>
+        <a href="producto.html?id=${p.id}" style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:11px;font-weight:500;color:#737872;text-decoration:none;margin-top:2px" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#737872'">
+          Ver detalles <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
+        </a>
       </div>
     </div>
   `).join('');

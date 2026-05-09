@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title id="page-title">Producto | Floristería Alameda Cartagena</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      "surface":"#f9f9f7","primary":"#506352","secondary":"#7b535c","secondary-container":"#fecad4",
+      "surface-container-highest":"#e2e3e1","primary-fixed":"#d3e8d3","primary-fixed-dim":"#b7ccb8",
+      "surface-dim":"#dadad8","primary-fixed-dim":"#b7ccb8",
+      "surface-container":"#eeeeec","on-surface-variant":"#434842","on-surface":"#1a1c1b",
+      "tertiary":"#775a19","tertiary-container":"#bb9751","background":"#f9f9f7",
+      "surface-container-low":"#f4f4f2","on-background":"#1a1c1b","on-primary":"#ffffff",
+      "outline":"#737872","outline-variant":"#c3c8c0","on-primary-container":"#263829",
+      "error":"#ba1a1a"
+    },
+    borderRadius: { "DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" },
+    spacing: { "base":"8px","margin":"32px","sm":"12px","xs":"4px","xl":"80px","gutter":"24px","md":"24px","lg":"48px" },
+    fontFamily: { "headline-lg":["Playfair Display"],"headline-md":["Playfair Display"],"body-lg":["Montserrat"],"body-md":["Montserrat"],"label-md":["Montserrat"],"label-sm":["Montserrat"] },
+    fontSize: {
+      "headline-lg":["32px",{"lineHeight":"1.3","fontWeight":"600"}],
+      "headline-md":["24px",{"lineHeight":"1.4","fontWeight":"500"}],
+      "body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],
+      "body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],
+      "label-md":["14px",{"lineHeight":"1.2","letterSpacing":"0.05em","fontWeight":"600"}],
+      "label-sm":["12px",{"lineHeight":"1.2","letterSpacing":"0.03em","fontWeight":"500"}]
+    }
+  }}
+}
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .canvas-wrap { background: #f4f4f2; aspect-ratio: 3/4; overflow: hidden; position: relative; border-radius: 0.75rem; }
+  .canvas-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
+  .spinner { border: 3px solid #c3c8c0; border-top-color: #506352; border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+  .star-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; color: #775a19; }
+  .star-empty { color: #c3c8c0; }
+  .btn-primary { background:#506352;color:#fff;border:none;border-radius:9999px;padding:14px 28px;font-family:'Montserrat';font-size:14px;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px; }
+  .btn-primary:hover { background:#8da18e; }
+  .btn-outline { background:transparent;color:#506352;border:1.5px solid #506352;border-radius:9999px;padding:13px 28px;font-family:'Montserrat';font-size:14px;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px; }
+  .btn-outline:hover { background:#d3e8d3; }
+  .rec-card { background:#fff;border-radius:0.75rem;overflow:hidden;border:1px solid #c3c8c0;transition:box-shadow 0.2s;cursor:pointer; }
+  .rec-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.10); }
+  .rec-canvas-wrap { background: #f4f4f2; aspect-ratio: 3/4; overflow: hidden; position: relative; }
+  .rec-canvas-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
+
+<!-- Nav -->
+<nav class="bg-surface/90 backdrop-blur-md shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin py-4">
+  <a href="index.html"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-20 w-auto rounded-full ml-md"/></a>
+  <div class="hidden md:flex items-center gap-md font-label-md text-label-md" style="font-size:14px;font-weight:600;letter-spacing:0.05em">
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#inicio">Inicio</a>
+    <a class="text-primary" href="catalogo-completo.html">Catálogo</a>
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#nosotros">Sobre Nosotros</a>
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#resenas">Reseñas</a>
+    <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#contacto">Contacto</a>
+  </div>
+  <div class="flex items-center gap-md">
+    <a href="carrito.html" class="relative flex items-center text-primary">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      <span class="cart-count hidden absolute -top-2 -right-2 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+    </a>
+    <a href="https://wa.me/34627546360" class="bg-primary text-on-primary px-md py-sm rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors hidden sm:flex items-center gap-xs" style="font-size:14px;font-weight:600">
+      WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="px-margin pt-lg pb-sm bg-surface border-b border-outline-variant">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-center gap-xs flex-wrap" style="font-size:12px;font-weight:500;letter-spacing:0.03em;color:#434842">
+      <a href="index.html" class="hover:text-primary transition-colors">Inicio</a>
+      <span class="material-symbols-outlined" style="font-size:16px">chevron_right</span>
+      <a href="catalogo-completo.html" class="hover:text-primary transition-colors">Catálogo</a>
+      <span class="material-symbols-outlined" style="font-size:16px">chevron_right</span>
+      <span id="breadcrumb-product" class="text-primary"></span>
+    </div>
+  </div>
+</div>
+
+<!-- Product Section -->
+<main class="px-margin py-xl bg-surface-container-low">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col lg:flex-row gap-xl lg:gap-margin" style="gap:64px">
+
+      <!-- Image -->
+      <div class="lg:w-5/12 flex-shrink-0">
+        <div class="canvas-wrap shadow-lg" id="main-img-wrap">
+          <div class="spinner" id="main-spinner"></div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="lg:w-7/12 flex flex-col gap-md" style="gap:20px">
+
+        <div>
+          <p id="prod-categoria" style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px"></p>
+          <h1 id="prod-nombre" style="font-family:'Playfair Display';font-size:36px;font-weight:600;line-height:1.25;color:#1a1c1b;margin-bottom:8px"></h1>
+          <div class="flex items-center gap-sm" style="margin-bottom:4px">
+            <div id="prod-estrellas" class="flex items-center gap-xs"></div>
+            <span id="prod-num-resenas" style="font-family:'Montserrat';font-size:12px;color:#737872"></span>
+          </div>
+        </div>
+
+        <div>
+          <p id="prod-precio" style="font-family:'Playfair Display';font-size:48px;font-weight:700;color:#506352;line-height:1"></p>
+          <p style="font-family:'Montserrat';font-size:13px;color:#737872;margin-top:4px">IVA incluido</p>
+        </div>
+
+        <p id="prod-descripcion" style="font-family:'Montserrat';font-size:16px;color:#434842;line-height:1.7;border-left:3px solid #b7ccb8;padding-left:16px"></p>
+
+        <!-- Delivery info -->
+        <div style="background:#d3e8d3;border-radius:0.75rem;padding:16px 20px;display:flex;align-items:center;gap:12px">
+          <span style="font-size:24px">🚚</span>
+          <div>
+            <p style="font-family:'Montserrat';font-size:13px;font-weight:600;color:#263829">Repartos solo en Cartagena</p>
+            <p style="font-family:'Montserrat';font-size:12px;color:#506352;margin-top:2px">Portes incluidos en todos los arreglos · Entrega a domicilio</p>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-col gap-sm" style="gap:10px">
+          <button class="btn-primary" onclick="handleAddToCart()">
+            <span class="material-symbols-outlined filled" style="font-size:18px">shopping_cart</span>
+            Añadir al carrito
+          </button>
+          <button class="btn-outline" id="btn-pedir">
+            <svg style="width:18px;height:18px;fill:#506352" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.121.556 4.11 1.528 5.832L.057 23.786c-.094.317.204.599.517.492l5.82-1.886A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.374l-.36-.213-3.723 1.207 1.19-3.646-.234-.376A9.818 9.818 0 1112 21.818z"/></svg>
+            Pedir por WhatsApp
+          </button>
+        </div>
+
+        <!-- Features -->
+        <div style="border-top:1px solid #c3c8c0;padding-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="flex items-center gap-xs">
+            <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">verified</span>
+            <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Flores frescas garantizadas</span>
+          </div>
+          <div class="flex items-center gap-xs">
+            <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">local_florist</span>
+            <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Elaborado a mano</span>
+          </div>
+          <div class="flex items-center gap-xs">
+            <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">schedule</span>
+            <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Entrega el mismo día</span>
+          </div>
+          <div class="flex items-center gap-xs">
+            <span class="material-symbols-outlined filled" style="font-size:18px;color:#506352">redeem</span>
+            <span style="font-family:'Montserrat';font-size:12px;color:#434842;font-weight:500">Dedicatoria incluida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Reviews Section -->
+<section class="px-margin py-xl bg-surface">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-xl" style="margin-bottom:48px">
+      <p style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">Opiniones verificadas</p>
+      <h2 style="font-family:'Playfair Display';font-size:28px;font-weight:600;color:#1a1c1b;margin-bottom:8px">Lo que dicen nuestros clientes</h2>
+      <div class="flex items-center justify-center gap-sm">
+        <div class="flex" id="resumen-estrellas"></div>
+        <span style="font-family:'Montserrat';font-size:14px;color:#434842;font-weight:600">5.0 · Excelente</span>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-md" id="resenas-grid" style="gap:20px"></div>
+  </div>
+</section>
+
+<!-- Recommended Products -->
+<section class="px-margin py-xl bg-surface-container-low">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-xl" style="margin-bottom:48px">
+      <p style="font-family:'Montserrat';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7b535c;margin-bottom:8px">También te puede gustar</p>
+      <h2 style="font-family:'Playfair Display';font-size:28px;font-weight:600;color:#1a1c1b">Otros arreglos florales</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-lg" id="recomendados-grid" style="gap:28px"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-surface-container-highest w-full px-margin">
+  <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
+    <a href="index.html"><img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-12 w-auto rounded-full"/></a>
+    <span style="font-size:16px;color:#434842">© 2024 Floristería Alameda · Cartagena, España</span>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="cart-toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-on-surface text-surface px-md py-sm rounded-full shadow-lg flex items-center gap-xs translate-y-24 opacity-0 transition-all duration-300" style="font-size:14px;font-weight:600;letter-spacing:0.05em">
+  <span class="material-symbols-outlined filled text-sm" style="color:#d3e8d3">check_circle</span>
+  <span id="toast-msg"></span>
+  <a href="carrito.html" class="underline ml-xs" style="color:#b7ccb8">Ver carrito</a>
+</div>
+
+<script src="cart.js"></script>
+<script src="pedido-modal.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const PRODUCTOS = [
+  { id:'p01', pagina:1,  categoria:'rosas',    nombre:'Ramo Rosas Rosa con Paniculata',       descripcion:'Docena de rosas rosa rodeadas de paniculata blanca y helecho, envueltas en encaje rosa con lazo de arpillera. Ideal para cumpleaños y aniversarios.',                    precio:45,  emoji:'🌸' },
+  { id:'p02', pagina:2,  categoria:'rosas',    nombre:'Ramo Rosas Blancas con Eucalipto',     descripcion:'Docena de rosas blancas premium acompañadas de paniculata cobre, eucalipto y helecho. Envoltorio de arpillera rústica con lazo de encaje. Elegancia atemporal.',      precio:50,  emoji:'🤍' },
+  { id:'p03', pagina:3,  categoria:'rosas',    nombre:'Ramo Rosas Rosa Fucsia',               descripcion:'Docena de rosas en intenso rosa fucsia con paniculata blanca y helecho, presentadas en envoltorio de malla rosa con lazo de arpillera. Muy romántico.',               precio:45,  emoji:'🌺' },
+  { id:'p04', pagina:4,  categoria:'rosas',    nombre:'Ramo Rosas Blancas Clásico',           descripcion:'Docena de rosas blancas puras con paniculata y helecho, envueltas en arpillera natural con lazo blanco de encaje. Pureza y sofisticación para cualquier ocasión.',    precio:45,  emoji:'🤍' },
+  { id:'p05', pagina:5,  categoria:'rosas',    nombre:'Ramo Pequeño 6 Rosas Rosa',            descripcion:'Seis rosas rosa con eucalipto y paniculata blanca, envoltorio de arpillera con lazo rosa. Perfecto para un detalle especial o un primer regalo romántico.',           precio:25,  emoji:'🌸' },
+  { id:'p06', pagina:6,  categoria:'rosas',    nombre:'Ramo Rosas Amarillas Alegría',         descripcion:'Docena de rosas amarillas con hypericum rosa, paniculata y helecho. Envoltorio de arpillera con malla rosa. El color de la amistad y la alegría.',                     precio:40,  emoji:'💛' },
+  { id:'p07', pagina:7,  categoria:'rosas',    nombre:'Gran Ramo Rosas Blancas y Eucalipto',  descripcion:'Gran ramo de 15 rosas blancas con abundante eucalipto, paniculata y helecho. Envoltorio de arpillera con lazo de rafia natural. Voluminoso y espectacular.',         precio:60,  emoji:'🤍' },
+  { id:'p08', pagina:8,  categoria:'primavera',nombre:'Ramo Primaveral de Tulipanes',         descripcion:'Composición de temporada con tulipanes amarillos y rosas, brotes de lilium, hypericum y helecho. Envoltorio papel lunares. Frescura y color de la primavera.',      precio:35,  emoji:'🌷' },
+  { id:'p09', pagina:9,  categoria:'mixtos',   nombre:'Ramo Multicolor Premium',              descripcion:'Lujosa composición con gerberas naranja, lirios rosas, iris azules, rosas blancas y alstroemeria. Para ocasiones especiales que merecen lo más llamativo.',           precio:55,  emoji:'🌼' },
+  { id:'p10', pagina:10, categoria:'mixtos',   nombre:'Gran Ramo Exótico de Temporada',      descripcion:'Voluminosa composición con liliums blancos, gerberas naranja, crisantemos amarillos y lilas, iris azules, envueltos en arpillera. Impresionante y festivo.',          precio:65,  emoji:'💐' },
+  { id:'p11', pagina:11, categoria:'orquideas',nombre:'Orquídea Blanca Dos Tallos',           descripcion:'Planta de orquídea Phalaenopsis blanca con dos tallos en flor, decorada con ramas blancas y encaje, lazo de arpillera. Elegante regalo para el hogar o la oficina.',precio:35,  emoji:'🌸' },
+  { id:'p12', pagina:12, categoria:'orquideas',nombre:'Orquídea Blanca Premium con Ramas',   descripcion:'Orquídea Phalaenopsis de múltiples flores con exuberantes ramas blancas decorativas. Presentación en jarrón con arpillera y encaje. Regalo de alto impacto visual.',  precio:55,  emoji:'🌸' },
+  { id:'p13', pagina:13, categoria:'orquideas',nombre:'Orquídea Lila Dos Tallos',             descripcion:'Planta de orquídea Phalaenopsis en tonos lilas con dos tallos, ramas decorativas y envoltorio de encaje rosa y arpillera. Delicadeza y romanticismo.',               precio:45,  emoji:'💜' },
+  { id:'p14', pagina:14, categoria:'mixtos',   nombre:'Gran Ramo Celebración Colorido',      descripcion:'Gran ramo festivo con gerberas rosas, crisantemos lilas, tulipanes naranja, liliums y crisantemos verdes. Envoltorio blanco. Para bodas, bautizos y celebraciones.',  precio:65,  emoji:'🎉' },
+  { id:'p15', pagina:15, categoria:'mixtos',   nombre:'Ramo Rosa Romántico',                  descripcion:'Composición rosa en tonos pastel con gerberas, rosas, liliums, crisantemos y margaritas. Envoltorio arpillera con encaje. Suavidad y delicadeza femenina.',           precio:55,  emoji:'🌸' },
+  { id:'p16', pagina:16, categoria:'orquideas',nombre:'Orquídea Blanca Doble Vara Elegante', descripcion:'Elegante orquídea blanca de doble vara con abundantes flores, presentada en tul blanco y arpillera con lazo de rafia. Símbolo de pureza y distinción.',               precio:50,  emoji:'🤍' },
+  { id:'p17', pagina:17, categoria:'mixtos',   nombre:'Ramo Gerberas y Crisantemos Rosa',    descripcion:'Ramo primaveralmente vistoso con gerberas rosas, crisantemos lilas, alstroemeria e hypericum. Envoltorio de encaje blanco artesanal. Alegre y colorido.',            precio:45,  emoji:'🌺' },
+  { id:'p18', pagina:18, categoria:'mixtos',   nombre:'Ramo Silvestre Bohemio',               descripcion:'Composición natural y romántica de eucalipto, lavanda, paniculata, hypericum y flores silvestres amarillas. Papel kraft rústico. Estilo boho y mediterráneo.',       precio:50,  emoji:'🌿' },
+  { id:'p19', pagina:19, categoria:'mixtos',   nombre:'Ramo Campo Rosa y Lila',               descripcion:'Alegre mezcla de rosas rosa, gerberas, crisantemos lilas y solidago amarillo. Envoltorio encaje blanco. Un ramo fresco y lleno de vida, perfecto para cualquier día.',precio:40,  emoji:'🌼' },
+];
+
+const CATEGORIAS = {
+  'rosas':     '🌹 Rosas',
+  'mixtos':    '💐 Mixtos',
+  'orquideas': '🌸 Orquídeas',
+  'primavera': '🌷 Primavera',
+};
+
+const RESEÑAS_POOL = [
+  { autor:'María García',    avatar:'MG', nota:5, texto:'El ramo llegó puntual y en perfectas condiciones. Mi madre no podía dejar de mirarlo, precioso. Repetiré sin dudarlo.', fecha:'Hace 2 días' },
+  { autor:'Carmen López',    avatar:'CL', nota:5, texto:'Increíble presentación, las flores frescas y el lazo perfectamente hecho. Superaron mis expectativas. 100% recomendado.', fecha:'Hace 1 semana' },
+  { autor:'Laura Martínez',  avatar:'LM', nota:5, texto:'Pedí para el cumpleaños de mi hermana y le encantó. El servicio de WhatsApp muy cómodo y rápido. Volveré a pedir.', fecha:'Hace 2 semanas' },
+  { autor:'Ana Fernández',   avatar:'AF', nota:5, texto:'Las flores duraron más de una semana en perfecto estado. Calidad excelente y precio muy competitivo. ¡Gracias!', fecha:'Hace 3 semanas' },
+  { autor:'Sofía Ruiz',      avatar:'SR', nota:5, texto:'El ramo era tal y como aparece en la foto. Entrega a tiempo y el mensaje de la dedicatoria llegó perfecto. Espectacular.', fecha:'Hace 1 mes' },
+  { autor:'Elena Torres',    avatar:'ET', nota:5, texto:'Fui por recomendación y no me decepcionó. El arreglo floral era de una calidad superior a la esperada. Muy feliz.', fecha:'Hace 1 mes' },
+  { autor:'Patricia Sánchez',avatar:'PS', nota:5, texto:'Pedido online muy fácil a través de WhatsApp. Las flores llegaron en tiempo récord y preciosas. Volveré seguro.', fecha:'Hace 2 meses' },
+  { autor:'Isabel Moreno',   avatar:'IM', nota:5, texto:'Ramo espectacular para el aniversario. Mi pareja se quedó sin palabras. La presentación es de nivel boutique. ¡Genial!', fecha:'Hace 2 meses' },
+  { autor:'Cristina Jiménez',avatar:'CJ', nota:5, texto:'El detalle de la dedicatoria fue un toque muy especial. Las flores duraron mucho tiempo. Excelente floristería.', fecha:'Hace 3 meses' },
+  { autor:'Beatriz Díaz',    avatar:'BD', nota:5, texto:'Muy profesionales y atentos. El ramo era exactamente lo que buscaba. Trato cercano y entrega impecable.', fecha:'Hace 3 meses' },
+  { autor:'Marta Pérez',     avatar:'MP', nota:5, texto:'Las orquídeas llegaron en un estado perfecto, muy bien embaladas. Un regalo espectacular que duró semanas en casa.', fecha:'Hace 4 meses' },
+  { autor:'Rosa Navarro',    avatar:'RN', nota:5, texto:'Precio muy razonable para la calidad que ofrecen. Ramo grandioso, mucho más bonito en persona. Muy recomendable.', fecha:'Hace 4 meses' },
+  { autor:'Lucía Vega',      avatar:'LV', nota:5, texto:'Sorprendí a mi madre en su cumpleaños y se emocionó muchísimo. Las flores frescas y preciosas. ¡Qué profesionales!', fecha:'Hace 5 meses' },
+  { autor:'Sandra Romero',   avatar:'SR', nota:5, texto:'Primera vez que pedía por WhatsApp y fue súper sencillo. El ramo llegó perfecto y puntual. Definitivamente repetiré.', fecha:'Hace 5 meses' },
+  { autor:'Nuria Castro',    avatar:'NC', nota:5, texto:'Pedí para una boda y todos los invitados preguntaron de dónde eran las flores. Simplemente espectaculares.', fecha:'Hace 6 meses' },
+  { autor:'Pilar Gómez',     avatar:'PG', nota:5, texto:'Llevo años siendo clienta y cada vez que pido me sorprenden. La calidad es siempre constante y el trato excelente.', fecha:'Hace 6 meses' },
+  { autor:'Lorena Herrera',  avatar:'LH', nota:5, texto:'Regalo de cumpleaños para mi mejor amiga. Se emocionó muchísimo al recibirlo. Perfecto en todos los sentidos.', fecha:'Hace 7 meses' },
+  { autor:'Silvia Molina',   avatar:'SM', nota:5, texto:'Compré online por primera vez y quedé encantada. Muy fácil, rápido y el resultado final es precioso.', fecha:'Hace 7 meses' },
+  { autor:'Teresa Gil',      avatar:'TG', nota:5, texto:'El envoltorio es una obra de arte. Se nota el cuidado y el amor que ponen en cada arreglo. Sin palabras.', fecha:'Hace 8 meses' },
+  { autor:'Rebeca Santos',   avatar:'RS', nota:5, texto:'Las flores llegaron superando todas mis expectativas. Gran profesionalidad y un producto de calidad excepcional.', fecha:'Hace 8 meses' },
+];
+
+function estrellas(n) {
+  return Array(5).fill(0).map((_, i) =>
+    `<span class="material-symbols-outlined ${i < n ? 'filled' : ''}" style="font-size:16px;color:${i < n ? '#775a19' : '#c3c8c0'}">${i < n ? 'star' : 'star'}</span>`
+  ).join('');
+}
+
+// --- Init ---
+const params = new URLSearchParams(window.location.search);
+const productId = params.get('id') || 'p01';
+const producto = PRODUCTOS.find(p => p.id === productId);
+
+if (!producto) {
+  window.location.href = 'catalogo-completo.html';
+} else {
+  initPage();
+}
+
+function initPage() {
+  document.getElementById('page-title').textContent = `${producto.nombre} | Floristería Alameda`;
+  document.getElementById('breadcrumb-product').textContent = producto.nombre;
+  document.getElementById('prod-categoria').textContent = CATEGORIAS[producto.categoria] || producto.categoria;
+  document.getElementById('prod-nombre').textContent = producto.nombre;
+  document.getElementById('prod-precio').textContent = producto.precio + '€';
+  document.getElementById('prod-descripcion').textContent = producto.descripcion;
+
+  const idx = PRODUCTOS.indexOf(producto);
+  const numResenas = 18 + (idx % 7);
+  document.getElementById('prod-num-resenas').textContent = `(${numResenas} reseñas)`;
+  document.getElementById('prod-estrellas').innerHTML = estrellas(5);
+  document.getElementById('resumen-estrellas').innerHTML = estrellas(5);
+
+  document.getElementById('btn-pedir').onclick = () => abrirPedido(producto.nombre, producto.precio, producto.emoji);
+
+  renderReseñas(idx);
+  renderRecomendados(idx);
+
+  let pdfDoc = null;
+  pdfjsLib.getDocument('catalogo.pdf').promise.then(doc => {
+    pdfDoc = doc;
+    renderMainImg(pdfDoc);
+    renderRecImgs(pdfDoc);
+  }).catch(() => {
+    document.getElementById('main-img-wrap').innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:96px">${producto.emoji}</div>`;
+  });
+}
+
+async function renderMainImg(pdfDoc) {
+  try {
+    const page = await pdfDoc.getPage(producto.pagina);
+    const viewport = page.getViewport({ scale: 2 });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    const spinner = document.getElementById('main-spinner');
+    if (spinner) spinner.remove();
+    document.getElementById('main-img-wrap').appendChild(canvas);
+  } catch {
+    document.getElementById('main-img-wrap').innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:96px">${producto.emoji}</div>`;
+  }
+}
+
+async function renderRecImgs(pdfDoc) {
+  const idx = PRODUCTOS.indexOf(producto);
+  const recomendados = getRecomendados(idx);
+  for (let i = 0; i < recomendados.length; i++) {
+    const p = recomendados[i];
+    try {
+      const page = await pdfDoc.getPage(p.pagina);
+      const viewport = page.getViewport({ scale: 1.2 });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      const spinner = document.getElementById(`rec-spin-${i}`);
+      if (spinner) spinner.remove();
+      const wrap = document.getElementById(`rec-wrap-${i}`);
+      if (wrap) wrap.appendChild(canvas);
+    } catch {
+      const wrap = document.getElementById(`rec-wrap-${i}`);
+      if (wrap) wrap.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:48px">${p.emoji}</div>`;
+    }
+  }
+}
+
+function getRecomendados(idx) {
+  const mismaCategoria = PRODUCTOS.filter(p => p.categoria === producto.categoria && p.id !== producto.id);
+  const otros = PRODUCTOS.filter(p => p.categoria !== producto.categoria && p.id !== producto.id);
+  const pool = [...mismaCategoria, ...otros];
+  const start = (idx * 3) % pool.length;
+  const result = [];
+  for (let i = 0; i < 3; i++) {
+    result.push(pool[(start + i) % pool.length]);
+  }
+  return result;
+}
+
+function renderReseñas(idx) {
+  const start = (idx * 4) % RESEÑAS_POOL.length;
+  const reseñas = Array(4).fill(0).map((_, i) => RESEÑAS_POOL[(start + i) % RESEÑAS_POOL.length]);
+
+  document.getElementById('resenas-grid').innerHTML = reseñas.map(r => `
+    <div style="background:#f9f9f7;border-radius:0.75rem;padding:24px;border:1px solid #c3c8c0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:40px;height:40px;border-radius:50%;background:#d3e8d3;display:flex;align-items:center;justify-content:center;font-family:'Montserrat';font-size:13px;font-weight:700;color:#506352">${r.avatar}</div>
+          <div>
+            <p style="font-family:'Montserrat';font-size:13px;font-weight:600;color:#1a1c1b">${r.autor}</p>
+            <p style="font-family:'Montserrat';font-size:11px;color:#737872">${r.fecha}</p>
+          </div>
+        </div>
+        <div style="display:flex">${estrellas(r.nota)}</div>
+      </div>
+      <p style="font-family:'Montserrat';font-size:14px;color:#434842;line-height:1.6">"${r.texto}"</p>
+    </div>
+  `).join('');
+}
+
+function renderRecomendados(idx) {
+  const recomendados = getRecomendados(idx);
+  document.getElementById('recomendados-grid').innerHTML = recomendados.map((p, i) => `
+    <div class="rec-card" onclick="window.location.href='producto.html?id=${p.id}'">
+      <div class="rec-canvas-wrap" id="rec-wrap-${i}">
+        <div class="spinner" id="rec-spin-${i}"></div>
+      </div>
+      <div style="padding:16px">
+        <p style="font-family:'Montserrat';font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#7b535c;margin-bottom:4px">${CATEGORIAS[p.categoria] || ''}</p>
+        <h3 style="font-family:'Playfair Display';font-size:16px;font-weight:500;color:#1a1c1b;margin-bottom:8px;line-height:1.3">${p.nombre}</h3>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-family:'Playfair Display';font-size:20px;font-weight:600;color:#506352">${p.precio}€</span>
+          <button onclick="event.stopPropagation();addRecToCart('${p.id}')" style="background:#506352;color:#fff;border:none;border-radius:9999px;padding:6px 14px;font-family:'Montserrat';font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background 0.2s" onmouseover="this.style.background='#8da18e'" onmouseout="this.style.background='#506352'">
+            <span class="material-symbols-outlined filled" style="font-size:13px">shopping_cart</span>
+            Añadir
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function handleAddToCart() {
+  addToCart({ id: producto.id, name: producto.nombre, price: producto.precio, quantity: 1, emoji: producto.emoji, image: '' });
+  showToast(producto.nombre);
+}
+
+function addRecToCart(id) {
+  const p = PRODUCTOS.find(x => x.id === id);
+  if (!p) return;
+  addToCart({ id: p.id, name: p.nombre, price: p.precio, quantity: 1, emoji: p.emoji, image: '' });
+  showToast(p.nombre);
+}
+</script>
+</body>
+</html>
