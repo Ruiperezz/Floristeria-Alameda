@@ -146,18 +146,6 @@
     .material-symbols-outlined.filled {
         font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-    .tilt-card {
-        transform-style: preserve-3d;
-        will-change: transform;
-        transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-    }
-    .tilt-glare {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 20;
-        border-radius: inherit;
-    }
     .hero-parallax {
         transition: transform 0.12s ease-out;
         transform: scale(1.06);
@@ -282,12 +270,12 @@
 <section class="px-margin py-xl bg-surface" id="categorias">
     <div class="max-w-7xl mx-auto">
         <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-xl">Nuestro Catálogo</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md stagger-grid">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
             <!-- Categoria 1: Rosas -->
-            <a href="catalogo-completo.html?cat=rosas" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=rosas" class="block rounded-lg overflow-hidden card-enter card-enter-1">
                 <div class="tilt-card group cursor-pointer">
                     <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden card-img-par" style="aspect-ratio:1/1">
-                        <img src="imgs/p04.jpg" alt="Rosas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+                        <img src="imgs/p04.jpg" alt="Rosas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
@@ -297,10 +285,10 @@
                 </div>
             </a>
             <!-- Categoria 2: Mixtos -->
-            <a href="catalogo-completo.html?cat=mixtos" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=mixtos" class="block rounded-lg overflow-hidden card-enter card-enter-2">
                 <div class="tilt-card group cursor-pointer">
                     <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden card-img-par" style="aspect-ratio:1/1">
-                        <img src="imgs/p19.jpg" alt="Ramos Mixtos" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+                        <img src="imgs/p19.jpg" alt="Ramos Mixtos" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
@@ -310,10 +298,10 @@
                 </div>
             </a>
             <!-- Categoria 3: Orquídeas -->
-            <a href="catalogo-completo.html?cat=orquideas" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=orquideas" class="block rounded-lg overflow-hidden card-enter card-enter-3">
                 <div class="tilt-card group cursor-pointer">
                     <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden card-img-par" style="aspect-ratio:1/1">
-                        <img src="imgs/p22.jpg" alt="Orquídeas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+                        <img src="imgs/p22.jpg" alt="Orquídeas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
@@ -323,10 +311,10 @@
                 </div>
             </a>
             <!-- Categoria 4: Primavera -->
-            <a href="catalogo-completo.html?cat=primavera" class="block rounded-lg overflow-hidden">
+            <a href="catalogo-completo.html?cat=primavera" class="block rounded-lg overflow-hidden card-enter card-enter-4">
                 <div class="tilt-card group cursor-pointer">
                     <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden card-img-par" style="aspect-ratio:1/1">
-                        <img src="imgs/p12.jpg" alt="Primavera" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+                        <img src="imgs/p12.jpg" alt="Primavera" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
@@ -349,9 +337,9 @@
 <section class="px-margin py-xl bg-surface-container-low" id="catalogo">
     <div class="max-w-7xl mx-auto">
         <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-xl">Los Más Elegidos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg stagger-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
             <!-- Producto 1: 12 Rosas Rojas -->
-            <a href="producto.html?id=p04" class="block rounded-xl overflow-hidden" style="text-decoration:none">
+            <a href="producto.html?id=p04" class="block rounded-xl overflow-hidden card-enter card-enter-1" style="text-decoration:none">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
                     <div class="relative overflow-hidden card-img-par" style="aspect-ratio:4/3">
                         <img src="imgs/p04.jpg" alt="12 Rosas Rojas" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
@@ -374,7 +362,7 @@
                 </div>
             </a>
             <!-- Producto 2: Centro Colores Variados -->
-            <a href="producto.html?id=p19" class="block rounded-xl overflow-hidden" style="text-decoration:none">
+            <a href="producto.html?id=p19" class="block rounded-xl overflow-hidden card-enter card-enter-2" style="text-decoration:none">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
                     <div class="relative overflow-hidden card-img-par" style="aspect-ratio:4/3">
                         <img src="imgs/p19.jpg" alt="Centro Colores Variados" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
@@ -397,7 +385,7 @@
                 </div>
             </a>
             <!-- Producto 3: 12 Rosas Azules -->
-            <a href="producto.html?id=p09" class="block rounded-xl overflow-hidden" style="text-decoration:none">
+            <a href="producto.html?id=p09" class="block rounded-xl overflow-hidden card-enter card-enter-3" style="text-decoration:none">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
                     <div class="relative overflow-hidden card-img-par" style="aspect-ratio:4/3">
                         <img src="imgs/p09.jpg" alt="12 Rosas Azules" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform 0.4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
@@ -785,8 +773,11 @@
         });
     }
 
-    // Stagger grid items
-    window.fx3d && window.fx3d.initGridStagger('.stagger-grid');
+    // Re-init 3D effects para asegurar que todo está observado
+    if (window.fx3d) {
+        window.fx3d.initScrollReveal();
+        window.fx3d.initCounters();
+    }
 </script>
 </body>
 </html>

@@ -252,7 +252,7 @@ function filtrar(cat) {
 function renderizarProductos(prods) {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = prods.map(p => `
-    <div class="prod-card tilt-card">
+    <div class="tilt-card" style="border-radius:0.75rem;overflow:hidden;border:1px solid #c3c8c0;background:#fff;display:flex;flex-direction:column;transition:box-shadow 0.2s;">
       <a href="producto.html?id=${p.id}" style="display:block;text-decoration:none">
         <div class="canvas-wrap card-img-par" id="wrap-${p.id}" style="cursor:pointer">
           <div class="spinner" id="spin-${p.id}"></div>
@@ -287,8 +287,22 @@ function renderizarProductos(prods) {
   `).join('');
 
   prods.forEach(p => renderImg(p, `wrap-${p.id}`, `spin-${p.id}`));
-  // Re-init 3D effects on dynamically rendered cards
-  if (window.fx3d) { window.fx3d.initTiltCards(); window.fx3d.initMagneticButtons(); window.fx3d.initRipple(); window.fx3d.initCardImageParallax(); }
+  // Añadir animación de entrada escalonada
+  const cards = grid.querySelectorAll('.tilt-card');
+  cards.forEach((c, i) => {
+    c.style.animationName = 'fx3d-cardin';
+    c.style.animationDuration = '0.55s';
+    c.style.animationTimingFunction = 'cubic-bezier(0.4,0,0.2,1)';
+    c.style.animationFillMode = 'both';
+    c.style.animationDelay = (i * 0.06) + 's';
+  });
+  // Re-init efectos 3D sobre las nuevas tarjetas
+  if (window.fx3d) {
+    window.fx3d.initTiltCards();
+    window.fx3d.initMagneticButtons();
+    window.fx3d.initRipple();
+    setTimeout(() => window.fx3d.initCardImageParallax(), 300); // esperar a que carguen las imgs
+  }
 }
 
 // Arranque — aplica filtro si viene en la URL (?cat=rosas)
