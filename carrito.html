@@ -129,7 +129,10 @@ tailwind.config = {
             </div>
             <div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
               <span>Envío</span>
-              <span id="delivery-cost" class="text-secondary">2,99€</span>
+              <span id="delivery-cost" class="text-primary">Incluido ✓</span>
+            </div>
+            <div class="bg-primary-fixed/50 rounded-lg px-sm py-xs">
+              <p class="font-label-sm text-label-sm text-primary">🚚 Repartos solo en Cartagena · Portes incluidos en todos los arreglos</p>
             </div>
             <div class="flex justify-between font-headline-md text-headline-md text-primary border-t border-outline-variant pt-sm">
               <span>Total</span>
@@ -214,7 +217,7 @@ tailwind.config = {
 <script>
   let deliveryType = 'Entrega a domicilio';
   let pagoType = 'Bizum';
-  const DELIVERY_COST = 2.99;
+  const DELIVERY_COST = 0; // Portes incluidos en todos los arreglos
 
   function selectDelivery(btn, tipo) {
     deliveryType = tipo;

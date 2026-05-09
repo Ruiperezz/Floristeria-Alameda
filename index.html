@@ -9,6 +9,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -124,6 +125,10 @@
         transition: transform 0.12s ease-out;
         transform: scale(1.06);
     }
+    .pdf-wrap { background:#f4f4f2; aspect-ratio:1/1; overflow:hidden; position:relative; }
+    .pdf-wrap canvas { position:absolute; inset:0; width:100% !important; height:100% !important; object-fit:cover; }
+    .pdf-spin { border:3px solid #c3c8c0; border-top-color:#506352; border-radius:50%; width:28px; height:28px; animation:spin 0.8s linear infinite; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden pt-24">
@@ -175,7 +180,7 @@
             <div class="hidden sm:block text-outline-variant">|</div>
             <div class="flex items-center gap-xs">
                 <span class="text-lg">🚚</span>
-                <span>Envío a domicilio en Cartagena</span>
+                <span>Repartos solo en Cartagena · Portes incluidos</span>
             </div>
             <div class="hidden sm:block text-outline-variant">|</div>
             <div class="flex items-center gap-xs">
@@ -191,55 +196,55 @@
     <div class="max-w-7xl mx-auto">
         <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-xl">Nuestro Catálogo</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
-            <!-- Categoria 1 -->
-            <a href="rosas-clasicas.html" class="block rounded-lg overflow-hidden">
+            <!-- Categoria 1: Rosas -->
+            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg aspect-square mb-sm shadow-sm border border-tertiary-container/20">
-                        <img alt="Rosas rosa vibrantes recién florecidas" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvb_mvHgR_Y8ZuE8EUHo5uEV7WD2MQpEt3aWQCiesp7yXz8LfbD_ItKtIa4wKS9yWcnjAft-6hz20UNP4xRQFu3WYSj0tmwJQBLQJRpKgSzH-q64Do5EQBzwezMaG9888hf9_ug5WjnsjGmbOse4EL_nZYror30oUWe00p1in-dL64YRFzhe2afDwkRwRefSAx8V7r5YgL9K2uwiPOS4jUxJsXGjaRD8MeZcqSlWp7JP8ZYPUX96udvFQDwDrHruzJFmvHf5G91w"/>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
+                        <div class="pdf-wrap" id="cat-wrap-1"><div class="pdf-spin" id="cat-spin-1"></div></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
                         <h3 class="font-label-md text-label-md text-on-surface">Rosas</h3>
-                        <span class="font-body-md text-body-md text-secondary">20€</span>
+                        <span class="font-body-md text-body-md text-secondary">desde 25€</span>
                     </div>
                 </div>
             </a>
-            <!-- Categoria 2 -->
-            <a href="ramo-brisas-alameda.html" class="block rounded-lg overflow-hidden">
+            <!-- Categoria 2: Mixtos -->
+            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg aspect-square mb-sm shadow-sm border border-tertiary-container/20">
-                        <img alt="Ramo artesanal con flores silvestres y eucalipto" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSHxORHuECkrAtdwi6Fr-OWgQiSp7ZGFGyakPMmQPM5nsmwr4qVKVNYpQ6lh9VjtMItKTtvnRDb6kEwfXPuwiIH88x0wEoW9ZehsyoDTikxCvCMYUl-Qfalh8NYVVKK2L6Q09y2iFp_Q6zm4GvnwtmTVxWFgH71_rEj31PBeEikqQUeaV_Hx5coLWy8xKYgNXVibuc03HhncVxAg83IVPLzE9mVcyHpxdJJNvU1OlDmgyZfOp0FRKZ0Hd5y4frcMo84nFJh7zlFg"/>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
+                        <div class="pdf-wrap" id="cat-wrap-10"><div class="pdf-spin" id="cat-spin-10"></div></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Ramos</h3>
-                        <span class="font-body-md text-body-md text-secondary">65€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">Ramos Mixtos</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 40€</span>
                     </div>
                 </div>
             </a>
-            <!-- Categoria 3 -->
-            <a href="ramo-especial-alameda.html" class="block rounded-lg overflow-hidden">
+            <!-- Categoria 3: Orquídeas -->
+            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg aspect-square mb-sm shadow-sm border border-tertiary-container/20">
-                        <img alt="Arreglo lujoso con orquídeas e hortensias en jarrón cerámico" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBExPNgVxUXsnAGFdnJCEdAX-JkSsCWrZayLhSW6n4VblMCrcCmfhqAr8nByT9CxQ4sLi6Jzl_RXwJqwyJXf8aMwPTc5_ZUkycUMis8yOM412c3zVRJF709X58QJpcUdLMPRkGHvlOZgOXDcquGUjJnTAsJBD81HmXH3d2ynIPVq6QTNKXNUfLRWlY0HDSvRyo76CgEQIQJLDrPUf2PkPTMNFdAzZ_8JxtE40XSE9d-M8YeRM3D_EwleOIkctxWkHUGgMFlZf18IA"/>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
+                        <div class="pdf-wrap" id="cat-wrap-12"><div class="pdf-spin" id="cat-spin-12"></div></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Ramos Especiales</h3>
-                        <span class="font-body-md text-body-md text-secondary">90€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">Orquídeas</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 35€</span>
                     </div>
                 </div>
             </a>
-            <!-- Categoria 4 -->
-            <a href="preservadas.html" class="block rounded-lg overflow-hidden">
+            <!-- Categoria 4: Silvestres -->
+            <a href="catalogo-completo.html" class="block rounded-lg overflow-hidden">
                 <div class="tilt-card group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg aspect-square mb-sm shadow-sm border border-tertiary-container/20">
-                        <img alt="Flores secas y preservadas con pampas y lavanda" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8nJ0pKMB38u1AVvb67NVdBecpsgEfT7dBjns08hHOueWUleJ12aSBLiFhx61Uk2d7u72JVWy3Ky9lErndBepL5tBZ2snpqWttRYnEpuKi4xoOmBJWRdyLNNJnL-6azgP9rPpP5w9b_QCRBykb6pItmRg2r2Hp3Sh-zZ-gDAFJGa7UIdnxS4vm-S3fQwo8h8t7y_hZjzWtti4h4FP5OjBQ7caZtO8eq44S7rzfPE7XZKbyqj_NrhChSHN9aab5xJu122DOFYY0MA"/>
+                    <div class="relative rounded-lg mb-sm shadow-sm border border-tertiary-container/20 overflow-hidden">
+                        <div class="pdf-wrap" id="cat-wrap-18"><div class="pdf-spin" id="cat-spin-18"></div></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex justify-between items-center px-xs">
-                        <h3 class="font-label-md text-label-md text-on-surface">Preservadas</h3>
-                        <span class="font-body-md text-body-md text-secondary">180€</span>
+                        <h3 class="font-label-md text-label-md text-on-surface">Silvestres</h3>
+                        <span class="font-body-md text-body-md text-secondary">desde 40€</span>
                     </div>
                 </div>
             </a>
@@ -259,71 +264,71 @@
         <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-xl">Los Más Elegidos</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
             <!-- Producto 1 -->
-            <a href="ramo-brisas-alameda.html" class="block rounded-xl overflow-hidden">
+            <div class="block rounded-xl overflow-hidden">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
-                    <div class="aspect-[4/3] relative">
-                        <img alt="Ramo de peonías rosa y lirios blancos sobre mármol" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMBW2hfPXAXQO8E-ey4lIq8_RcYm_c7PnsgpHpGKnc-dnMsmoznqpRi2mDjZAXL1ObClTjyPQuB5Y1q41rkdSQFUiTgctn2N6K3GIQIdhF6ASORayESimU-CiyT3QrTnFdEJERI3tddS7LYPtPVdI_d0ygm_COiloEjitnd6C6RUe6h54nb3gWGdzReN9ghGhojkFQ_B8GoktUiaXVHksifOgQO2nZb7s0WO_dEg4TEdSRQALQcmt4p4Qw1n1ZczTabDD4nPrJ_g"/>
+                    <div class="relative overflow-hidden" style="aspect-ratio:4/3">
+                        <div class="pdf-wrap" id="prod-wrap-2" style="aspect-ratio:4/3"><div class="pdf-spin" id="prod-spin-2"></div></div>
                         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm px-sm py-xs rounded-full">
                             <span class="font-label-sm text-label-sm text-secondary">Más vendido</span>
                         </div>
                     </div>
                     <div class="p-md flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Ramo 'Brisas de Alameda'</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Peonías, rosas de pitimini y eucalipto.</p>
-                        </div>
-                        <div class="flex items-center justify-between mt-auto">
-                            <span class="font-headline-md text-headline-md text-primary">65€</span>
-                            <span class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full flex items-center gap-xs">
-                                <span class="material-symbols-outlined text-sm">chat</span>Pedir
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <!-- Producto 2 -->
-            <a href="rosas-clasicas.html" class="block rounded-xl overflow-hidden">
-                <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
-                    <div class="aspect-[4/3] relative">
-                        <img alt="Docena de rosas rojas clásicas en jarrón de cristal" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfJIXKsoCGH7HGHe4BOeTVZPRLWIilK81riZWvoJP8H2lX-MzgGL7WBqFeFT00Tg4-7pasiIz5bH7X9D3Pc0EMa22vZEOeXZbOFAyFGjk84T0VjVGk12aYU6V5f5sDnY5k16-kDC0sFU0-apV8kOjS3W3wQ9nNIajBl9geQ7ddMyWkvCWMT1OjzPeqk7kcbK67KhswIAO9wOiRXdybr4xlNHOMgGrGhhUtwQvOiOQIAi5wIsY7_6pMMsY2yfwFkGq2hZT4r6_T8Q"/>
-                    </div>
-                    <div class="p-md flex-grow flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Rosas Clásicas</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Docena de rosas rojas premium de tallo largo.</p>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Ramo Rosas Blancas con Eucalipto</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Docena de rosas blancas con paniculata cobre y eucalipto.</p>
                         </div>
                         <div class="flex items-center justify-between mt-auto">
                             <span class="font-headline-md text-headline-md text-primary">50€</span>
-                            <span class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full flex items-center gap-xs">
+                            <button onclick="abrirPedido('Ramo Rosas Blancas con Eucalipto', 50, '🤍')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
                                 <span class="material-symbols-outlined text-sm">chat</span>Pedir
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </div>
-            </a>
-            <!-- Producto 3 -->
-            <a href="ramo-especial-alameda.html" class="block rounded-xl overflow-hidden">
+            </div>
+            <!-- Producto 2 -->
+            <div class="block rounded-xl overflow-hidden">
                 <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
-                    <div class="aspect-[4/3] relative">
-                        <img alt="Arreglo lujoso de orquídeas y hortensias" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBExPNgVxUXsnAGFdnJCEdAX-JkSsCWrZayLhSW6n4VblMCrcCmfhqAr8nByT9CxQ4sLi6Jzl_RXwJqwyJXf8aMwPTc5_ZUkycUMis8yOM412c3zVRJF709X58QJpcUdLMPRkGHvlOZgOXDcquGUjJnTAsJBD81HmXH3d2ynIPVq6QTNKXNUfLRWlY0HDSvRyo76CgEQIQJLDrPUf2PkPTMNFdAzZ_8JxtE40XSE9d-M8YeRM3D_EwleOIkctxWkHUGgMFlZf18IA"/>
+                    <div class="relative overflow-hidden" style="aspect-ratio:4/3">
+                        <div class="pdf-wrap" id="prod-wrap-14" style="aspect-ratio:4/3"><div class="pdf-spin" id="prod-spin-14"></div></div>
+                    </div>
+                    <div class="p-md flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Gran Ramo Celebración</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Gerberas, crisantemos, tulipanes y liliums. Ideal para celebraciones.</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="font-headline-md text-headline-md text-primary">65€</span>
+                            <button onclick="abrirPedido('Gran Ramo Celebración', 65, '🎉')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
+                                <span class="material-symbols-outlined text-sm">chat</span>Pedir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Producto 3 -->
+            <div class="block rounded-xl overflow-hidden">
+                <div class="tilt-card bg-surface shadow-sm hover:shadow-md transition-shadow border border-surface-variant flex flex-col h-full">
+                    <div class="relative overflow-hidden" style="aspect-ratio:4/3">
+                        <div class="pdf-wrap" id="prod-wrap-7" style="aspect-ratio:4/3"><div class="pdf-spin" id="prod-spin-7"></div></div>
                         <div class="absolute top-sm right-sm bg-tertiary-container/90 backdrop-blur-sm px-sm py-xs rounded-full">
                             <span class="font-label-sm text-label-sm text-on-tertiary-container">Premium</span>
                         </div>
                     </div>
                     <div class="p-md flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Ramo Especial Alameda</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">Orquídeas, hortensias y amaranto colgante.</p>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Gran Ramo Rosas Blancas</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">15 rosas blancas con eucalipto y helecho, envoltorio rústico.</p>
                         </div>
                         <div class="flex items-center justify-between mt-auto">
-                            <span class="font-headline-md text-headline-md text-primary">90€</span>
-                            <span class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full flex items-center gap-xs">
+                            <span class="font-headline-md text-headline-md text-primary">60€</span>
+                            <button onclick="abrirPedido('Gran Ramo Rosas Blancas', 60, '🤍')" class="bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-xs">
                                 <span class="material-symbols-outlined text-sm">chat</span>Pedir
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 </section>
@@ -459,13 +464,16 @@
                 </div>
                 <p class="font-body-md text-body-md text-on-surface-variant">"Personal muy amable y flores preciosas. Sin duda la mejor opción en Cartagena."</p>
             </div>
-            <!-- Ver más en Google -->
+            <!-- QR + Ver más en Google -->
             <div class="bg-primary-fixed/40 rounded-xl p-md border border-primary/20 flex flex-col items-center justify-center gap-sm text-center">
-                <span class="text-4xl">⭐</span>
                 <p class="font-label-md text-label-md text-primary">¿Has venido a visitarnos?</p>
-                <p class="font-body-md text-body-md text-on-surface-variant">Déjanos tu reseña en Google y ayuda a otros clientes.</p>
-                <a href="https://www.google.com/search?q=Florister%C3%ADa+Alameda+Cartagena" target="_blank" class="bg-primary text-on-primary font-label-sm text-label-sm px-md py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors">
-                    Escribir reseña
+                <p class="font-body-md text-body-md text-on-surface-variant">Escanea el QR o haz clic para dejarnos tu reseña en Google.</p>
+                <a href="https://www.google.com/maps/place/Floristería+Alameda,+Alameda+de+San+Antón,+15,+30205+Cartagena" target="_blank">
+                    <img src="qr-resenas.png" alt="QR Reseñas Google Floristería Alameda" class="w-32 h-32 mx-auto rounded-lg shadow-sm"
+                         onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.google.com/maps/search/Floristería+Alameda+Cartagena+reseñas'"/>
+                </a>
+                <a href="https://www.google.com/maps/place/Floristería+Alameda,+Alameda+de+San+Antón,+15,+30205+Cartagena" target="_blank" class="bg-primary text-on-primary font-label-sm text-label-sm px-md py-xs rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                    ⭐ Escribir reseña en Google
                 </a>
             </div>
         </div>
@@ -572,7 +580,35 @@
 </div>
 
 <script src="cart.js"></script>
+<script src="pedido-modal.js"></script>
 <script>
+    // PDF.js - render catalog pages
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    let _pdfDoc = null;
+    pdfjsLib.getDocument('catalogo.pdf').promise.then(doc => {
+        _pdfDoc = doc;
+        [[1,'cat-wrap-1','cat-spin-1'],[10,'cat-wrap-10','cat-spin-10'],[12,'cat-wrap-12','cat-spin-12'],[18,'cat-wrap-18','cat-spin-18'],
+         [2,'prod-wrap-2','prod-spin-2'],[14,'prod-wrap-14','prod-spin-14'],[7,'prod-wrap-7','prod-spin-7']].forEach(([page,wrap,spin]) => {
+            renderPdfPage(page, wrap, spin);
+        });
+    }).catch(e => console.warn('PDF no cargado:', e));
+
+    async function renderPdfPage(pageNum, wrapId, spinId) {
+        if (!_pdfDoc) return;
+        try {
+            const page = await _pdfDoc.getPage(pageNum);
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            const viewport = page.getViewport({ scale: 1.0 });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width; canvas.height = viewport.height;
+            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            const sp = document.getElementById(spinId);
+            if (sp) sp.remove();
+            wrap.appendChild(canvas);
+        } catch(e) { console.warn('Error página', pageNum, e); }
+    }
+
     // 3D Tilt Effect on cards
     document.querySelectorAll('.tilt-card').forEach(card => {
         card.style.position = 'relative';

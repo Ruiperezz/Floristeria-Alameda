@@ -119,6 +119,7 @@ tailwind.config = {
 </div>
 
 <script src="cart.js"></script>
+<script src="pedido-modal.js"></script>
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -190,12 +191,12 @@ function renderizarProductos(prods) {
             Añadir
           </button>
         </div>
-        <a href="https://wa.me/34627546360?text=${encodeURIComponent(`Hola! Me interesa: ${p.nombre} (${p.precio}€)`)}"
-          style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:12px;font-weight:600;color:#506352;text-decoration:none;border:1px solid #506352;border-radius:9999px;padding:6px 12px;margin-top:4px;transition:all 0.2s"
+        <button onclick="abrirPedido('${p.nombre}', ${p.precio}, '${p.emoji}')"
+          style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Montserrat';font-size:12px;font-weight:600;color:#506352;background:transparent;border:1px solid #506352;border-radius:9999px;padding:6px 12px;margin-top:4px;transition:all 0.2s;cursor:pointer;width:100%"
           onmouseover="this.style.background='#d3e8d3'" onmouseout="this.style.background='transparent'">
           <span class="material-symbols-outlined" style="font-size:14px">chat</span>
           Pedir por WhatsApp
-        </a>
+        </button>
       </div>
     </div>
   `).join('');
