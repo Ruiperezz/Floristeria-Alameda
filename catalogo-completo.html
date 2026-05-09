@@ -9,7 +9,6 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 tailwind.config = {
   theme: { extend: {
@@ -123,103 +122,57 @@ tailwind.config = {
 <script src="cart.js"></script>
 <script src="pedido-modal.js"></script>
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
 // Cada producto indica la página del PDF y las coordenadas de recorte (0-1, relativo al tamaño de página)
 // cropX, cropY = esquina superior izquierda; cropW, cropH = ancho y alto del recorte
 const PRODUCTOS = [
-  // cropX/Y = inicio del recorte (0-1); cropW/H = tamaño del recorte (0-1)
-  // Solo se recorta la columna izquierda del PDF (la foto), excluyendo el texto de la derecha
-  // Página 1 (título ROSAS + 3 productos)
-  { id:'p01', pdfPage:1, cropX:0.01, cropY:0.03, cropW:0.37, cropH:0.34,
-    categoria:'rosas', nombre:'12 Rosas Rosa', emoji:'🌸', precio:95,
-    descripcion:'Docena de rosas en el más delicado tono rosa, presentadas con paniculata blanca y helecho fresco. Envueltas artesanalmente con encaje rosa y lazo de arpillera. El regalo romántico por excelencia para cumpleaños, aniversarios o cualquier declaración especial.' },
+  { id:'p01', img:'imgs/p01.jpg', categoria:'rosas', nombre:'12 Rosas Rosa', emoji:'🌸', precio:95,
+    descripcion:'Docena de rosas en el más delicado tono rosa, con paniculata blanca, helecho y margaritas. Presentadas en elegante tul rosa con lazo de arpillera. El regalo romántico por excelencia para cumpleaños, aniversarios o cualquier declaración especial.' },
 
-  { id:'p02', pdfPage:1, cropX:0.01, cropY:0.37, cropW:0.37, cropH:0.31,
-    categoria:'rosas', nombre:'12 Rosas Blancas', emoji:'🤍', precio:95,
-    descripcion:'Doce rosas blancas de primera calidad acompañadas de paniculata cobre, eucalipto y helecho. Presentación en arpillera rústica con lazo de encaje. Sinónimo de pureza, admiración y elegancia atemporal para las ocasiones más significativas.' },
+  { id:'p02', img:'imgs/p02.jpg', categoria:'rosas', nombre:'12 Rosas Blancas', emoji:'🤍', precio:95,
+    descripcion:'Doce rosas blancas de primera calidad acompañadas de paniculata cobre, eucalipto y helecho. Presentación en arpillera rústica con lazo de encaje artesanal. Sinónimo de pureza, admiración y elegancia atemporal para las ocasiones más significativas.' },
 
-  { id:'p03', pdfPage:1, cropX:0.01, cropY:0.68, cropW:0.37, cropH:0.32,
-    categoria:'rosas', nombre:'12 Rosas Amarillas', emoji:'💛', precio:95,
-    descripcion:'Docena de luminosas rosas amarillas con hypericum rosa y helecho, envueltas en papel kraft con lazo. El color de la alegría, la amistad y la energía positiva. Un regalo que ilumina cualquier espacio y saca una sonrisa garantizada.' },
+  { id:'p03', img:'imgs/p03.jpg', categoria:'rosas', nombre:'12 Rosas Amarillas', emoji:'💛', precio:95,
+    descripcion:'Docena de luminosas rosas amarillas con hypericum rosa, paniculata y helecho, presentadas en arpillera con lazo de red rosa. El color de la alegría, la amistad y la energía positiva. Un regalo que ilumina cualquier espacio y saca una sonrisa garantizada.' },
 
-  // Página 2 (4 productos)
-  { id:'p04', pdfPage:2, cropX:0.01, cropY:0.01, cropW:0.37, cropH:0.25,
-    categoria:'rosas', nombre:'12 Rosas Rojas', emoji:'🌹', precio:95,
-    descripcion:'La declaración de amor más clásica y apasionada: doce rosas rojas de tallo largo con paniculata blanca y presentación premium. El gesto más romántico del mundo para San Valentín, aniversarios o cualquier ocasión que merezca lo mejor.' },
+  { id:'p04', img:'imgs/p04.jpg', categoria:'rosas', nombre:'12 Rosas Rojas', emoji:'🌹', precio:95,
+    descripcion:'La declaración de amor más clásica y apasionada: doce rosas rojas de tallo largo con paniculata blanca y eucalipto, en presentación premium de papel rosa con lazo granate. Ideal para San Valentín, aniversarios o cualquier ocasión especial.' },
 
-  { id:'p05', pdfPage:2, cropX:0.01, cropY:0.26, cropW:0.37, cropH:0.25,
-    categoria:'rosas', nombre:'6 Rosas Rosa', emoji:'🌸', precio:55,
-    descripcion:'Seis rosas rosa en plena madurez, con eucalipto y paniculata, presentadas en elegante arpillera con lazo rosa. Una opción más íntima y personal para sorprender con un detalle cargado de ternura y cariño sincero.' },
+  { id:'p05', img:'imgs/p05.jpg', categoria:'rosas', nombre:'6 Rosas Rosa', emoji:'🌸', precio:55,
+    descripcion:'Seis rosas rosa en plena madurez, con eucalipto y paniculata blanca, presentadas en arpillera artesanal con lazo de red rosa. Una opción más íntima y personal para sorprender con un detalle cargado de ternura y cariño sincero.' },
 
-  { id:'p06', pdfPage:2, cropX:0.01, cropY:0.51, cropW:0.37, cropH:0.25,
-    categoria:'rosas', nombre:'6 Rosas Azules Pintadas', emoji:'💙', precio:75,
-    descripcion:'Seis rosas pintadas a mano en un hipnótico azul intenso, con paniculata blanca. Presentación en papel traslúcido con lazo dorado. Una pieza única e irrepetible para quienes buscan un regalo verdaderamente diferente y extraordinario.' },
+  { id:'p06', img:'imgs/p06.jpg', categoria:'rosas', nombre:'6 Rosas Azules Pintadas', emoji:'💙', precio:75,
+    descripcion:'Seis rosas pintadas a mano en hipnótico azul intenso, con paniculata azul y helecho, presentadas en envoltorio de tul blanco con lazo de rafia. Una pieza única e irrepetible para quienes buscan un regalo verdaderamente diferente y extraordinario.' },
 
-  { id:'p07', pdfPage:2, cropX:0.01, cropY:0.76, cropW:0.37, cropH:0.24,
-    categoria:'rosas', nombre:'6 Rosas Rojas', emoji:'🌹', precio:55,
-    descripcion:'Seis rosas rojas de tallo largo con eucalipto y paniculata, pasión hecha flor. El regalo clásico para una ocasión íntima y romántica. Presentadas con lazo y envoltorio artesanal que realza su belleza natural.' },
+  { id:'p07', img:'imgs/p07.jpg', categoria:'rosas', nombre:'6 Rosas Rojas', emoji:'🌹', precio:55,
+    descripcion:'Seis rosas rojas de tallo largo con hypericum, eucalipto y paniculata, presentadas en arpillera con lazo de red roja. El regalo clásico y apasionado para una ocasión íntima y romántica, elaborado artesanalmente con mimo y detalle.' },
 
-  // Página 3 (4 productos)
-  { id:'p08', pdfPage:3, cropX:0.01, cropY:0.01, cropW:0.37, cropH:0.25,
-    categoria:'rosas', nombre:'6 Rosas Amarillas', emoji:'💛', precio:55,
-    descripcion:'Seis rosas amarillas envueltas en papel satinado con lazo de rafia, con el sello de Floristería Alameda. El regalo perfecto para transmitir alegría, agradecimiento, amistad sincera o simplemente dar un poco de luz a alguien especial.' },
+  { id:'p08', img:'imgs/p08.jpg', categoria:'rosas', nombre:'6 Rosas Amarillas', emoji:'💛', precio:55,
+    descripcion:'Seis rosas amarillas con eucalipto y paniculata blanca, envueltas en llamativa red dorada con lazo de rafia y el sello de Floristería Alameda. El regalo perfecto para transmitir alegría, agradecimiento o amistad sincera.' },
 
-  { id:'p09', pdfPage:3, cropX:0.01, cropY:0.26, cropW:0.37, cropH:0.25,
-    categoria:'rosas', nombre:'12 Rosas Azules', emoji:'💙', precio:120,
-    descripcion:'Exclusiva docena de rosas pintadas en un azul profundo e intenso, presentadas en papel negro elegante con lazo dorado. Una pieza de lujo, completamente única y extraordinaria, reservada para los regalos más especiales y memorables de la vida.' },
+  { id:'p09', img:'imgs/p09.jpg', categoria:'rosas', nombre:'12 Rosas Azules', emoji:'💙', precio:120,
+    descripcion:'Exclusiva docena de rosas pintadas en azul profundo e intenso, con paniculata blanca y eucalipto, presentadas en dramático papel negro con lazo de rafia dorado. Una pieza de lujo única y extraordinaria para los regalos más memorables.' },
 
-  { id:'p10', pdfPage:3, cropX:0.01, cropY:0.51, cropW:0.37, cropH:0.25,
-    categoria:'rosas', nombre:'Rosa Roja con Arreglo', emoji:'🌹', precio:25,
-    descripcion:'Una única rosa roja de tallo largo acompañada de eucalipto, helecho y paniculata, envuelta en malla roja con lazo de arpillera artesanal. El gesto más íntimo y romántico, simple en su forma pero cargado de profundo significado y emoción.' },
+  { id:'p10', img:'imgs/p10.jpg', categoria:'rosas', nombre:'Rosa Roja con Arreglo', emoji:'🌹', precio:25,
+    descripcion:'Composición romántica con rosas rojas, mini rosas, paniculata blanca y follaje, envuelta en arpillera roja con lazo artesanal y detalle de corazón. Un gesto cargado de significado, perfecto para sorprender con un regalo íntimo y lleno de emoción.' },
 
-  { id:'p11', pdfPage:3, cropX:0.01, cropY:0.76, cropW:0.37, cropH:0.24,
-    categoria:'rosas', nombre:'Rosa Roja Clásica', emoji:'🌹', precio:15,
-    descripcion:'Una rosa roja elegante y sencilla, presentada con hojas verdes naturales. El gesto más puro y directo para expresar amor, pensamiento o afecto sincero. Porque a veces, una sola flor perfecta dice más que mil palabras.' },
+  { id:'p11', img:'imgs/p11.jpg', categoria:'rosas', nombre:'Rosa Roja Clásica', emoji:'🌹', precio:15,
+    descripcion:'Una única rosa roja de tallo largo acompañada de paniculata blanca, helecho y eucalipto, presentada en elegante envoltorio artesanal de arpillera con lazo. El gesto más puro y directo para expresar amor o afecto sincero. Porque a veces, una sola flor lo dice todo.' },
 ];
 
-// --- PDF con caché por página ---
-const _pageCache = {};
-let _pdfDoc = null;
-
-async function getPdf() {
-  if (_pdfDoc) return _pdfDoc;
-  _pdfDoc = await pdfjsLib.getDocument('Catálogo Floristeria Nuevo Parte 1.pdf').promise;
-  return _pdfDoc;
-}
-
-async function getPageSrc(pageNum) {
-  if (_pageCache[pageNum]) return _pageCache[pageNum];
-  const doc = await getPdf();
-  const page = await doc.getPage(pageNum);
-  const vp = page.getViewport({ scale: 2.5 });
-  const c = document.createElement('canvas');
-  c.width = vp.width; c.height = vp.height;
-  await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
-  _pageCache[pageNum] = c;
-  return c;
-}
-
-async function renderCrop(producto, wrapId, spinId) {
-  try {
-    const src = await getPageSrc(producto.pdfPage);
-    const sx = Math.round(producto.cropX * src.width);
-    const sy = Math.round(producto.cropY * src.height);
-    const sw = Math.round(producto.cropW * src.width);
-    const sh = Math.round(producto.cropH * src.height);
-    const tmp = document.createElement('canvas');
-    tmp.width = sw; tmp.height = sh;
-    tmp.getContext('2d').drawImage(src, sx, sy, sw, sh, 0, 0, sw, sh);
-    // Usar <img> para que object-fit:cover funcione correctamente sin distorsión
-    const img = new Image();
-    img.src = tmp.toDataURL('image/jpeg', 0.90);
+function renderImg(producto, wrapId, spinId) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  const img = new Image();
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;opacity:0;transition:opacity 0.35s ease;';
+  img.onload = () => {
     const spin = document.getElementById(spinId); if (spin) spin.remove();
-    const wrap = document.getElementById(wrapId);
-    if (wrap) wrap.appendChild(img);
-  } catch {
-    const wrap = document.getElementById(wrapId);
-    if (wrap) wrap.innerHTML = `<div style="font-size:56px;display:flex;align-items:center;justify-content:center;height:100%">${producto.emoji}</div>`;
-  }
+    img.style.opacity = '1';
+  };
+  img.onerror = () => {
+    wrap.innerHTML = `<div style="font-size:56px;display:flex;align-items:center;justify-content:center;height:100%">${producto.emoji}</div>`;
+  };
+  img.src = producto.img;
+  wrap.appendChild(img);
 }
 
 // --- Filtro y renderizado ---
@@ -274,7 +227,7 @@ function renderizarProductos(prods) {
     </div>
   `).join('');
 
-  prods.forEach(p => renderCrop(p, `wrap-${p.id}`, `spin-${p.id}`));
+  prods.forEach(p => renderImg(p, `wrap-${p.id}`, `spin-${p.id}`));
 }
 
 // Arranque
