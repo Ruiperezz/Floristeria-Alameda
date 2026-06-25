@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/rosas-negras.html", "destination": "/producto.html?id=p31", "statusCode": 301 }
+  ],
   "headers": [
     {
       "source": "/(.*)",
