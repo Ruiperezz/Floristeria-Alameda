@@ -1,0 +1,15 @@
+.vercel
+node_modules
+package-lock.json
+.env
+.env.*
+*.pdf
+.claude/
+.DS_Store
+Thumbs.db
+imagenes catalogo 2ºParte/
+Nueva Seccion Catálogo/
+skills claude/
+catalogo/
+GUIA-POSICIONAMIENTO-GOOGLE.md
+Factura-*.html

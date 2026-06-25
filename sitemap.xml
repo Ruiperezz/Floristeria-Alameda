@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Página principal -->
+  <url>
+    <loc>https://floristeriaalameda.com/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p04.jpg</image:loc>
+      <image:title>Floristería Alameda Cartagena — Flores y Ramos a Domicilio</image:title>
+    </image:image>
+  </url>
+
+  <!-- Catálogo -->
+  <url>
+    <loc>https://floristeriaalameda.com/catalogo-completo.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Páginas de producto -->
+  <url>
+    <loc>https://floristeriaalameda.com/rosas-clasicas.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p04.jpg</image:loc>
+      <image:title>Rosas Clásicas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/rosas-negras.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p31.jpg</image:loc>
+      <image:title>12 Rosas Color Negras — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/ramo-brisas-alameda.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/ramo-especial-alameda.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/preservadas.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+
+  <!-- Categorías del catálogo -->
+  <url>
+    <loc>https://floristeriaalameda.com/catalogo-completo.html?cat=rosas</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/catalogo-completo.html?cat=mixtos</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/catalogo-completo.html?cat=orquideas</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/catalogo-completo.html?cat=primavera</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/catalogo-completo.html?cat=tanatorio</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Páginas de producto individuales -->
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p01</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p01.jpg</image:loc>
+      <image:title>Ternura · 12 Rosas Rosa — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p02</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p02.jpg</image:loc>
+      <image:title>Devoción · 12 Rosas Blancas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p03</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p03.jpg</image:loc>
+      <image:title>Amistad · 12 Rosas Amarillas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p04</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p04.jpg</image:loc>
+      <image:title>Pasión · 12 Rosas Rojas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p05</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p05.jpg</image:loc>
+      <image:title>Dulzura · 6 Rosas Rosa — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p06</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p06.jpg</image:loc>
+      <image:title>Magia · 6 Rosas Azules Pintadas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p07</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p07.jpg</image:loc>
+      <image:title>Deseo · 6 Rosas Rojas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p08</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p08.jpg</image:loc>
+      <image:title>Alegría · 6 Rosas Amarillas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p09</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p09.jpg</image:loc>
+      <image:title>Sueño · 12 Rosas Azules — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p10</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p10.jpg</image:loc>
+      <image:title>Romance · Rosa Roja con Arreglo — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p11</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p11.jpg</image:loc>
+      <image:title>Amor · Rosa Roja Clásica — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p12</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p12.jpg</image:loc>
+      <image:title>Luz · Ramo de Girasoles — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p13</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p13.jpg</image:loc>
+      <image:title>Encanto · Ramo Combinado — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p14</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p14.jpg</image:loc>
+      <image:title>Querencia · Ramo Campestre — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p15</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p15.jpg</image:loc>
+      <image:title>Ilusión · Ramo Variado de Flor — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p16</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p16.jpg</image:loc>
+      <image:title>Latido · Ramo Colores Rojos — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p17</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p17.jpg</image:loc>
+      <image:title>Caricia · Ramo Colores Rosas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p18</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p18.jpg</image:loc>
+      <image:title>Suspiro · Ramo Colores Naranjas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p19</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p19.jpg</image:loc>
+      <image:title>Armonía · Centro Colores Variados — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p20</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p20.jpg</image:loc>
+      <image:title>Promesa · Ramo Colores Blancos — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p21</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p21.jpg</image:loc>
+      <image:title>Sonrisa · Ramo Margaritas Blancas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p22</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p22.jpg</image:loc>
+      <image:title>Perla · Orquídea Blanca — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p23</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p23.jpg</image:loc>
+      <image:title>Seducción · Orquídea Fucsia — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p24</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p24.jpg</image:loc>
+      <image:title>Fortaleza · Centro Cactus Base Madera — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p25</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p25.jpg</image:loc>
+      <image:title>Complicidad · Ramo Combinado Especial — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p26</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p26.jpg</image:loc>
+      <image:title>Esperanza · Ramo Variado Primaveral — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p27</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p27.jpg</image:loc>
+      <image:title>Felicidad · Ramo Variado Colorido — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p28</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p28.jpg</image:loc>
+      <image:title>Admiración · Gran Ramo Variado — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p29</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p29.jpg</image:loc>
+      <image:title>Eternidad · Centro Floral Premium — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p30</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p30.jpg</image:loc>
+      <image:title>Poema · Centro Floral Especial — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p32</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p32.jpg</image:loc>
+      <image:title>Recuerdo · Ramo de Tanatorio Clásico — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p33</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p33.jpg</image:loc>
+      <image:title>Memoria · Ramo de Tanatorio Rosas Blancas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p34</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p34.jpg</image:loc>
+      <image:title>Cariño Eterno · Centro de Tanatorio Multicolor — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p35</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p35.jpg</image:loc>
+      <image:title>Despedida · Centro de Tanatorio Blanco con Lirios — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p36</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p36.jpg</image:loc>
+      <image:title>Homenaje · Centro de Tanatorio Blanco Premium — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p37</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p37.jpg</image:loc>
+      <image:title>Tributo · Centro de Tanatorio Rosa y Lila — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p38</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p38.jpg</image:loc>
+      <image:title>Luz Eterna · Centro Grande de Tanatorio Amarillo y Azul — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p39</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p39.jpg</image:loc>
+      <image:title>Serenidad · Centro Grande de Tanatorio Azul y Rojo — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p40</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p40.jpg</image:loc>
+      <image:title>En tu Memoria · Centro Grande de Tanatorio Rosa con Lirios — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p41</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p41.jpg</image:loc>
+      <image:title>Hasta Siempre · Centro Grande de Tanatorio Rojo y Blanco — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p42</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p42.jpg</image:loc>
+      <image:title>Paz Eterna · Centro Grande de Tanatorio Melocotón — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p43</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p43.jpg</image:loc>
+      <image:title>Siempre en Nuestro Corazón · Centro Grande de Tanatorio Rojo y Melocotón — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p44</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p44.jpg</image:loc>
+      <image:title>Descanso · Centro Grande de Tanatorio Melocotón y Blanco — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p45</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p45.jpg</image:loc>
+      <image:title>Consuelo · Centro Grande de Tanatorio Rosa y Lila Silvestre — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p46</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p46.jpg</image:loc>
+      <image:title>Último Adiós · Corona Grande de Tanatorio Roja — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p47</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p47.jpg</image:loc>
+      <image:title>Corona del Recuerdo · Corona Grande de Tanatorio Rosa y Lila — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p48</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p48.jpg</image:loc>
+      <image:title>Gran Homenaje · Corona Grande de Tanatorio Multicolor — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p49</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p49.jpg</image:loc>
+      <image:title>Eternidad · Corona Grande de Tanatorio Blanca y Lila — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p50</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p50.jpg</image:loc>
+      <image:title>Tributo Floral · Corona Grande de Tanatorio Rosa y Amarillo — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p51</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p51.jpg</image:loc>
+      <image:title>Última Despedida · Corona Grande de Tanatorio Rosa y Azul — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p52</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p52.jpg</image:loc>
+      <image:title>Corona de Paz · Corona Grande de Tanatorio Multicolor Otoñal — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <!-- Páginas de información -->
+  <url>
+    <loc>https://floristeriaalameda.com/envios.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/privacidad.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/aviso-legal.html</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Excluir páginas privadas y APIs
+Disallow: /api/
+Disallow: /carrito.html
+Disallow: /pago-completado.html
+Disallow: /pago-cancelado.html
+Disallow: /bizum-pago.html
+
+# Sitemap
+Sitemap: https://floristeriaalameda.com/sitemap.xml

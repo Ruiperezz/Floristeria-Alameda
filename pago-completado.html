@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pago completado | Floristería Alameda</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://floristeriaalameda.com/favicon-32.png?v=2"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://floristeriaalameda.com/favicon-180.png?v=2"/>
+<meta name="msapplication-TileImage" content="https://floristeriaalameda.com/favicon-512.png?v=2"/>
+<meta name="msapplication-TileColor" content="#3a5244"/>
+<meta name="robots" content="noindex"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  body { font-family: 'Montserrat', sans-serif; background: #f9f9f7; }
+  h1, h2 { font-family: 'Playfair Display', serif; }
+  @keyframes pop { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+  .pop { animation: pop 0.5s ease-out forwards; }
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+  <!-- Nav mínima -->
+  <div class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-sm flex items-center px-6 py-3 z-10">
+    <a href="index.html">
+      <img src="logo-floristeria.jpg" alt="Floristería Alameda" class="h-12 w-auto rounded-full"/>
+    </a>
+  </div>
+
+  <div class="max-w-md w-full mt-16">
+
+    <!-- ✅ Pago OK -->
+    <div id="pago-ok" class="bg-white rounded-2xl shadow-lg p-8 text-center" style="display:none">
+      <div class="text-6xl pop mb-4" id="emoji-prod">🌸</div>
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-green-700 mb-1">¡Pago recibido!</h1>
+      <p class="text-gray-500 text-sm mb-6">Tu pedido ha sido abonado correctamente.</p>
+
+      <!-- Resumen del pedido -->
+      <div class="bg-gray-50 rounded-xl p-4 text-left mb-6 text-sm space-y-2">
+        <p><span class="font-semibold text-gray-700">Producto:</span> <span id="r-producto" class="text-gray-600"></span></p>
+        <p><span class="font-semibold text-gray-700">Importe:</span> <span id="r-precio" class="text-green-700 font-bold"></span></p>
+        <p><span class="font-semibold text-gray-700">Fecha entrega:</span> <span id="r-fecha" class="text-gray-600"></span></p>
+        <p><span class="font-semibold text-gray-700">Destinatario/a:</span> <span id="r-cliente" class="text-gray-600"></span></p>
+        <p><span class="font-semibold text-gray-700">Teléfono:</span> <span id="r-telefono" class="text-gray-600"></span></p>
+        <p id="r-direccion-wrap"><span class="font-semibold text-gray-700">Dirección:</span> <span id="r-direccion" class="text-gray-600"></span></p>
+        <p id="r-dedicatoria-wrap" style="display:none"><span class="font-semibold text-gray-700">Dedicatoria:</span> <em id="r-dedicatoria" class="text-gray-600"></em></p>
+        <p class="text-xs text-gray-400 pt-1">Ref. pago: <span id="r-session" class="font-mono"></span></p>
+      </div>
+
+      <!-- Botón WhatsApp -->
+      <a id="btn-whatsapp" href="#" target="_blank" rel="noopener"
+         class="flex items-center justify-center gap-3 w-full py-4 rounded-full text-white font-bold text-base shadow-lg transition-transform hover:scale-105"
+         style="background:#25D366">
+        <svg class="w-6 h-6 fill-white flex-shrink-0" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.121.556 4.11 1.528 5.832L.057 23.786c-.094.317.204.599.517.492l5.82-1.886A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.374l-.36-.213-3.723 1.207 1.19-3.646-.234-.376A9.818 9.818 0 1112 21.818z"/>
+        </svg>
+        Confirmar pedido por WhatsApp
+      </a>
+      <p class="text-xs text-gray-400 mt-3">Pulsa el botón para que recibamos la confirmación de tu pedido.</p>
+
+      <div class="flex gap-3 mt-4 flex-wrap justify-center">
+        <a href="index.html"
+           class="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border-2 transition-colors"
+           style="border-color:#506352;color:#506352">
+          🏠 Volver a la tienda
+        </a>
+        <a href="catalogo-completo.html"
+           class="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
+           style="background:#506352;color:#fff">
+          🌸 Ver más flores
+        </a>
+      </div>
+    </div>
+
+    <!-- ❌ Error / sesión inválida -->
+    <div id="pago-error" class="bg-white rounded-2xl shadow-lg p-8 text-center" style="display:none">
+      <div class="text-5xl mb-4">⚠️</div>
+      <h1 class="text-xl font-bold text-red-700 mb-2">No se pudo verificar el pago</h1>
+      <p class="text-gray-500 text-sm mb-6">Si realizaste el pago y ves este mensaje, contacta con nosotros.</p>
+      <a href="tel:627546360" class="block w-full py-3 rounded-full text-white font-bold" style="background:#506352">
+        📞 Llamar: 627 54 63 60
+      </a>
+      <a href="index.html" class="block w-full py-3 rounded-full border-2 border-gray-300 text-gray-600 font-bold mt-3">
+        Volver al inicio
+      </a>
+    </div>
+
+    <!-- Cargando -->
+    <div id="pago-loading" class="bg-white rounded-2xl shadow-lg p-8 text-center">
+      <div class="w-12 h-12 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin mx-auto mb-4"></div>
+      <p class="text-gray-500 text-sm">Verificando tu pago...</p>
+    </div>
+
+  </div>
+
+<script>
+(function () {
+  const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  function fmtFecha(str) {
+    if (!str) return '—';
+    try {
+      const [y, mo, d] = str.split('-');
+      return `${parseInt(d)} de ${MESES[parseInt(mo)-1]} de ${y}`;
+    } catch { return str; }
+  }
+
+  function mostrarError() {
+    document.getElementById('pago-loading').style.display = 'none';
+    document.getElementById('pago-error').style.display   = 'block';
+  }
+
+  // Mostrar carrito pagado con PayPal
+  function _mostrarCarritoPayPal(refId, amount) {
+    let c = null;
+    try { c = JSON.parse(localStorage.getItem('alameda_cart_order') || 'null'); } catch {}
+    if (!c) {
+      mostrarOk({ producto:'Pedido del carrito', emoji:'🛒', precio: amount || sp.get('precio') || '',
+                  cliente:'', telefono:'', direccion:'', fecha:'', entrega:'domicilio', dedicatoria:'' },
+                refId, 'paypal');
+      return;
+    }
+    // Reutilizar el mismo bloque que Stripe carrito, adaptado para PayPal
+    document.getElementById('pago-loading').style.display = 'none';
+    document.getElementById('emoji-prod').textContent = '🛒';
+    const items = c.items || [];
+    const total = (c.total || items.reduce((s,i)=>s+i.price*i.quantity,0)).toFixed(2);
+    document.getElementById('r-producto').textContent  = items.map(i=>`${i.name} ×${i.quantity}`).join(', ');
+    document.getElementById('r-precio').textContent    = total + '€';
+    document.getElementById('r-fecha').textContent     = fmtFecha(c.fecha);
+    document.getElementById('r-cliente').textContent   = c.nombre || '';
+    document.getElementById('r-telefono').textContent  = c.telefono || '';
+    document.getElementById('r-session').textContent   = refId || '';
+    if (c.entrega === 'Recogida en tienda') {
+      document.getElementById('r-direccion-wrap').style.display = 'none';
+    } else { document.getElementById('r-direccion').textContent = c.direccion || ''; }
+    if (c.dedicatoria) {
+      document.getElementById('r-dedicatoria-wrap').style.display = 'block';
+      document.getElementById('r-dedicatoria').textContent = c.dedicatoria;
+    }
+    const lineas = items.map(i=>`   ${i.emoji||'🌸'} *${i.name}*  ×${i.quantity}  ·  ${(i.price*i.quantity).toFixed(2)}€`).join('\n');
+    const envio = c.entrega === 'Recogida en tienda' ? '🏪 *Recogida en tienda*' : `🚚 *Entrega a domicilio*\n📍 *Dirección:* ${c.direccion}`;
+    const msgCarrito =
+`╔══════════════════════╗
+   🌸 *FLORISTERÍA ALAMEDA* 🌸
+╚══════════════════════╝\n\n✨ _Pedido del carrito_\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🛒 *PRODUCTOS:*\n\n${lineas}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n📋 *DATOS DE ENTREGA*\n\n📅 *Fecha:* ${fmtFecha(c.fecha)}\n👤 *Destinatario/a:* ${c.nombre}\n📱 *Teléfono:* ${c.telefono}\n${envio}${c.dedicatoria?`\n✍️ *Dedicatoria:* _"${c.dedicatoria}"_`:''}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n💶 *TOTAL: ${total}€*\n💻 *PAGO:* ✅ CONFIRMADO POR PAYPAL\n   Ref: ${refId}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n_¡Gracias por confiar en nosotros!_ 🌿`;
+    document.getElementById('btn-whatsapp').href = `https://wa.me/34627546360?text=${encodeURIComponent(msgCarrito)}`;
+    document.getElementById('pago-ok').style.display = 'block';
+    _enviarEmailConfirmacion({ producto: items.map(i=>`${i.name} ×${i.quantity}`).join(', '), emoji:'🛒', precio:total, cliente:c.nombre, telefono:c.telefono, fecha:c.fecha, direccion:c.direccion, dedicatoria:c.dedicatoria }, 'paypal', refId);
+    try { localStorage.removeItem('alameda_cart_order'); } catch {}
+  }
+
+  function mostrarOk(p, sessionId, payMethod) {
+    document.getElementById('pago-loading').style.display = 'none';
+
+    document.getElementById('emoji-prod').textContent   = p.emoji || '🌸';
+    document.getElementById('r-producto').textContent   = p.producto || '';
+    document.getElementById('r-precio').textContent     = (p.precio || '0') + '€';
+    document.getElementById('r-fecha').textContent      = fmtFecha(p.fecha);
+    document.getElementById('r-cliente').textContent    = p.cliente || '';
+    document.getElementById('r-telefono').textContent   = p.telefono || '';
+    document.getElementById('r-session').textContent    = sessionId || '';
+
+    if (p.entrega === 'tienda') {
+      document.getElementById('r-direccion-wrap').style.display = 'none';
+    } else {
+      document.getElementById('r-direccion').textContent = p.direccion || '';
+    }
+
+    if (p.dedicatoria) {
+      document.getElementById('r-dedicatoria-wrap').style.display = 'block';
+      document.getElementById('r-dedicatoria').textContent = p.dedicatoria;
+    }
+
+    // Construir mensaje WhatsApp
+    const envioLinea = p.entrega === 'tienda'
+      ? '🏪 *Recogida en tienda*'
+      : `🚚 *Entrega a domicilio*\n📍 *Dirección:* ${p.direccion}`;
+
+    const modeloLinea = p.imagen
+      ? `\n🔗 *Ver modelo:* https://floristeriaalameda.com/${p.imagen}`
+      : '';
+
+    const pagoLinea = payMethod === 'paypal'
+      ? `💻 *PAGO:* ✅ CONFIRMADO POR PAYPAL\n   Ref: ${sessionId}`
+      : `💳 *PAGO:* ✅ CONFIRMADO POR STRIPE\n   Referencia: ${sessionId}`;
+
+    const msg =
+`╔══════════════════════╗
+   🌸 *FLORISTERÍA ALAMEDA* 🌸
+╚══════════════════════╝
+
+✨ _Nuevo pedido_
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+🛒 *PRODUCTO:*
+   ${p.emoji || '🌸'} *${p.producto}*
+   💶 *${p.precio}€* (portes incluidos)${modeloLinea}
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+📋 *DATOS DE ENTREGA*
+
+📅 *Fecha:* ${fmtFecha(p.fecha)}
+👤 *Destinatario/a:* ${p.cliente}
+📱 *Teléfono:* ${p.telefono}
+${envioLinea}${p.dedicatoria ? `\n✍️ *Dedicatoria:* _"${p.dedicatoria}"_` : ''}
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+${pagoLinea}
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+_¡Gracias por confiar en nosotros!_ 🌿`;
+
+    document.getElementById('btn-whatsapp').href =
+      `https://wa.me/34627546360?text=${encodeURIComponent(msg)}`;
+
+    document.getElementById('pago-ok').style.display = 'block';
+
+    // Enviar email de confirmación
+    _enviarEmailConfirmacion(p, payMethod, sessionId);
+  }
+
+  function _enviarEmailConfirmacion(p, payMethod, refId) {
+    let email = '';
+    // Intentar obtener email de localStorage (pedido individual o carrito)
+    try {
+      const orderEmail = JSON.parse(localStorage.getItem('alameda_order_email') || 'null');
+      if (orderEmail?.email) email = orderEmail.email;
+    } catch {}
+    if (!email) {
+      try {
+        const cartOrder = JSON.parse(localStorage.getItem('alameda_cart_order') || 'null');
+        if (cartOrder?.email) email = cartOrder.email;
+      } catch {}
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+
+    fetch('/api/send-order-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        tipo:        payMethod || 'tarjeta',
+        producto:    p.producto || 'Pedido',
+        emoji:       p.emoji || '🌸',
+        precio:      String(p.precio || '0'),
+        nombre:      p.cliente || p.nombre || '',
+        telefono:    p.telefono || '',
+        fecha:       fmtFecha(p.fecha),
+        direccion:   p.direccion || '',
+        dedicatoria: p.dedicatoria || '',
+        ref:         refId || '',
+      }),
+    }).catch(() => {});
+
+    try { localStorage.removeItem('alameda_order_email'); } catch {}
+  }
+
+  const sp        = new URLSearchParams(window.location.search);
+  const sessionId = sp.get('session_id');
+  const method    = sp.get('method');   // 'paypal' cuando viene de PayPal
+  const ppToken   = sp.get('token');    // Order ID que PayPal añade automáticamente
+
+  // ── Flujo PayPal ──────────────────────────────────────────────────
+  if (method === 'paypal' && ppToken) {
+    fetch(`/api/capture-paypal-order?token=${encodeURIComponent(ppToken)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.paid) { mostrarError(); return; }
+        const refId = 'PP-' + (data.captureId || data.orderId || ppToken).slice(0, 17).toUpperCase();
+
+        if (sp.get('source') === 'carrito') {
+          _mostrarCarritoPayPal(refId, data.amount);
+        } else {
+          mostrarOk({
+            producto:    sp.get('producto') || '',
+            emoji:       sp.get('emoji')    || '💻',
+            precio:      sp.get('precio')   || data.amount || '',
+            cliente:     sp.get('cliente')  || '',
+            telefono:    sp.get('telefono') || '',
+            direccion:   sp.get('direccion')|| '',
+            fecha:       sp.get('fecha')    || '',
+            entrega:     sp.get('entrega')  || 'domicilio',
+            dedicatoria: sp.get('dedicatoria') || '',
+            imagen:      sp.get('imagen')   || '',
+          }, refId, 'paypal');
+        }
+      })
+      .catch(mostrarError);
+    return; // Salir — no seguir con el flujo Stripe
+  }
+
+  // ── Flujo Stripe ─────────────────────────────────────────────────
+  if (!sessionId || !sessionId.startsWith('cs_')) { mostrarError(); return; }
+
+  fetch(`/api/verify-payment?session_id=${encodeURIComponent(sessionId)}`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.paid) { mostrarError(); return; }
+
+      if (sp.get('source') === 'carrito') {
+        // Pedido multi-producto desde carrito — datos en localStorage
+        let c = null;
+        try { c = JSON.parse(localStorage.getItem('alameda_cart_order') || 'null'); } catch {}
+        if (!c) { mostrarOk({ producto:'Pedido del carrito', emoji:'🛒', precio:sp.get('precio')||'0', cliente:sp.get('cliente')||'—', telefono:sp.get('telefono')||'—', direccion:'—', fecha:'', entrega:'domicilio', dedicatoria:'' }, sessionId, 'stripe'); return; }
+
+        // Mostrar resumen carrito
+        document.getElementById('pago-loading').style.display = 'none';
+        document.getElementById('emoji-prod').textContent = '🛒';
+        const items = c.items || [];
+        const total = (c.total || items.reduce((s,i) => s+i.price*i.quantity, 0)).toFixed(2);
+        document.getElementById('r-producto').textContent  = items.map(i => `${i.name} ×${i.quantity}`).join(', ');
+        document.getElementById('r-precio').textContent    = total + '€';
+        document.getElementById('r-fecha').textContent     = fmtFecha(c.fecha);
+        document.getElementById('r-cliente').textContent   = c.nombre||'';
+        document.getElementById('r-telefono').textContent  = c.telefono||'';
+        document.getElementById('r-session').textContent   = sessionId||'';
+        if (c.entrega === 'Recogida en tienda') {
+          document.getElementById('r-direccion-wrap').style.display = 'none';
+        } else { document.getElementById('r-direccion').textContent = c.direccion||''; }
+        if (c.dedicatoria) {
+          document.getElementById('r-dedicatoria-wrap').style.display = 'block';
+          document.getElementById('r-dedicatoria').textContent = c.dedicatoria;
+        }
+        const lineas = items.map(i => `   ${i.emoji||'🌸'} *${i.name}*  ×${i.quantity}  ·  ${(i.price*i.quantity).toFixed(2)}€`).join('\n');
+        const envioCarrito = c.entrega === 'Recogida en tienda' ? '🏪 *Recogida en tienda*' : `🚚 *Entrega a domicilio*\n📍 *Dirección:* ${c.direccion}`;
+        const msgCarrito =
+`╔══════════════════════╗
+   🌸 *FLORISTERÍA ALAMEDA* 🌸
+╚══════════════════════╝\n\n✨ _Pedido del carrito_\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🛒 *PRODUCTOS:*\n\n${lineas}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n📋 *DATOS DE ENTREGA*\n\n📅 *Fecha:* ${fmtFecha(c.fecha)}\n👤 *Destinatario/a:* ${c.nombre}\n📱 *Teléfono:* ${c.telefono}\n${envioCarrito}${c.dedicatoria?`\n✍️ *Dedicatoria:* _"${c.dedicatoria}"_`:''}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n💶 *TOTAL: ${total}€*\n💳 *PAGO:* ✅ CONFIRMADO POR STRIPE\n   Referencia: ${sessionId}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n_¡Gracias por confiar en nosotros!_ 🌿`;
+        document.getElementById('btn-whatsapp').href = `https://wa.me/34627546360?text=${encodeURIComponent(msgCarrito)}`;
+        document.getElementById('pago-ok').style.display = 'block';
+        _enviarEmailConfirmacion({ producto: items.map(i=>`${i.name} ×${i.quantity}`).join(', '), emoji:'🛒', precio:total, cliente:c.nombre, telefono:c.telefono, fecha:c.fecha, direccion:c.direccion, dedicatoria:c.dedicatoria }, 'stripe', sessionId);
+        try { localStorage.removeItem('alameda_cart_order'); } catch {}
+      } else {
+        mostrarOk({
+          producto:   sp.get('producto') || '',
+          emoji:      sp.get('emoji')    || '🌸',
+          precio:     sp.get('precio')   || '',
+          cliente:    sp.get('cliente')  || '',
+          telefono:   sp.get('telefono') || '',
+          direccion:  sp.get('direccion')|| '',
+          fecha:      sp.get('fecha')    || '',
+          entrega:    sp.get('entrega')  || 'domicilio',
+          dedicatoria:sp.get('dedicatoria') || '',
+          imagen:     sp.get('imagen')   || '',
+        }, sessionId, 'stripe');
+      }
+    })
+    .catch(mostrarError);
+})();
+</script>
+<div style="text-align:center;padding:12px 0;margin-top:24px"><p style="font-family:'Montserrat',sans-serif;font-size:11px;color:#9e9e9e;letter-spacing:0.02em">Diseñada por <a href="https://ruiperezstudio.es/" target="_blank" rel="noopener" style="color:#9e9e9e;text-decoration:none;font-weight:600;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#9e9e9e'">Ruiperez Studio</a></p></div>
+</body>
+</html>

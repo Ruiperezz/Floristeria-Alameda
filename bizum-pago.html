@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex"/>
+<title>Pagar con Bizum | Floristería Alameda</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://floristeriaalameda.com/favicon-32.png?v=2"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://floristeriaalameda.com/favicon-180.png?v=2"/>
+<meta name="msapplication-TileImage" content="https://floristeriaalameda.com/favicon-512.png?v=2"/>
+<meta name="msapplication-TileColor" content="#3a5244"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(160deg, #d0f5ef 0%, #a8ede4 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px 40px;
+}
+.card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 24px 28px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 16px 48px rgba(0,0,0,.13);
+}
+
+/* Header */
+.header { text-align: center; margin-bottom: 24px; }
+.header-emoji { font-size: 44px; margin-bottom: 10px; }
+.header h1 { font-size: 22px; font-weight: 800; color: #005f54; margin-bottom: 4px; }
+.header p  { font-size: 13px; color: #888; }
+
+/* Cajas de importe y número */
+.info-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.info-box {
+  flex: 1; border-radius: 14px; padding: 14px 12px; text-align: center;
+}
+.info-box.green { background: #d0f5ef; }
+.info-box.grey  { background: #f4f4f2; }
+.info-box .lbl  { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #888; margin-bottom: 4px; }
+.info-box .val  { font-size: 26px; font-weight: 800; color: #005f54; letter-spacing: .03em; }
+.info-box.grey .val { color: #1a1c1b; }
+.info-box .sub  { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+/* Pasos */
+.steps-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: #00C2A8; margin-bottom: 12px;
+}
+.steps { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.step {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #f9f9f7; border-radius: 12px; padding: 12px 14px;
+}
+.step-num {
+  min-width: 26px; height: 26px; border-radius: 50%;
+  background: #00C2A8; color: #fff;
+  font-size: 13px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-txt { font-size: 13px; color: #1a1c1b; line-height: 1.5; }
+.step-txt strong { color: #005f54; }
+
+/* Copiar número */
+.copy-wrap { margin-bottom: 16px; }
+.copy-btn {
+  width: 100%; padding: 14px; border-radius: 14px;
+  background: #005f54; color: #fff; border: none;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: opacity .2s, transform .1s;
+}
+.copy-btn:active { transform: scale(.97); opacity: .9; }
+.copy-confirm {
+  text-align: center; font-size: 12px; color: #00C2A8; font-weight: 600;
+  margin-top: 6px; height: 16px; transition: opacity .3s;
+}
+
+/* Botón secundario intentar app */
+.try-btn {
+  width: 100%; padding: 13px; border-radius: 14px;
+  background: transparent; color: #00C2A8;
+  border: 2px solid #00C2A8; font-size: 14px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px; margin-bottom: 14px;
+  transition: background .15s;
+}
+.try-btn:hover, .try-btn:active { background: #d0f5ef; }
+
+/* Botón volver */
+.back-btn {
+  display: block; width: 100%; padding: 12px;
+  text-align: center; color: #888; font-size: 13px;
+  font-weight: 600; text-decoration: none; border-radius: 10px;
+  border: 1.5px solid #e8e8e6; background: #fff; cursor: pointer;
+  margin-bottom: 16px; transition: background .15s;
+}
+.back-btn:hover { background: #f4f4f2; }
+
+/* Footer */
+.footer { font-size: 11px; color: #bbb; text-align: center; line-height: 1.7; }
+.footer strong { color: #aaa; }
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="card">
+
+  <div class="header">
+    <div class="header-emoji">📲</div>
+    <h1>Pagar con Bizum</h1>
+    <p>Envía el importe desde tu app bancaria</p>
+  </div>
+
+  <!-- Importe + Número -->
+  <div class="info-row">
+    <div class="info-box green">
+      <div class="lbl">Importe</div>
+      <div class="val" id="show-amount">—</div>
+    </div>
+    <div class="info-box grey">
+      <div class="lbl">Número Bizum</div>
+      <div class="val" style="font-size:22px;letter-spacing:.06em">627 54 63 60</div>
+      <div class="sub">Floristería Alameda</div>
+    </div>
+  </div>
+
+  <!-- Pasos -->
+  <p class="steps-title">¿Cómo hacerlo?</p>
+  <ul class="steps">
+    <li class="step">
+      <div class="step-num">1</div>
+      <div class="step-txt">Abre la app de tu banco (CaixaBank, BBVA, Santander, ING…)</div>
+    </li>
+    <li class="step">
+      <div class="step-num">2</div>
+      <div class="step-txt">Ve a <strong>Bizum → Enviar dinero</strong></div>
+    </li>
+    <li class="step">
+      <div class="step-num">3</div>
+      <div class="step-txt">Introduce el número <strong>627 54 63 60</strong> y el importe <strong id="step-amount">—</strong></div>
+    </li>
+    <li class="step">
+      <div class="step-num">4</div>
+      <div class="step-txt">Concepto: <strong id="show-concept">Floristeria Alameda</strong>. Confirma el pago.</div>
+    </li>
+    <li class="step">
+      <div class="step-num">5</div>
+      <div class="step-txt">Vuelve aquí y completa tu pedido marcando "He completado el pago".</div>
+    </li>
+  </ul>
+
+  <!-- Copiar número -->
+  <div class="copy-wrap">
+    <button class="copy-btn" onclick="copiarNumero()">
+      📋 Copiar número: 627 54 63 60
+    </button>
+    <p class="copy-confirm" id="copy-ok" style="opacity:0">✅ ¡Número copiado!</p>
+  </div>
+
+  <!-- Intentar abrir app (puede funcionar en algunos bancos) -->
+  <button class="try-btn" id="try-btn" onclick="intentarApp()">
+    📱 Intentar abrir app de Bizum
+  </button>
+
+  <!-- Volver -->
+  <button class="back-btn" onclick="volverAlPedido()">← Volver al pedido</button>
+
+  <div class="footer">
+    <strong>Floristería Alameda · Cartagena</strong><br/>
+    Una vez enviado el Bizum, vuelve al pedido<br/>
+    e introduce el localizador de confirmación.
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const p      = new URLSearchParams(location.search);
+  const amount = parseFloat(p.get('amount') || '0');
+  const concept= (p.get('concept') || 'Floristeria Alameda').replace(/\+/g, ' ');
+
+  // Validar que la URL de retorno pertenece al mismo origen (evita open redirect)
+  function _safeReturn(raw) {
+    if (!raw) return '/';
+    try {
+      const u = new URL(raw, window.location.origin);
+      return u.origin === window.location.origin ? u.href : '/';
+    } catch { return '/'; }
+  }
+
+  const amountFmt = amount > 0 && amount < 10000 ? amount.toFixed(2) + '€' : '—';
+  document.getElementById('show-amount').textContent = amountFmt;
+  document.getElementById('step-amount').textContent = amountFmt;
+  document.getElementById('show-concept').textContent = concept;
+
+  window._returnUrl = _safeReturn(p.get('return'));
+  window._bizumUrl  = `bizum://transfer?phoneNumber=627546360&amount=${amount.toFixed(2)}&concept=${encodeURIComponent(concept)}`;
+})();
+
+function volverAlPedido() {
+  // Cerrar esta pestaña devuelve al usuario a la pestaña del pedido
+  // con todo el formulario intacto — sin recargar nada
+  window.close();
+
+  // Fallback: si window.close() no funciona (pestaña abierta directamente,
+  // no por window.open), redirigir a la URL de origen o al inicio
+  setTimeout(function () {
+    window.location.href = window._returnUrl || '/';
+  }, 250);
+}
+
+function copiarNumero() {
+  const num = '627546360';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(num).then(mostrarCopiado).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+}
+
+function fallbackCopy() {
+  // Fallback para iOS Safari y navegadores sin clipboard API
+  const ta = document.createElement('textarea');
+  ta.value = '627546360';
+  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); mostrarCopiado(); } catch {}
+  document.body.removeChild(ta);
+}
+
+function mostrarCopiado() {
+  const el = document.getElementById('copy-ok');
+  el.style.opacity = '1';
+  setTimeout(() => { el.style.opacity = '0'; }, 2500);
+}
+
+function intentarApp() {
+  const btn = document.getElementById('try-btn');
+  btn.textContent = '⏳ Intentando abrir Bizum…';
+  btn.disabled = true;
+  // Intentar abrir la app
+  window.location.href = window._bizumUrl || 'bizum://';
+  // Restaurar botón si la app no se abrió
+  setTimeout(() => {
+    btn.textContent = '📱 Intentar de nuevo';
+    btn.disabled = false;
+  }, 3000);
+}
+</script>
+<div style="text-align:center;padding:12px 0;margin-top:24px"><p style="font-family:'Montserrat',sans-serif;font-size:11px;color:#9e9e9e;letter-spacing:0.02em">Diseñada por <a href="https://ruiperezstudio.es/" target="_blank" rel="noopener" style="color:#9e9e9e;text-decoration:none;font-weight:600;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#9e9e9e'">Ruiperez Studio</a></p></div>
+</body>
+</html>
