@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /carrito.html
-
-Sitemap: https://floristeria-alameda.vercel.app/sitemap.xml
