@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /carrito.html
+
+Sitemap: https://floristeriaalameda.com/sitemap.xml

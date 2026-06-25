@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#506352"/>
 <title id="page-title">Producto | Floristería Alameda Cartagena</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://floristeriaalameda.com/favicon-32.png?v=2"/>
 <link rel="apple-touch-icon" sizes="180x180" href="https://floristeriaalameda.com/favicon-180.png?v=2"/>
@@ -40,6 +41,7 @@ tailwind.config = {
 }
 </script>
 <style>
+  html { scroll-behavior: smooth; }
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 
@@ -694,5 +696,6 @@ function addRecToCart(id) {
   showToast(p.nombre);
 }
 </script>
+<script src="cookie-consent.js"></script>
 </body>
 </html>
