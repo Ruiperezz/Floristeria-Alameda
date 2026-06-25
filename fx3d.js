@@ -211,6 +211,222 @@ function initCounters(root) {
   document.head.appendChild(style);
 })();
 
+// --- 7. HERO 3D PETALS BACKGROUND ---
+// Pétalos y hojas flotantes con proyección 3D real, iluminación dinámica
+// y paralaje con el ratón. Canvas sobre la imagen de fondo, bajo el contenido.
+function initHeroParticles() {
+  var hero = document.getElementById('inicio');
+  if (!hero || hero.querySelector('.hero-petals-canvas')) return;
+
+  var canvas = document.createElement('canvas');
+  canvas.className = 'hero-petals-canvas';
+  Object.assign(canvas.style, {
+    position: 'absolute',
+    top: '0', left: '0',
+    width: '100%', height: '100%',
+    zIndex: '2',
+    pointerEvents: 'none'
+  });
+  // Insertar entre la imagen de fondo (z-0) y el card de contenido (z-10)
+  var contentCard = hero.querySelector('.relative.z-10');
+  if (contentCard) {
+    hero.insertBefore(canvas, contentCard);
+  } else {
+    hero.appendChild(canvas);
+  }
+
+  var ctx = canvas.getContext('2d');
+  var W, H, cx, cy;
+  var mouse = { x: 0.5, y: 0.5 };
+  var animId = null;
+  var frame = 0;
+  var petals = [];
+  var sorted = [];
+  var NUM = 68;
+  var FOCAL = 520;
+
+  // Paleta de colores de la floristería (rosa, blanco, verde salvia, crema, malva)
+  var PALETTE = [
+    [350, 52, 82],  // rosa suave
+    [342, 44, 72],  // rosa medio
+    [358, 32, 91],  // blanco rosado
+    [0,   0,  96],  // blanco puro
+    [130, 22, 62],  // verde salvia
+    [125, 28, 74],  // verde salvia claro
+    [32,  28, 86],  // crema
+    [318, 28, 76],  // malva suave
+  ];
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  // Dibuja la forma del pétalo a escala 1 (se aplica transform fuera)
+  function petalShape(ctx, type) {
+    ctx.beginPath();
+    if (type === 0) {
+      // Pétalo de rosa - gota asimétrica
+      ctx.moveTo(0, -1);
+      ctx.bezierCurveTo( 0.72, -0.38,  0.82,  0.32, 0,  0.62);
+      ctx.bezierCurveTo(-0.82,  0.32, -0.72, -0.38, 0, -1);
+    } else if (type === 1) {
+      // Hoja - óvalo apuntado
+      ctx.moveTo(0, -1);
+      ctx.bezierCurveTo( 0.56, -0.28,  0.56, 0.28, 0, 1);
+      ctx.bezierCurveTo(-0.56,  0.28, -0.56, -0.28, 0, -1);
+    } else {
+      // Pétalo redondeado - elipse levemente inclinada
+      ctx.ellipse(0, -0.08, 0.42, 0.72, 0, 0, Math.PI * 2);
+      return; // la elipse es ya un path cerrado
+    }
+    ctx.closePath();
+  }
+
+  function makePetal(startY) {
+    var col = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+    return {
+      x:   rnd(-0.9, 0.9),
+      y:   startY !== undefined ? startY : rnd(-1.3, 0.6),
+      z:   rnd(-300, 300),
+      vx:  rnd(-0.00025, 0.00025),
+      vy:  rnd(0.00035, 0.00120),
+      vz:  rnd(-0.0018, 0.0018),
+      rx:  rnd(0, Math.PI * 2),
+      ry:  rnd(0, Math.PI * 2),
+      rz:  rnd(0, Math.PI * 2),
+      vrx: rnd(-0.013, 0.013),
+      vry: rnd(-0.019, 0.019),
+      vrz: rnd(-0.007, 0.007),
+      sz:  rnd(8, 23),
+      type: Math.floor(Math.random() * 3),
+      h: col[0] + rnd(-10, 10),
+      s: col[1],
+      l: col[2],
+      wob:    rnd(0, Math.PI * 2),
+      wobSpd: rnd(0.010, 0.024),
+      wobAmt: rnd(0.0004, 0.0013),
+    };
+  }
+
+  function resize() {
+    W = canvas.width  = hero.clientWidth  || window.innerWidth;
+    H = canvas.height = hero.clientHeight || window.innerHeight;
+    cx = W / 2;
+    cy = H / 2;
+  }
+
+  function tick() {
+    frame++;
+    ctx.clearRect(0, 0, W, H);
+
+    if (frame % 3 === 0) {
+      sorted = petals.slice().sort(function(a, b) { return a.z - b.z; });
+    }
+
+    var parallaxX = (mouse.x - 0.5) * 28;
+    var parallaxY = (mouse.y - 0.5) * 18;
+
+    for (var i = 0; i < sorted.length; i++) {
+      var p = sorted[i];
+
+      p.wob += p.wobSpd;
+      p.x  += p.vx + Math.sin(p.wob) * p.wobAmt;
+      p.y  += p.vy;
+      p.z  += p.vz;
+      p.rx += p.vrx;
+      p.ry += p.vry;
+      p.rz += p.vrz;
+
+      if (p.z >  330) p.vz = -Math.abs(p.vz);
+      if (p.z < -330) p.vz =  Math.abs(p.vz);
+
+      if (p.y > 1.35) {
+        Object.assign(p, makePetal(-1.35));
+        continue;
+      }
+
+      var scale = FOCAL / (FOCAL + p.z);
+      var px = cx + (p.x * cx + parallaxX) * scale;
+      var py = cy + (p.y * cy + parallaxY) * scale;
+
+      if (px < -80 || px > W + 80 || py < -80 || py > H + 80) continue;
+
+      var displaySz = p.sz * scale;
+      if (displaySz < 1.5) continue;
+
+      // Aplanado 3D: simula rotación del pétalo sobre sus ejes
+      var flatX = Math.abs(Math.cos(p.ry));
+      var flatY = Math.abs(Math.cos(p.rx));
+
+      var alpha = Math.min(0.86, 0.22 + scale * 0.72);
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(px, py);
+      ctx.rotate(p.rz);
+      ctx.scale(displaySz * (0.48 + flatX * 0.52), displaySz * (0.22 + flatY * 0.78));
+
+      petalShape(ctx, p.type);
+
+      // Gradiente radial para simular volumen e iluminación
+      var light = 0.62 + flatX * 0.22 + flatY * 0.16;
+      var lBase = p.l * light;
+      var lHi   = Math.min(97, lBase + 15);
+      var lLo   = Math.max(36, lBase - 13);
+
+      var grd = ctx.createRadialGradient(-0.18, -0.28, 0.04, 0.05, 0.05, 0.95);
+      grd.addColorStop(0, 'hsl(' + p.h + ',' + p.s + '%,' + lHi + '%)');
+      grd.addColorStop(1, 'hsl(' + p.h + ',' + p.s + '%,' + lLo + '%)');
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      // Nervadura central sutil para hojas y pétalos de rosa
+      if (p.type < 2 && flatY > 0.38) {
+        ctx.globalAlpha = alpha * 0.22;
+        ctx.strokeStyle = 'hsl(' + p.h + ',18%,' + Math.min(97, lBase + 22) + '%)';
+        ctx.lineWidth = 0.07;
+        ctx.beginPath();
+        ctx.moveTo(0, -0.88);
+        ctx.lineTo(0, 0.78);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    animId = requestAnimationFrame(tick);
+  }
+
+  // Reducir partículas en móvil (rendimiento) y desactivar con prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth < 768) NUM = 28;
+
+  // Inicialización
+  resize();
+  for (var i = 0; i < NUM; i++) petals.push(makePetal());
+  sorted = petals.slice();
+
+  window.addEventListener('resize', resize);
+
+  hero.addEventListener('mousemove', function(e) {
+    var r = hero.getBoundingClientRect();
+    mouse.x = (e.clientX - r.left) / r.width;
+    mouse.y = (e.clientY - r.top)  / r.height;
+  });
+
+  // Pausar cuando el hero no está visible (ahorro de CPU)
+  var vis = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        if (!animId) animId = requestAnimationFrame(tick);
+      } else {
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+      }
+    });
+  }, { threshold: 0.05 });
+  vis.observe(hero);
+
+  animId = requestAnimationFrame(tick);
+}
+
 // --- Auto-init ---
 function initAll(root) {
   root = root || document;
@@ -220,6 +436,7 @@ function initAll(root) {
   initScrollReveal(root);
   initCounters(root);
   initCardImageParallax(root);
+  if (root === document) initHeroParticles();
 }
 
 if (document.readyState === 'loading') {
@@ -235,5 +452,6 @@ window.fx3d = {
   initRipple: initRipple,
   initScrollReveal: initScrollReveal,
   initCounters: initCounters,
-  initCardImageParallax: initCardImageParallax
+  initCardImageParallax: initCardImageParallax,
+  initHeroParticles: initHeroParticles
 };

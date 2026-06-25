@@ -4,6 +4,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Carrito | Floristería Alameda</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://floristeriaalameda.com/favicon-32.png?v=2"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://floristeriaalameda.com/favicon-180.png?v=2"/>
+<meta name="msapplication-TileImage" content="https://floristeriaalameda.com/favicon-512.png?v=2"/>
+<meta name="msapplication-TileColor" content="#3a5244"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -48,7 +52,14 @@ tailwind.config = {
   .pago-opt.active.tarjeta { background: #1A1F71; color: #fff; border-color: #1A1F71; }
   input:focus, textarea:focus { border-color: #506352 !important; box-shadow: 0 0 0 2px rgba(80,99,82,0.15); }
   input.error, textarea.error { border-color: #ba1a1a !important; }
+  input.valid { border-color: #00C2A8 !important; }
+  input, textarea { transition: border-color .2s; }
   input, textarea { padding: 12px !important; font-size: 16px !important; } /* 16px evita zoom en iOS */
+  /* Feedback táctil en bloques de pago */
+  #cart-bizum-link, #cart-paypal-btn { transition: transform .1s, box-shadow .1s; }
+  #cart-bizum-link:active, #cart-paypal-btn:active { transform: scale(.97); box-shadow: 0 2px 8px rgba(0,0,0,.12) !important; }
+  #cart-confirm-btn:not([disabled]):active { transform: scale(.98); }
+  a, button { -webkit-tap-highlight-color: transparent; }
   @media (max-width:639px){
     body { padding-top:68px; }
     .px-margin { padding-left:18px !important; padding-right:18px !important; }
@@ -75,7 +86,7 @@ tailwind.config = {
         <span class="material-symbols-outlined filled">shopping_cart</span>
         <span class="cart-count hidden absolute -top-1 -right-1 bg-secondary text-on-primary text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
       </a>
-      <a href="https://wa.me/34627546360" class="hidden sm:flex bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container transition-colors items-center gap-xs">WhatsApp</a>
+      <a href="https://wa.me/34627546360?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20vuestros%20arreglos%20florales" target="_blank" rel="noopener noreferrer" class="hidden sm:flex bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-full hover:bg-primary-container transition-colors items-center gap-xs">WhatsApp</a>
       <button id="mob-btn" onclick="toggleMobNav()" class="md:hidden flex flex-col justify-center gap-1.5 p-2 rounded-lg" aria-label="Menú">
         <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham1"></span>
         <span class="block w-6 h-0.5 bg-primary transition-all duration-300" id="ham2"></span>
@@ -90,8 +101,8 @@ tailwind.config = {
     <a href="tel:627546360" class="flex items-center gap-2 py-3 font-semibold text-primary border-b border-outline-variant/30" style="font-size:15px">
       <span class="material-symbols-outlined text-lg">call</span>627 54 63 60
     </a>
-    <a href="https://wa.me/34627546360" target="_blank" class="mt-2 bg-primary text-on-primary rounded-full py-3 text-center font-semibold flex items-center justify-center gap-2" style="font-size:14px">
-      <span class="material-symbols-outlined text-sm">chat</span>Pedir por WhatsApp
+    <a href="https://wa.me/34627546360?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20vuestros%20arreglos%20florales" target="_blank" rel="noopener noreferrer" class="mt-2 bg-primary text-on-primary rounded-full py-3 text-center font-semibold flex items-center justify-center gap-2" style="font-size:14px">
+      <span class="material-symbols-outlined text-sm" aria-hidden="true">chat</span>Pedir por WhatsApp
     </a>
   </div>
 </nav>
@@ -195,30 +206,137 @@ tailwind.config = {
             </div>
 
             <div class="flex flex-col gap-xs">
+              <label class="font-label-sm text-label-sm text-on-surface-variant">
+                Email
+                <span class="font-label-sm text-on-surface-variant opacity-60 normal-case" style="font-size:11px">&nbsp;(opcional — recibirás confirmación)</span>
+              </label>
+              <input id="f-email" type="email" placeholder="tu@email.com" autocomplete="email"
+                     class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary"/>
+            </div>
+
+            <div class="flex flex-col gap-xs">
               <label class="font-label-sm text-label-sm text-on-surface-variant">Forma de pago <span class="text-error">*</span></label>
+              <!-- Strip seguridad -->
+              <div class="flex items-center justify-center gap-sm flex-wrap py-xs px-sm rounded-lg mb-xs" style="background:#f4f4f2;font-size:10px;color:#666;font-weight:600">
+                <span>🔒 Pago seguro</span>
+                <span class="font-bold italic text-[#1A1F71]">VISA</span>
+                <div class="flex"><div class="w-3.5 h-3.5 rounded-full bg-[#EB001B]"></div><div class="w-3.5 h-3.5 rounded-full bg-[#F79E1B] -ml-1.5 opacity-90"></div></div>
+                <span class="font-extrabold text-[10px]"><span style="color:#003087">Pay</span><span style="color:#009CDE">Pal</span></span>
+                <span class="font-extrabold text-white text-[10px] px-1.5 py-0.5 rounded" style="background:#00C2A8">bizum</span>
+              </div>
               <div class="pago-grid grid grid-cols-3 sm:grid-cols-3 gap-sm">
-                <button onclick="selectPago(this,'Bizum')" id="pago-bizum"
-                  class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
-                  <span class="font-extrabold tracking-tight">bizum</span>
-                </button>
+                <div class="relative">
+                  <button onclick="selectPago(this,'Bizum')" id="pago-bizum"
+                    class="pago-opt w-full flex items-center justify-center gap-xs px-sm py-sm rounded-lg border-2 font-label-sm text-label-sm transition-all"
+                    style="border-color:#00C2A8;background:#f0fdfb;color:#005f54;font-weight:700">
+                    📲 Bizum
+                  </button>
+                  <span class="absolute -top-2 left-1/2 -translate-x-1/2 text-white font-bold rounded-full px-2 whitespace-nowrap" style="background:#00C2A8;font-size:8px;padding:1px 6px">⚡ MÁS USADO</span>
+                </div>
                 <button onclick="selectPago(this,'Tarjeta')" id="pago-tarjeta"
                   class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
-                  <span class="material-symbols-outlined text-sm">credit_card</span>Tarjeta
+                  💳 Tarjeta
                 </button>
                 <button onclick="selectPago(this,'PayPal')" id="pago-paypal"
                   class="pago-opt flex items-center justify-center gap-xs px-sm py-sm rounded-lg border font-label-sm text-label-sm transition-all">
-                  <span class="font-extrabold text-sm paypal-label">PayPal</span>
+                  💻 PayPal
                 </button>
               </div>
+            </div>
+
+            <!-- ══ BLOQUE BIZUM ══ -->
+            <div id="cart-block-bizum" style="display:none;background:#d0f5ef;border:1.5px solid #00C2A8;border-radius:.75rem;padding:14px">
+              <p style="font-family:'Montserrat';font-size:13px;font-weight:700;color:#005f54;margin-bottom:6px">📲 Paga ahora por Bizum</p>
+              <p style="font-family:'Montserrat';font-size:13px;color:#1a1c1b;margin-bottom:10px">
+                Envía <strong id="cart-bizum-imp" style="color:#005f54;font-size:15px"></strong>
+                al número <strong style="color:#005f54">627 54 63 60</strong>
+              </p>
+
+              <!-- MÓVIL: botón directo a app Bizum -->
+              <button id="cart-bizum-link" type="button" onclick="abrirBizumCarrito()"
+                      style="width:100%;padding:13px;border:none;border-radius:9999px;
+                             background:#00C2A8;color:#fff;font-family:'Montserrat';
+                             font-size:14px;font-weight:700;cursor:pointer;
+                             display:flex;align-items:center;justify-content:center;gap:8px;
+                             transition:opacity .2s,transform .1s;margin-bottom:10px;
+                             box-shadow:0 4px 14px rgba(0,194,168,.35)">
+                📱 Abrir Bizum y pagar ahora
+              </button>
+
+              <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-family:'Montserrat';font-size:13px;font-weight:600;color:#1a1c1b">
+                <input type="checkbox" id="cart-check-bizum" onchange="cartCheckPago('bizum')"
+                       style="width:18px;height:18px;accent-color:#00C2A8;flex-shrink:0;margin-top:1px"/>
+                <span>✅ He enviado <strong id="cart-bizum-imp2" style="color:#005f54"></strong> por Bizum al 627 54 63 60</span>
+              </label>
+              <div id="cart-bizum-ref-wrap" style="display:none;margin-top:10px">
+                <label style="font-family:'Montserrat';font-size:12px;font-weight:600;color:#434842;display:block;margin-bottom:4px">
+                  Localizador del Bizum
+                  <span style="font-size:10px;font-weight:400;color:#888;margin-left:4px">(opcional)</span>
+                </label>
+                <input id="cart-bizum-ref" type="text"
+                       placeholder="Ej: 4KDTG1748 — déjalo vacío si no lo ves"
+                       oninput="cartValidarRef()" maxlength="30"
+                       style="width:100%;border:1.5px solid #00C2A8;border-radius:.5rem;
+                              padding:8px 12px;font-family:'Montserrat';font-size:13px;
+                              color:#1a1c1b;background:#fff;outline:none;box-sizing:border-box"/>
+                <p style="font-family:'Montserrat';font-size:11px;color:#666;margin-top:4px;line-height:1.5">
+                  📱 <strong>CaixaBank, BBVA, Santander</strong>: aparece tras confirmar el pago.<br/>
+                  ⚠️ <strong>Revolut y N26</strong>: no muestran localizador — puedes dejarlo vacío.
+                </p>
+              </div>
+            </div>
+
+            <!-- ══ BLOQUE TARJETA ══ -->
+            <div id="cart-block-tarjeta" style="display:none;background:#f0f1ff;border:1.5px solid #1A1F71;border-radius:.75rem;padding:14px">
+              <p style="font-family:'Montserrat';font-size:13px;font-weight:700;color:#1A1F71;margin-bottom:6px">💳 Pago seguro con tarjeta</p>
+              <p style="font-family:'Montserrat';font-size:12px;color:#434842;line-height:1.6;margin-bottom:12px">
+                Serás redirigido a la página oficial de <strong>Stripe</strong>. Tus datos de tarjeta son procesados por Stripe directamente, nunca por nosotros.
+              </p>
+              <button id="cart-btn-stripe" onclick="cartPagarStripe()"
+                      style="width:100%;padding:12px;border:none;border-radius:9999px;
+                             background:#1A1F71;color:#fff;font-family:'Montserrat';
+                             font-size:14px;font-weight:700;cursor:pointer;
+                             display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s">
+                🔒 Pagar <span id="cart-stripe-imp"></span> con tarjeta
+              </button>
+              <p id="cart-stripe-err" style="display:none;font-family:'Montserrat';font-size:11px;color:#ba1a1a;background:#ffdad6;padding:8px;border-radius:.5rem;margin-top:8px;line-height:1.5"></p>
+              <p style="font-family:'Montserrat';font-size:10px;color:#888;text-align:center;margin-top:8px">🔒 SSL · PCI DSS · Procesado por Stripe</p>
+            </div>
+
+            <!-- ══ BLOQUE PAYPAL — redirige a PayPal Checkout ══ -->
+            <div id="cart-block-paypal" style="display:none;background:#e3eef9;border:1.5px solid #003087;border-radius:.75rem;padding:14px">
+              <p style="font-family:'Montserrat';font-size:13px;font-weight:700;color:#003087;margin-bottom:6px">💻 Pago seguro con PayPal</p>
+              <p style="font-family:'Montserrat';font-size:12px;color:#434842;line-height:1.6;margin-bottom:12px">
+                Serás redirigido a <strong>PayPal</strong> para pagar de forma segura.
+                Puedes usar tu cuenta PayPal o cualquier tarjeta desde PayPal.
+              </p>
+              <button id="cart-btn-paypal" onclick="cartPagarPayPal()"
+                      style="width:100%;padding:12px;border:none;border-radius:9999px;
+                             background:#003087;color:#fff;font-family:'Montserrat';
+                             font-size:14px;font-weight:700;cursor:pointer;
+                             display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s">
+                💻 Pagar <span id="cart-paypal-imp"></span> con PayPal
+              </button>
+              <p id="cart-paypal-err" style="display:none;font-family:'Montserrat';font-size:11px;color:#ba1a1a;background:#ffdad6;padding:8px;border-radius:.5rem;margin-top:8px;line-height:1.5"></p>
+              <p style="font-family:'Montserrat';font-size:10px;color:#888;text-align:center;margin-top:8px">🔒 SSL · PCI DSS · Procesado por PayPal</p>
             </div>
 
             <p id="form-error" class="hidden font-label-sm text-label-sm text-error bg-error-container px-sm py-xs rounded-lg">Por favor, rellena todos los campos obligatorios.</p>
           </div>
 
-          <button onclick="confirmarPedido()"
-            class="bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-sm w-full shadow-md text-base">
-            <span class="material-symbols-outlined filled text-sm">chat</span>
-            Confirmar pedido por WhatsApp
+          <p class="font-label-sm text-label-sm text-center" style="font-size:10px;color:#aaa;line-height:1.6">
+            Al confirmar aceptas nuestra
+            <a href="privacidad.html" target="_blank" class="hover:text-primary transition-colors" style="color:#506352;text-decoration:underline">política de privacidad</a>
+            y <a href="aviso-legal.html" target="_blank" class="hover:text-primary transition-colors" style="color:#506352;text-decoration:underline">aviso legal</a>.
+          </p>
+
+          <button id="cart-confirm-btn" disabled onclick="confirmarPedido()"
+            style="width:100%;padding:15px;border:none;border-radius:9999px;
+                   background:#9e9e9e;color:#fff;font-family:'Montserrat';
+                   font-size:14px;font-weight:700;cursor:not-allowed;
+                   display:flex;align-items:center;justify-content:center;gap:8px;
+                   transition:all .3s;opacity:.65">
+            <span id="cart-confirm-txt">Completa el pago para continuar</span>
           </button>
         </div>
 
@@ -234,8 +352,11 @@ tailwind.config = {
 <footer class="bg-surface-container-highest w-full px-margin">
   <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
     <a href="index.html" class="font-headline-md text-headline-md text-primary">Floristería Alameda</a>
-    <span class="font-body-md text-body-md text-on-surface-variant">© 2024 Floristería Alameda. Cartagena, España.</span>
+    <span class="font-body-md text-body-md text-on-surface-variant">© 2026 Floristería Alameda. Cartagena, España.</span>
   </div>
+    <div style="border-top:1px solid rgba(67,72,66,0.12);margin-top:16px;padding-top:10px;text-align:center">
+      <p style="font-family:'Montserrat',sans-serif;font-size:11px;color:#9e9e9e;letter-spacing:0.02em">Diseñada por <a href="https://ruiperezstudio.es/" target="_blank" rel="noopener" style="color:#9e9e9e;text-decoration:none;font-weight:600;transition:color 0.2s" onmouseover="this.style.color='#506352'" onmouseout="this.style.color='#9e9e9e'">Ruiperez Studio</a></p>
+    </div>
 </footer>
 
 <script src="cart.js"></script>
@@ -257,7 +378,8 @@ document.addEventListener('click', e => {
 <script>
   let deliveryType = 'Entrega a domicilio';
   let pagoType = 'Bizum';
-  const DELIVERY_COST = 0; // Portes incluidos en todos los arreglos
+  let cartPagoListo = false;
+  const DELIVERY_COST = 0;
 
   function selectDelivery(btn, tipo) {
     deliveryType = tipo;
@@ -272,20 +394,202 @@ document.addEventListener('click', e => {
   const PAGO_COLORES = {
     'Bizum':   { bg: '#00C2A8', border: '#00C2A8' },
     'Tarjeta': { bg: '#1A1F71', border: '#1A1F71' },
-    'PayPal':  { bg: 'linear-gradient(135deg, #003087 0%, #009CDE 100%)', border: '#0070BA' },
+    'PayPal':  { bg: '#003087', border: '#003087' },
   };
 
   function selectPago(btn, tipo) {
     pagoType = tipo;
+    cartPagoListo = false;
+    cartBloquear();
+
+    // Estilos botones
     document.querySelectorAll('.pago-opt').forEach(b => {
-      b.style.background = '#ffffff';
-      b.style.color = '#434842';
-      b.style.borderColor = '#c3c8c0';
+      b.style.background = '#fff'; b.style.color = '#434842'; b.style.borderColor = '#c3c8c0';
     });
     const c = PAGO_COLORES[tipo];
-    btn.style.background = c.bg;
-    btn.style.color = '#ffffff';
-    btn.style.borderColor = c.border;
+    btn.style.background = c.bg; btn.style.color = '#fff'; btn.style.borderColor = c.border;
+
+    // Ocultar todos los bloques
+    ['bizum','tarjeta','paypal'].forEach(t => {
+      const el = document.getElementById('cart-block-' + t);
+      if (el) el.style.display = 'none';
+    });
+
+    // Mostrar bloque del tipo seleccionado
+    const block = document.getElementById('cart-block-' + tipo.toLowerCase());
+    if (!block) return;
+    block.style.display = 'block';
+
+    const total = getTotal();
+    const imp = total.toFixed(2) + '€';
+
+    if (tipo === 'Bizum') {
+      document.getElementById('cart-bizum-imp').textContent  = imp;
+      document.getElementById('cart-bizum-imp2').textContent = imp;
+      document.getElementById('cart-check-bizum').checked = false;
+      document.getElementById('cart-bizum-ref-wrap').style.display = 'none';
+      const bRef = document.getElementById('cart-bizum-ref'); if (bRef) bRef.value = '';
+      const cartBizumPageUrl = `${window.location.origin}/bizum-pago.html?amount=${total.toFixed(2)}&concept=Floristeria+Alameda&return=${encodeURIComponent(window.location.href)}`;
+      document.getElementById('cart-bizum-link').dataset.url = cartBizumPageUrl;
+    }
+    if (tipo === 'Tarjeta') {
+      document.getElementById('cart-stripe-imp').textContent = imp;
+      document.getElementById('cart-stripe-err').style.display = 'none';
+      const sb = document.getElementById('cart-btn-stripe');
+      sb.disabled = false; sb.style.opacity = '1'; sb.style.cursor = 'pointer';
+    }
+    if (tipo === 'PayPal') {
+      document.getElementById('cart-paypal-imp').textContent = imp;
+      document.getElementById('cart-paypal-err').style.display = 'none';
+      const pb = document.getElementById('cart-btn-paypal');
+      pb.disabled = false; pb.style.opacity = '1'; pb.style.cursor = 'pointer';
+      pb.innerHTML = `💻 Pagar ${imp} con PayPal`;
+    }
+  }
+
+  function cartBloquear() {
+    const b = document.getElementById('cart-confirm-btn');
+    if (!b) return;
+    b.disabled = true; b.style.background = '#9e9e9e'; b.style.opacity = '.65'; b.style.cursor = 'not-allowed';
+    document.getElementById('cart-confirm-txt').textContent = 'Completa el pago para continuar';
+  }
+
+  function cartActivar() {
+    const b = document.getElementById('cart-confirm-btn');
+    if (!b) return;
+    b.disabled = false; b.style.background = '#25D366'; b.style.opacity = '1'; b.style.cursor = 'pointer';
+    document.getElementById('cart-confirm-txt').textContent = '✅ Pago confirmado — Confirmar pedido por WhatsApp';
+  }
+
+  function cartCheckPago(tipo) {
+    const checked = document.getElementById('cart-check-' + tipo)?.checked;
+    const refWrap = document.getElementById('cart-' + tipo + '-ref-wrap');
+    if (refWrap) refWrap.style.display = checked ? 'block' : 'none';
+    if (!checked) {
+      const refEl = document.getElementById('cart-' + tipo + '-ref');
+      if (refEl) refEl.value = '';
+      cartPagoListo = false;
+      cartBloquear();
+    } else {
+      // Localizador opcional: activar en cuanto el checkbox está marcado
+      cartPagoListo = true;
+      cartActivar();
+    }
+  }
+
+  function cartValidarRef() {
+    // El localizador es opcional — no bloquea el botón si está vacío
+    // Solo actúa si el checkbox ya está marcado (para mantener estado)
+    const tipo = pagoType.toLowerCase();
+    if (!tipo || tipo === 'tarjeta') return;
+    const checked = document.getElementById('cart-check-' + tipo)?.checked;
+    if (checked) { cartPagoListo = true; cartActivar(); }
+  }
+
+  async function cartPagarStripe() {
+    if (!validarFormulario()) return;
+    const total = getTotal();
+    const btn = document.getElementById('cart-btn-stripe');
+    btn.disabled = true; btn.style.opacity = '.65'; btn.style.cursor = 'not-allowed';
+    btn.innerHTML = '⏳ Preparando pago seguro...';
+    document.getElementById('cart-stripe-err').style.display = 'none';
+
+    // Guardar datos del carrito para la página de éxito
+    const cartData = {
+      items: getCart().items,
+      fecha:      document.getElementById('f-fecha').value,
+      nombre:     document.getElementById('f-nombre').value.trim(),
+      telefono:   document.getElementById('f-telefono').value.trim(),
+      direccion:  deliveryType === 'Entrega a domicilio'
+                    ? document.getElementById('f-direccion').value.trim()
+                    : 'Recogida en tienda',
+      dedicatoria: document.getElementById('f-dedicatoria').value.trim(),
+      entrega:    deliveryType,
+      total,
+      email:      document.getElementById('f-email')?.value.trim() || '',
+    };
+    try { localStorage.setItem('alameda_cart_order', JSON.stringify(cartData)); } catch {}
+
+    try {
+      const res = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount:      total,
+          productName: `Carrito Floristería Alameda (${cartData.items.length} artículo/s)`,
+          emoji:       '🛒',
+          customerName: cartData.nombre,
+          telefono:    cartData.telefono,
+          direccion:   cartData.direccion,
+          fecha:       cartData.fecha,
+          dedicatoria: cartData.dedicatoria,
+          entrega:     deliveryType,
+          source:      'carrito',
+        }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      window.location.href = data.url;
+    } catch (e) {
+      const errEl = document.getElementById('cart-stripe-err');
+      errEl.style.display = 'block';
+      errEl.textContent = '⚠️ ' + (e.message || 'Error al conectar con la pasarela de pago.');
+      btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
+      btn.innerHTML = `🔒 Pagar ${total.toFixed(2)}€ con tarjeta`;
+    }
+  }
+
+  async function cartPagarPayPal() {
+    if (!validarFormulario()) return;
+    const total = getTotal();
+    const btn = document.getElementById('cart-btn-paypal');
+    btn.disabled = true; btn.style.opacity = '.65'; btn.style.cursor = 'not-allowed';
+    btn.innerHTML = '⏳ Conectando con PayPal...';
+    document.getElementById('cart-paypal-err').style.display = 'none';
+
+    // Guardar datos del carrito para la página de éxito (igual que Stripe)
+    const cartData = {
+      items:      getCart().items,
+      fecha:      document.getElementById('f-fecha').value,
+      nombre:     document.getElementById('f-nombre').value.trim(),
+      telefono:   document.getElementById('f-telefono').value.trim(),
+      direccion:  deliveryType === 'Entrega a domicilio'
+                    ? document.getElementById('f-direccion').value.trim()
+                    : 'Recogida en tienda',
+      dedicatoria: document.getElementById('f-dedicatoria').value.trim(),
+      entrega:    deliveryType,
+      total,
+      email:      document.getElementById('f-email')?.value.trim() || '',
+    };
+    try { localStorage.setItem('alameda_cart_order', JSON.stringify(cartData)); } catch {}
+
+    try {
+      const res = await fetch('/api/create-paypal-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount:      total,
+          productName: `Carrito Floristería Alameda (${cartData.items.length} artículo/s)`,
+          emoji:       '🛒',
+          customerName: cartData.nombre,
+          telefono:    cartData.telefono,
+          direccion:   cartData.direccion,
+          fecha:       cartData.fecha,
+          dedicatoria: cartData.dedicatoria,
+          entrega:     deliveryType,
+          source:      'carrito',
+        }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      window.location.href = data.url;
+    } catch (e) {
+      const errEl = document.getElementById('cart-paypal-err');
+      errEl.style.display = 'block';
+      errEl.textContent = '⚠️ ' + (e.message || 'Error al conectar con PayPal.');
+      btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
+      btn.innerHTML = `💻 Pagar ${total.toFixed(2)}€ con PayPal`;
+    }
   }
 
   function getDeliveryCost() {
@@ -305,6 +609,20 @@ document.addEventListener('click', e => {
         el.classList.remove('error');
       }
     });
+
+    // Validar formato del teléfono español (6xx, 7xx, 8xx, 9xx — 9 dígitos)
+    const telEl = document.getElementById('f-telefono');
+    if (telEl && telEl.value.trim()) {
+      const telNum = telEl.value.trim().replace(/[\s\-\.]/g, '');
+      if (!/^[6789]\d{8}$/.test(telNum)) {
+        telEl.classList.add('error');
+        const errEl = document.getElementById('form-error');
+        errEl.textContent = '📱 El teléfono no es válido (ej: 600 123 456).';
+        errEl.classList.remove('hidden');
+        return false;
+      }
+    }
+
     document.getElementById('form-error').classList.toggle('hidden', ok);
     return ok;
   }
@@ -326,29 +644,66 @@ document.addEventListener('click', e => {
     contentEl.classList.remove('hidden');
     contentEl.classList.add('grid');
 
+    // Mapa de imágenes por ID de producto — fallback para items guardados sin imagen
+    const IMG_MAP = {
+      'p01':'imgs/p01.jpg','p02':'imgs/p02.jpg','p03':'imgs/p03.jpg','p04':'imgs/p04.jpg',
+      'p05':'imgs/p05.jpg','p06':'imgs/p06.jpg','p07':'imgs/p07.jpg','p08':'imgs/p08.jpg',
+      'p09':'imgs/p09.jpg','p10':'imgs/p10.jpg','p11':'imgs/p11.jpg','p12':'imgs/p12.jpg',
+      'p13':'imgs/p13.jpg','p14':'imgs/p14.jpg','p15':'imgs/p15.jpg','p16':'imgs/p16.jpg',
+      'p17':'imgs/p17.jpg','p18':'imgs/p18.jpg','p19':'imgs/p19.jpg','p20':'imgs/p20.jpg',
+      'p21':'imgs/p21.jpg','p22':'imgs/p22.jpg','p23':'imgs/p23.jpg','p24':'imgs/p24.jpg',
+      'p25':'imgs/p25.jpg','p26':'imgs/p26.jpg','p27':'imgs/p27.jpg','p28':'imgs/p28.jpg',
+      'p31':'imgs/p31.jpg',
+      'rosas-clasicas':'imgs/p04.jpg',
+      'rosas-negras':'imgs/p31.jpg',
+      'ramo-brisas-alameda':'imgs/p15.jpg',
+      'ramo-especial-alameda':'imgs/p16.jpg',
+      'preservadas':'imgs/p22.jpg',
+    };
+
     const itemsEl = document.getElementById('cart-items');
-    itemsEl.innerHTML = cart.items.map(item => `
-      <div class="bg-surface rounded-xl border border-outline-variant overflow-hidden flex gap-md p-sm items-center" id="item-${item.id}">
-        <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-          <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover"/>
+    itemsEl.innerHTML = cart.items.map(item => {
+      const imgSrc = item.image || IMG_MAP[item.id] || '';
+      const imgHtml = imgSrc
+        ? `<img src="${imgSrc}" alt="${item.name}"
+               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+           <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;
+                       background:#f4f4f2;font-size:40px">${item.emoji || '🌸'}</div>`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+                       background:#f4f4f2;font-size:40px">${item.emoji || '🌸'}</div>`;
+      return `
+      <div class="bg-surface rounded-xl border border-outline-variant overflow-hidden flex gap-md p-sm items-center shadow-sm hover:shadow-md transition-shadow" id="item-${item.id}">
+        <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-surface-container-low">
+          ${imgHtml}
         </div>
-        <div class="flex-grow flex flex-col gap-xs">
-          <p class="font-label-md text-label-md text-on-surface">${item.name}</p>
-          <p class="font-headline-md text-headline-md text-primary">${item.price}€ <span class="font-body-md text-body-md text-on-surface-variant">/ ud.</span></p>
-          <div class="flex items-center gap-sm mt-xs">
+        <div class="flex-grow flex flex-col gap-xs min-w-0">
+          <p class="font-label-md text-label-md text-on-surface leading-snug">${item.emoji || ''} ${item.name}</p>
+          <p class="font-headline-md text-headline-md text-primary">${item.price}€
+            <span class="font-body-md text-body-md text-on-surface-variant text-sm">/ ud.</span>
+          </p>
+          <div class="flex items-center gap-sm mt-xs flex-wrap">
             <div class="flex items-center border border-outline-variant rounded-full overflow-hidden">
-              <button onclick="changeQty('${item.id}', -1)" class="px-sm py-xs font-bold text-primary hover:bg-primary-fixed transition-colors">−</button>
+              <button onclick="changeQty('${item.id}', -1)"
+                      class="px-sm py-xs font-bold text-primary hover:bg-primary-fixed transition-colors text-lg leading-none"
+                      style="min-width:36px;min-height:36px">−</button>
               <span class="px-sm font-label-md text-label-md text-on-surface min-w-[2rem] text-center" id="qty-${item.id}">${item.quantity}</span>
-              <button onclick="changeQty('${item.id}', 1)" class="px-sm py-xs font-bold text-primary hover:bg-primary-fixed transition-colors">+</button>
+              <button onclick="changeQty('${item.id}', 1)"
+                      class="px-sm py-xs font-bold text-primary hover:bg-primary-fixed transition-colors text-lg leading-none"
+                      style="min-width:36px;min-height:36px">+</button>
             </div>
-            <span class="font-label-md text-label-md text-primary" id="subtotal-${item.id}">${item.price * item.quantity}€</span>
+            <span class="font-label-md text-label-md text-primary font-bold" id="subtotal-${item.id}">${(item.price * item.quantity).toFixed(2)}€</span>
           </div>
         </div>
-        <button onclick="eliminarItem('${item.id}')" class="flex-shrink-0 p-xs text-on-surface-variant hover:text-error transition-colors rounded-full hover:bg-surface-container" title="Eliminar">
+        <button onclick="eliminarItem('${item.id}')"
+                class="flex-shrink-0 p-xs text-on-surface-variant hover:text-error transition-colors rounded-full hover:bg-surface-container"
+                style="min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center"
+                title="Eliminar producto">
           <span class="material-symbols-outlined">delete</span>
         </button>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
 
     updateTotals();
   }
@@ -401,6 +756,12 @@ document.addEventListener('click', e => {
     const cart = getCart();
     if (cart.items.length === 0) return;
     if (!validarFormulario()) return;
+    if (!cartPagoListo) {
+      const errEl = document.getElementById('form-error');
+      errEl.textContent = '💳 Debes completar el pago antes de confirmar el pedido.';
+      errEl.classList.remove('hidden');
+      return;
+    }
 
     const subtotal  = getTotal();
     const delivery  = getDeliveryCost();
@@ -423,7 +784,11 @@ document.addEventListener('click', e => {
       ? `🚚 Envío a domicilio .......... ${fmtPrecio(delivery)}`
       : `🏪 Recogida en tienda ......... Gratuita`;
 
-    const pagoIcono = pagoType === 'Bizum' ? '📲' : pagoType === 'PayPal' ? '💻' : '💳';
+    // Solo Bizum llega a confirmarPedido() — PayPal y Tarjeta van a pago-completado.html
+    const ref = document.getElementById('cart-bizum-ref')?.value.trim() || '—';
+    const pagoConfirmado = pagoType === 'Bizum'
+      ? `📲 Bizum al 627 54 63 60\n   🔖 Localizador: ${ref}\n   ⚠️ Verificar referencia antes de preparar`
+      : '💳 TARJETA ✅ CONFIRMADO POR STRIPE';
 
     const msg =
 `╔══════════════════════╗
@@ -455,7 +820,9 @@ ${lineas}
 ${envioLinea}
 
 💶 *TOTAL: ${fmtPrecio(total)}*
-${pagoIcono} *Forma de pago:* ${pagoType}
+
+💳 *PAGO:* ${pagoType === 'Bizum' ? '⏳ PENDIENTE VERIFICACIÓN' : '✅ CONFIRMADO'}
+   ${pagoConfirmado}
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
@@ -463,11 +830,84 @@ _¡Gracias por confiar en nosotros!_ 🌿
 _Floristería Alameda · Cartagena_`;
 
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
+
+    // Email de confirmación (no bloqueante)
+    const email = document.getElementById('f-email')?.value.trim();
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      fetch('/api/send-order-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          tipo:       pagoType.toLowerCase(),
+          producto:   cart.items.map(i => `${i.emoji||'🌸'} ${i.name} ×${i.quantity}`).join(', '),
+          emoji:      '🛒',
+          precio:     fmtPrecio(total),
+          nombre,
+          telefono,
+          fecha:      fmtFecha(document.getElementById('f-fecha').value),
+          direccion,
+          dedicatoria,
+          ref:        ref !== '—' ? ref : '',
+        }),
+      }).catch(() => {});
+    }
   }
 
+  // ── Abrir página Bizum (compatible móvil + escritorio) ───────────
+  function abrirBizumCarrito() {
+    const btn = document.getElementById('cart-bizum-link');
+    const url = btn?.dataset.url;
+    if (!url) return;
+    btn.style.transform = 'scale(0.97)';
+    setTimeout(() => { btn.style.transform = ''; }, 150);
+    window.open(url, '_blank', 'noopener');
+  }
+
+  // Validación en tiempo real
+  function _rtSetup(id, validator, optional) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const check = () => {
+      const v = el.value.trim();
+      if (optional && !v) { el.classList.remove('valid','error'); return; }
+      const ok = validator(v);
+      el.classList.toggle('valid', ok);
+      el.classList.toggle('error', !ok && v !== '');
+    };
+    el.addEventListener('input', check);
+    el.addEventListener('blur', () => {
+      const v = el.value.trim();
+      if (!optional && !v) { el.classList.add('error'); el.classList.remove('valid'); }
+      else check();
+    });
+  }
+  _rtSetup('f-fecha',     v => v !== '');
+  _rtSetup('f-nombre',    v => v.length >= 2);
+  _rtSetup('f-telefono',  v => /^[6789]\d{8}$/.test(v.replace(/[\s\-.]/g,'')));
+  _rtSetup('f-direccion', v => v.length >= 5);
+  _rtSetup('f-email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), true);
+
   renderCart();
+  // Inicializar estado: botón bloqueado hasta pago
+  cartBloquear();
   const bizumBtn = document.getElementById('pago-bizum');
   if (bizumBtn) selectPago(bizumBtn, 'Bizum');
+
+  // Fecha mínima: hoy — usando hora LOCAL (toISOString devuelve UTC y puede dar ayer en España)
+  function _fechaLocalHoy() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+  const _hoyStr    = _fechaLocalHoy();
+  const _fechaInput = document.getElementById('f-fecha');
+  if (_fechaInput) {
+    _fechaInput.min = _hoyStr;
+    // iOS Safari no bloquea visualmente días pasados: los corregimos al cambiar
+    _fechaInput.addEventListener('change', function () {
+      if (this.value && this.value < _hoyStr) this.value = _hoyStr;
+    });
+  }
 </script>
 </body>
 </html>
