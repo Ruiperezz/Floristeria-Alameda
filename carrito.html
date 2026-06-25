@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#506352"/>
+<link rel="icon" type="image/jpeg" href="logo-floristeria.jpg"/>
+<link rel="apple-touch-icon" href="logo-floristeria.jpg"/>
 <title>Carrito | Floristería Alameda</title>
+<meta name="robots" content="noindex, nofollow"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -231,29 +235,12 @@ tailwind.config = {
   </div>
 </main>
 
-<footer class="bg-surface-container-highest w-full px-margin">
-  <div class="py-lg flex flex-col md:flex-row justify-between items-center gap-md">
-    <a href="index.html" class="font-headline-md text-headline-md text-primary">Floristería Alameda</a>
-    <span class="font-body-md text-body-md text-on-surface-variant">© 2024 Floristería Alameda. Cartagena, España.</span>
-  </div>
-</footer>
+<footer id="site-footer" class="bg-surface-container-highest w-full px-margin"></footer>
+<script src="footer.js"></script>
 
 <script src="cart.js"></script>
-<script>
-function toggleMobNav() {
-  const m = document.getElementById('mob-menu');
-  const h1 = document.getElementById('ham1'), h2 = document.getElementById('ham2'), h3 = document.getElementById('ham3');
-  const open = m.classList.toggle('hidden');
-  m.classList.toggle('flex', !open);
-  h1.style.transform = open ? '' : 'translateY(8px) rotate(45deg)';
-  h2.style.opacity = open ? '1' : '0';
-  h3.style.transform = open ? '' : 'translateY(-8px) rotate(-45deg)';
-}
-document.addEventListener('click', e => {
-  const nav = document.getElementById('main-nav'), menu = document.getElementById('mob-menu');
-  if (nav && menu && !nav.contains(e.target) && !menu.classList.contains('hidden')) toggleMobNav();
-});
-</script>
+<script src="cookie-consent.js"></script>
+<script src="nav.js"></script>
 <script>
   let deliveryType = 'Entrega a domicilio';
   let pagoType = 'Bizum';
@@ -329,8 +316,10 @@ document.addEventListener('click', e => {
     const itemsEl = document.getElementById('cart-items');
     itemsEl.innerHTML = cart.items.map(item => `
       <div class="bg-surface rounded-xl border border-outline-variant overflow-hidden flex gap-md p-sm items-center" id="item-${item.id}">
-        <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-          <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover"/>
+        <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-low">
+          ${item.image
+            ? '<img src="' + item.image + '" alt="' + item.name + '" class="w-full h-full object-cover"/>'
+            : '<div style="font-size:36px;display:flex;align-items:center;justify-content:center;height:100%">' + (item.emoji || '🌸') + '</div>'}
         </div>
         <div class="flex-grow flex flex-col gap-xs">
           <p class="font-label-md text-label-md text-on-surface">${item.name}</p>
