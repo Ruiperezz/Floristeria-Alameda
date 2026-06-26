@@ -26,10 +26,7 @@ export default async function handler(request) {
   const { email, tipo, producto, emoji, precio, nombre, telefono,
           fecha, direccion, dedicatoria, ref } = body;
 
-  // Validar email
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return new Response(JSON.stringify({ error: 'Email inválido' }), { status: 400, headers: JSON_H });
-  }
+  const clienteEmail = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null;
 
   // Sanitizar todos los campos contra XSS en el HTML del email
   const h = s => String(s || '').slice(0, 400)
@@ -40,11 +37,13 @@ export default async function handler(request) {
   const refSafe    = hasRef ? h(ref) : null;
   const isManual   = tipoLabel !== 'Tarjeta';
 
-  const envios = [
-    // ─── Email al cliente ─────────────────────────────────────────
-    sendEmail(resendKey, {
+  const envios = [];
+
+  // ─── Email al cliente (solo si proporcionó email) ──────────────
+  if (clienteEmail) {
+    envios.push(sendEmail(resendKey, {
       from:    FROM_PEDIDOS,
-      to:      email,
+      to:      clienteEmail,
       subject: '✅ Pedido recibido — Floristería Alameda',
       html:    clienteHtml({
         emoji: h(emoji), producto: h(producto), precio: h(precio),
@@ -52,10 +51,10 @@ export default async function handler(request) {
         direccion: h(direccion), dedicatoria: h(dedicatoria),
         tipoLabel, refSafe,
       }),
-    }),
-  ];
+    }));
+  }
 
-  // ─── Notificación al florista ────────────────────────────────────
+  // ─── Notificación al florista (SIEMPRE) ──────────────────────────
   if (floristMail) {
     envios.push(
       sendEmail(resendKey, {
@@ -63,7 +62,7 @@ export default async function handler(request) {
         to:      floristMail,
         subject: `🌸 Nuevo pedido ${tipoLabel} — ${h(nombre)} — ${h(precio)}`,
         html:    floristaHtml({
-          emailCliente: h(email),
+          emailCliente: h(clienteEmail || ''),
           emoji: h(emoji), producto: h(producto), precio: h(precio),
           nombre: h(nombre), telefono: h(telefono), fecha: h(fecha),
           direccion: h(direccion), dedicatoria: h(dedicatoria),

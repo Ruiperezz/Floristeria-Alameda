@@ -243,8 +243,6 @@ _¡Gracias por confiar en nosotros!_ 🌿`;
         if (cartOrder?.email) email = cartOrder.email;
       } catch {}
     }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
-
     fetch('/api/send-order-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

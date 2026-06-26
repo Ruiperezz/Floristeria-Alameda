@@ -831,27 +831,25 @@ _Floristería Alameda · Cartagena_`;
 
     window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
 
-    // Email de confirmación (no bloqueante)
-    const email = document.getElementById('f-email')?.value.trim();
-    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      fetch('/api/send-order-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          tipo:       pagoType.toLowerCase(),
-          producto:   cart.items.map(i => `${i.emoji||'🌸'} ${i.name} ×${i.quantity}`).join(', '),
-          emoji:      '🛒',
-          precio:     fmtPrecio(total),
-          nombre,
-          telefono,
-          fecha:      fmtFecha(document.getElementById('f-fecha').value),
-          direccion,
-          dedicatoria,
-          ref:        ref !== '—' ? ref : '',
-        }),
-      }).catch(() => {});
-    }
+    // Email de confirmación al cliente Y notificación al florista (no bloqueante)
+    const email = document.getElementById('f-email')?.value.trim() || '';
+    fetch('/api/send-order-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        tipo:       pagoType.toLowerCase(),
+        producto:   cart.items.map(i => `${i.emoji||'🌸'} ${i.name} ×${i.quantity}`).join(', '),
+        emoji:      '🛒',
+        precio:     fmtPrecio(total),
+        nombre,
+        telefono,
+        fecha:      fmtFecha(document.getElementById('f-fecha').value),
+        direccion,
+        dedicatoria,
+        ref:        ref !== '—' ? ref : '',
+      }),
+    }).catch(() => {});
   }
 
   // ── Abrir página Bizum (compatible móvil + escritorio) ───────────

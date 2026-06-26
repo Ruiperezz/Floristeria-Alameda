@@ -816,27 +816,25 @@ _¡Gracias por confiar en nosotros!_ 🌿`;
   _waEnviando = true;
   window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
 
-  // Email de confirmación (no bloqueante — si falla, el pedido sigue adelante)
-  const email = document.getElementById('m-email')?.value.trim();
-  if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    fetch('/api/send-order-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        tipo:       _metodo,
-        producto:   _producto,
-        emoji:      _emoji,
-        precio:     String(_precio),
-        nombre,
-        telefono,
-        fecha:      fechaFmt,
-        direccion,
-        dedicatoria,
-        ref:        ref !== '—' ? ref : '',
-      }),
-    }).catch(() => {});
-  }
+  // Email de confirmación al cliente Y notificación al florista (no bloqueante)
+  const email = document.getElementById('m-email')?.value.trim() || '';
+  fetch('/api/send-order-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email,
+      tipo:       _metodo,
+      producto:   _producto,
+      emoji:      _emoji,
+      precio:     String(_precio),
+      nombre,
+      telefono,
+      fecha:      fechaFmt,
+      direccion,
+      dedicatoria,
+      ref:        ref !== '—' ? ref : '',
+    }),
+  }).catch(() => {});
 
   setTimeout(() => { _waEnviando = false; cerrarModal(); }, 2000);
 }
