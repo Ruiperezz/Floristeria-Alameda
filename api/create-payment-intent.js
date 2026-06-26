@@ -23,11 +23,14 @@ export default async function handler(request) {
   }
 
   const { amount, description } = body;
-  if (!amount || amount < 1) {
-    return new Response(JSON.stringify({ error: 'Importe inválido.' }), {
+  const parsedAmount = parseFloat(amount);
+  if (!amount || isNaN(parsedAmount) || parsedAmount < 1 || parsedAmount > 2000) {
+    return new Response(JSON.stringify({ error: 'Importe fuera de rango (1€–2000€).' }), {
       status: 400, headers: { 'Content-Type': 'application/json' },
     });
   }
+
+  const safeDescription = String(description || 'Pedido Floristería Alameda').slice(0, 100);
 
   // Crear Payment Intent en Stripe
   // Los datos de tarjeta NUNCA pasan por aquí — Stripe.js los gestiona directamente
@@ -38,9 +41,9 @@ export default async function handler(request) {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: new URLSearchParams({
-      amount: String(Math.round(amount * 100)), // Stripe trabaja en céntimos
+      amount: String(Math.round(parsedAmount * 100)), // Stripe trabaja en céntimos
       currency: 'eur',
-      description: description || 'Pedido Floristería Alameda',
+      description: safeDescription,
       'payment_method_types[]': 'card',
       'metadata[negocio]': 'Floristería Alameda',
     }),

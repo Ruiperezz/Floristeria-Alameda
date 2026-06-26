@@ -93,7 +93,7 @@
                       letter-spacing:.05em;color:#434842;display:block;margin-bottom:5px">
           Nombre del destinatario/a <span style="color:#ba1a1a">*</span>
         </label>
-        <input id="m-nombre" type="text" placeholder="Remitente"
+        <input id="m-nombre" type="text" placeholder="Nombre completo"
                style="width:100%;border:1.5px solid #c3c8c0;border-radius:.5rem;
                       padding:10px 14px;font-family:'Montserrat';font-size:14px;
                       color:#1a1c1b;background:#f4f4f2;outline:none;box-sizing:border-box"/>
@@ -733,7 +733,7 @@ function _validar() {
   const telefono  = document.getElementById('m-telefono').value.trim();
   const direccion = document.getElementById('m-direccion').value.trim();
   if (!fecha)    return '📅 Indica la fecha de entrega.';
-  if (!nombre)   return '👤 Indica el nombre del remitente.';
+  if (!nombre)   return '👤 Indica el nombre del destinatario/a.';
   if (!telefono) return '📱 Indica el teléfono de contacto.';
   if (!/^[6789]\d{8}$/.test(telefono.replace(/[\s\-\.]/g, '')))
     return '📱 El teléfono no es válido (ej: 600 123 456).';

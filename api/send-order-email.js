@@ -72,7 +72,11 @@ export default async function handler(request) {
     );
   }
 
-  await Promise.allSettled(envios);
+  const results = await Promise.allSettled(envios);
+  const failures = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && r.value && !r.value.ok));
+  if (failures.length > 0) {
+    console.error('Email send failures:', failures.length, '/', results.length);
+  }
 
   return new Response(JSON.stringify({ ok: true }), { headers: JSON_H });
 }

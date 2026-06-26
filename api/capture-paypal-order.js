@@ -32,6 +32,10 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json');
 
+  if (req.method !== 'GET') {
+    return res.status(405).json({ paid: false, error: 'Method not allowed' });
+  }
+
   const token = req.query?.token || new URL(req.url, 'http://x').searchParams.get('token');
 
   // PayPal order IDs: alfanuméricos mayúsculas/minúsculas y guiones, 6-30 chars

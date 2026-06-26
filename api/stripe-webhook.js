@@ -35,7 +35,7 @@ export default async function handler(request) {
     const session = event.data?.object;
     if (session?.payment_status === 'paid') {
       // No bloqueamos la respuesta a Stripe — usamos waitUntil equivalente
-      handleSession(session).catch(() => {});
+      handleSession(session).catch(err => console.error('Webhook email error:', err?.message || err));
     }
   }
 

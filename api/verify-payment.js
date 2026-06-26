@@ -6,6 +6,10 @@ const JSON_HEADERS = { 'Content-Type': 'application/json', 'Cache-Control': 'no-
 const SESSION_RE = /^cs_(test|live)_[A-Za-z0-9]{30,}$/;
 
 export default async function handler(request) {
+  if (request.method !== 'GET') {
+    return new Response('Method not allowed', { status: 405 });
+  }
+
   const url = new URL(request.url);
   const sessionId = url.searchParams.get('session_id');
 
