@@ -683,13 +683,13 @@ function renderRecomendados(idx) {
 }
 
 function handleAddToCart() {
-  addToCart({ id: producto.id, name: producto.nombre, price: producto.precio, quantity: 1, emoji: producto.emoji, image: '' });
+  addToCart({ id: producto.id, name: producto.nombre, price: producto.precio, quantity: 1, emoji: producto.emoji, image: producto.img });
 }
 
 function addRecToCart(id) {
   const p = PRODUCTOS.find(x => x.id === id);
   if (!p) return;
-  addToCart({ id: p.id, name: p.nombre, price: p.precio, quantity: 1, emoji: p.emoji, image: '' });
+  addToCart({ id: p.id, name: p.nombre, price: p.precio, quantity: 1, emoji: p.emoji, image: p.img });
 }
 </script>
 <script src="cookie-consent.js"></script>
