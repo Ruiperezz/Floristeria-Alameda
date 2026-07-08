@@ -90,11 +90,58 @@ async function sendEmail(apiKey, payload) {
   });
 }
 
+const LOGO_URL = 'https://floristeriaalameda.com/logo-floristeria.jpg';
+
 // ─── Fila de detalle en el email ──────────────────────────────────
 function fila(label, valor) {
-  return `<tr>
-    <td style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#666;width:130px;vertical-align:top">${label}</td>
-    <td style="padding:6px 0;border-bottom:1px solid #eee;font-size:13px;color:#1a1c1b;font-weight:600">${valor}</td>
+  return `
+  <tr>
+    <td style="padding:10px 0;border-bottom:1px solid #ece9e4;font-size:12px;
+               font-weight:600;letter-spacing:.04em;color:#8da18e;
+               text-transform:uppercase;width:140px;vertical-align:top">${label}</td>
+    <td style="padding:10px 0;border-bottom:1px solid #ece9e4;font-size:14px;
+               color:#1a1c1b;font-weight:500">${valor}</td>
+  </tr>`;
+}
+
+// ─── Cabecera común con logo ──────────────────────────────────────
+function header() {
+  return `
+  <tr>
+    <td style="background:linear-gradient(160deg,#3d4f3f 0%,#506352 60%,#5e7360 100%);
+               padding:36px 40px;text-align:center">
+      <img src="${LOGO_URL}" alt="Floristería Alameda"
+           width="80" height="80"
+           style="border-radius:50%;border:3px solid rgba(255,255,255,0.25);
+                  object-fit:cover;display:block;margin:0 auto 16px"/>
+      <p style="margin:0 0 2px;font-size:11px;letter-spacing:.2em;
+                text-transform:uppercase;color:#a5c1a7;font-weight:600">Floristería</p>
+      <p style="margin:0 0 4px;font-size:28px;font-weight:800;color:#ffffff;
+                letter-spacing:.06em;font-family:Georgia,serif">ALAMEDA</p>
+      <p style="margin:0;font-size:10px;color:#8da18e;letter-spacing:.18em">
+        · CARTAGENA ·
+      </p>
+    </td>
+  </tr>`;
+}
+
+// ─── Pie común ────────────────────────────────────────────────────
+function footer() {
+  return `
+  <tr>
+    <td style="background:#f9f9f7;border-top:2px solid #ece9e4;padding:24px 40px;text-align:center">
+      <p style="margin:0 0 6px">
+        <a href="https://floristeriaalameda.com"
+           style="font-size:13px;font-weight:700;color:#506352;text-decoration:none;
+                  letter-spacing:.04em">floristeriaalameda.com</a>
+      </p>
+      <p style="margin:0 0 2px;font-size:11px;color:#aaa">
+        Alameda de San Antón, 15 · 30205 Cartagena, Murcia
+      </p>
+      <p style="margin:0;font-size:11px;color:#ccc">
+        © ${new Date().getFullYear()} Floristería Alameda — Confirmación automática
+      </p>
+    </td>
   </tr>`;
 }
 
@@ -106,101 +153,106 @@ function clienteHtml({ emoji, producto, precio, nombre, telefono, fecha,
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pedido recibido</title>
+<title>Pedido confirmado — Floristería Alameda</title>
 </head>
-<body style="margin:0;padding:0;background:#f4f4f2;font-family:'Helvetica Neue',Arial,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0">
+<body style="margin:0;padding:0;background:#ece9e4;font-family:Georgia,'Times New Roman',serif">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation">
 <tr><td align="center" style="padding:32px 16px">
 
-  <table width="100%" style="max-width:560px;background:#ffffff;border-radius:18px;
-         overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.10)">
+  <table width="100%" style="max-width:580px" cellpadding="0" cellspacing="0" role="presentation">
 
-    <!-- CABECERA -->
-    <tr>
-      <td style="background:linear-gradient(135deg,#506352 0%,#3d4f3f 100%);
-                 padding:32px;text-align:center">
-        <p style="margin:0 0 4px;font-size:11px;letter-spacing:.15em;
-                  text-transform:uppercase;color:#a5c1a7">Floristería</p>
-        <h1 style="margin:0 0 6px;font-size:30px;font-weight:700;
-                   color:#ffffff;letter-spacing:-.5px">ALAMEDA</h1>
-        <p style="margin:0;font-size:11px;color:#89aa8c;letter-spacing:.12em">· CARTAGENA ·</p>
-      </td>
-    </tr>
+    ${header()}
 
     <!-- CONFIRMACIÓN -->
     <tr>
-      <td style="padding:36px 36px 0;text-align:center">
-        <div style="width:64px;height:64px;background:#e8f5e9;border-radius:50%;
-                    margin:0 auto 16px;line-height:64px;font-size:32px">✅</div>
-        <h2 style="margin:0 0 10px;font-size:24px;font-weight:700;color:#2e7d32">
-          ¡Pedido recibido!
-        </h2>
-        <p style="margin:0;font-size:14px;color:#666;line-height:1.75">
-          Hola <strong style="color:#1a1c1b">${nombre}</strong>,<br>
-          hemos registrado tu pedido correctamente.<br>
-          Te contactaremos por WhatsApp para confirmar los detalles.
+      <td style="background:#ffffff;padding:40px 40px 28px;text-align:center;
+                 border-left:1px solid #ece9e4;border-right:1px solid #ece9e4">
+        <div style="width:56px;height:56px;border-radius:50%;background:#eef3ee;
+                    margin:0 auto 18px;display:flex;align-items:center;
+                    justify-content:center;font-size:26px;line-height:56px">✅</div>
+        <h1 style="margin:0 0 8px;font-size:26px;font-weight:700;color:#1a1c1b;
+                   font-family:Georgia,serif;letter-spacing:-.3px">
+          Pedido confirmado
+        </h1>
+        <p style="margin:0;font-size:14px;color:#737872;line-height:1.8;
+                  font-family:'Helvetica Neue',Arial,sans-serif">
+          Hola <strong style="color:#1a1c1b">${nombre}</strong>, hemos recibido tu pedido.<br>
+          Nos pondremos en contacto contigo por WhatsApp para coordinar la entrega.
         </p>
+      </td>
+    </tr>
+
+    <!-- SEPARADOR DECORATIVO -->
+    <tr>
+      <td style="background:#ffffff;padding:0 40px;
+                 border-left:1px solid #ece9e4;border-right:1px solid #ece9e4">
+        <div style="border-top:1px solid #ece9e4"></div>
       </td>
     </tr>
 
     <!-- PRODUCTO -->
     <tr>
-      <td style="padding:28px 36px 0">
-        <div style="background:#f9f9f7;border-radius:14px;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:8px">${emoji}</div>
-          <p style="margin:0 0 6px;font-size:17px;font-weight:700;color:#1a1c1b">${producto}</p>
-          <p style="margin:0;font-size:26px;font-weight:700;color:#506352">${precio}€</p>
+      <td style="background:#ffffff;padding:28px 40px;
+                 border-left:1px solid #ece9e4;border-right:1px solid #ece9e4">
+        <div style="background:#f9f9f7;border-radius:16px;padding:24px;text-align:center;
+                    border:1px solid #ece9e4">
+          <div style="font-size:48px;line-height:1;margin-bottom:12px">${emoji}</div>
+          <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#1a1c1b;
+                    font-family:Georgia,serif">${producto}</p>
+          <p style="margin:0;font-size:30px;font-weight:800;color:#506352;
+                    font-family:Georgia,serif">${precio}€</p>
+          <p style="margin:8px 0 0;font-size:11px;color:#8da18e;letter-spacing:.06em;
+                    text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif">
+            Portes incluidos · Solo Cartagena
+          </p>
         </div>
       </td>
     </tr>
 
     <!-- DETALLE DEL PEDIDO -->
     <tr>
-      <td style="padding:24px 36px 0">
-        <p style="margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.08em;
-                  text-transform:uppercase;color:#506352">Datos del pedido</p>
-        <table width="100%" cellpadding="0" cellspacing="0">
-          ${fila('Destinatario/a', nombre)}
+      <td style="background:#ffffff;padding:4px 40px 32px;
+                 border-left:1px solid #ece9e4;border-right:1px solid #ece9e4">
+        <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:.1em;
+                  text-transform:uppercase;color:#506352;
+                  font-family:'Helvetica Neue',Arial,sans-serif">
+          Resumen del pedido
+        </p>
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+               style="font-family:'Helvetica Neue',Arial,sans-serif">
+          ${fila('Destinatario', nombre)}
           ${fila('Teléfono', telefono)}
-          ${fila('Fecha de entrega', `<span style="color:#ba1a1a">${fecha}</span>`)}
-          ${direccion ? fila('Dirección', direccion) : fila('Entrega', 'Recogida en tienda')}
+          ${fila('Fecha de entrega', `<span style="color:#7b535c;font-weight:700">${fecha}</span>`)}
+          ${direccion ? fila('Dirección', direccion) : fila('Recogida', 'En tienda · Alameda de San Antón, 15')}
           ${dedicatoria ? fila('Dedicatoria', `<em style="color:#7b535c">"${dedicatoria}"</em>`) : ''}
-          ${fila('Forma de pago', tipoLabel)}
-          ${refSafe ? fila('Referencia', `<code style="background:#e8f5e9;padding:2px 8px;border-radius:4px;color:#2e7d32;font-size:12px">${refSafe}</code>`) : ''}
+          ${fila('Pago', tipoLabel)}
+          ${refSafe ? fila('Referencia', `<span style="font-family:monospace;background:#eef3ee;
+            padding:2px 8px;border-radius:4px;color:#3d5c40;font-size:13px">${refSafe}</span>`) : ''}
         </table>
       </td>
     </tr>
 
-    <!-- BOTÓN WHATSAPP -->
+    <!-- CTA WHATSAPP -->
     <tr>
-      <td style="padding:28px 36px">
-        <div style="text-align:center">
-          <a href="${WA_LINK}" style="display:inline-block;padding:15px 36px;
-             background:#25D366;color:#ffffff;border-radius:9999px;
-             text-decoration:none;font-size:15px;font-weight:700;
-             box-shadow:0 4px 16px rgba(37,211,102,.35)">
-            💬 Confirmar pedido por WhatsApp
-          </a>
-          <p style="margin:12px 0 0;font-size:12px;color:#999">
-            También puedes llamarnos: <a href="tel:${TEL.replace(/\s/g,'')}"
-            style="color:#506352;font-weight:600">${TEL}</a>
-          </p>
-        </div>
+      <td style="background:#ffffff;padding:0 40px 40px;text-align:center;
+                 border-left:1px solid #ece9e4;border-right:1px solid #ece9e4">
+        <a href="${WA_LINK}"
+           style="display:inline-block;padding:16px 40px;background:#25D366;
+                  color:#ffffff;border-radius:9999px;text-decoration:none;
+                  font-size:15px;font-weight:700;letter-spacing:.02em;
+                  box-shadow:0 6px 20px rgba(37,211,102,.3);
+                  font-family:'Helvetica Neue',Arial,sans-serif">
+          Contactar por WhatsApp
+        </a>
+        <p style="margin:14px 0 0;font-size:12px;color:#aaa;
+                  font-family:'Helvetica Neue',Arial,sans-serif">
+          ¿Prefieres llamar? <a href="tel:${TEL.replace(/\s/g,'')}"
+          style="color:#506352;font-weight:600;text-decoration:none">${TEL}</a>
+        </p>
       </td>
     </tr>
 
-    <!-- PIE -->
-    <tr>
-      <td style="background:#f4f4f2;border-top:1px solid #e8e8e6;
-                 padding:20px 36px;text-align:center">
-        <p style="margin:0 0 4px;font-size:11px;color:#aaa">
-          © 2026 Floristería Alameda · Cartagena, España
-        </p>
-        <p style="margin:0;font-size:11px;color:#ccc">
-          Este email es una confirmación automática. Por favor no respondas a este mensaje.
-        </p>
-      </td>
-    </tr>
+    ${footer()}
 
   </table>
 
@@ -213,93 +265,97 @@ function clienteHtml({ emoji, producto, precio, nombre, telefono, fecha,
 // ─── Email para el FLORISTA ───────────────────────────────────────
 function floristaHtml({ emailCliente, emoji, producto, precio, nombre, telefono,
                         fecha, direccion, dedicatoria, tipoLabel, refSafe, isManual }) {
-  const estadoPago = isManual
-    ? `<tr><td colspan="2">
-        <div style="background:#fff8e1;border:2px solid #ffc107;border-radius:8px;
-                    padding:12px 16px;margin-bottom:8px">
-          <p style="margin:0;font-size:13px;font-weight:700;color:#856404">
-            ⚠️ VERIFICAR PAGO ANTES DE PREPARAR
-          </p>
-          <p style="margin:4px 0 0;font-size:12px;color:#856404">
-            Pago por ${tipoLabel} · Localizador:
-            <strong style="font-size:14px;letter-spacing:.05em">${refSafe || 'No indicado'}</strong>
-          </p>
-        </div>
-      </td></tr>`
-    : `<tr><td colspan="2">
-        <div style="background:#e8f5e9;border:2px solid #4caf50;border-radius:8px;
-                    padding:12px 16px;margin-bottom:8px">
-          <p style="margin:0;font-size:13px;font-weight:700;color:#2e7d32">
-            ✅ PAGO VERIFICADO POR STRIPE — PUEDES PREPARAR EL PEDIDO
-          </p>
-        </div>
-      </td></tr>`;
+
+  const badgePago = isManual
+    ? `<div style="background:#fffbeb;border:1.5px solid #f59e0b;border-radius:10px;
+                   padding:14px 18px;margin-bottom:24px;font-family:'Helvetica Neue',Arial,sans-serif">
+        <p style="margin:0 0 4px;font-size:13px;font-weight:800;color:#92400e;letter-spacing:.03em">
+          ⚠️ VERIFICAR PAGO ANTES DE PREPARAR
+        </p>
+        <p style="margin:0;font-size:12px;color:#92400e;line-height:1.5">
+          Método: <strong>${tipoLabel}</strong> &nbsp;·&nbsp;
+          Localizador: <strong style="font-family:monospace;font-size:13px;
+            background:#fef3c7;padding:1px 6px;border-radius:3px">
+            ${refSafe || 'No indicado'}
+          </strong>
+        </p>
+      </div>`
+    : `<div style="background:#f0fdf4;border:1.5px solid #4ade80;border-radius:10px;
+                   padding:14px 18px;margin-bottom:24px;font-family:'Helvetica Neue',Arial,sans-serif">
+        <p style="margin:0;font-size:13px;font-weight:800;color:#166534">
+          ✅ PAGO VERIFICADO POR STRIPE — PUEDES PREPARAR EL PEDIDO
+        </p>
+      </div>`;
 
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nuevo pedido</title>
+<title>Nuevo pedido — Floristería Alameda</title>
 </head>
-<body style="margin:0;padding:0;background:#f4f4f2;font-family:'Helvetica Neue',Arial,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0">
+<body style="margin:0;padding:0;background:#ece9e4;font-family:Georgia,'Times New Roman',serif">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation">
 <tr><td align="center" style="padding:32px 16px">
 
-  <table width="100%" style="max-width:560px;background:#ffffff;border-radius:18px;
-         overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.10)">
+  <table width="100%" style="max-width:580px" cellpadding="0" cellspacing="0" role="presentation">
 
-    <!-- CABECERA -->
+    ${header()}
+
+    <!-- BANNER NUEVO PEDIDO -->
     <tr>
-      <td style="background:#506352;padding:20px 32px;text-align:center">
-        <h2 style="margin:0 0 4px;font-size:20px;font-weight:700;color:#ffffff">
-          🌸 Nuevo pedido recibido
-        </h2>
-        <p style="margin:0;font-size:12px;color:#b0c9b2">
-          ${tipoLabel} · ${precio}€ · ${nombre}
+      <td style="background:#7b535c;padding:16px 40px;text-align:center;
+                 border-left:1px solid #6a4550;border-right:1px solid #6a4550">
+        <p style="margin:0;font-size:13px;font-weight:700;color:#f5d6db;letter-spacing:.06em;
+                  text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif">
+          Nuevo pedido recibido
         </p>
       </td>
     </tr>
 
     <!-- CUERPO -->
     <tr>
-      <td style="padding:28px 32px">
-        <table width="100%" cellpadding="0" cellspacing="0">
-          ${estadoPago}
-          <tr>
-            <td style="padding:16px;background:#f9f9f7;border-radius:12px" colspan="2">
-              <div style="text-align:center;margin-bottom:16px">
-                <span style="font-size:32px">${emoji}</span>
-                <p style="margin:6px 0 4px;font-size:16px;font-weight:700;color:#1a1c1b">
-                  ${producto}
-                </p>
-                <p style="margin:0;font-size:22px;font-weight:700;color:#506352">${precio}€</p>
-              </div>
-              <table width="100%" cellpadding="0" cellspacing="0">
-                ${fila('Destinatario/a', nombre)}
-                ${fila('Teléfono', `<a href="tel:${telefono.replace(/\s/g,'')}" style="color:#506352">${telefono}</a>`)}
-                ${emailCliente ? fila('Email cliente', `<a href="mailto:${emailCliente}" style="color:#506352">${emailCliente}</a>`) : ''}
-                ${fila('Fecha entrega', `<strong style="color:#ba1a1a;font-size:15px">${fecha}</strong>`)}
-                ${direccion ? fila('Dirección', direccion) : fila('Entrega', 'Recogida en tienda')}
-                ${dedicatoria ? fila('Dedicatoria', `<em style="color:#7b535c">"${dedicatoria}"</em>`) : ''}
-                ${fila('Pago', tipoLabel)}
-                ${refSafe ? fila('Referencia', `<code style="background:#e3f2fd;padding:2px 8px;border-radius:4px;color:#1976d2;font-size:13px;letter-spacing:.04em">${refSafe}</code>`) : ''}
-              </table>
-            </td>
-          </tr>
+      <td style="background:#ffffff;padding:32px 40px;
+                 border-left:1px solid #ece9e4;border-right:1px solid #ece9e4">
+
+        ${badgePago}
+
+        <!-- Producto destacado -->
+        <div style="background:#f9f9f7;border-radius:16px;padding:20px;text-align:center;
+                    border:1px solid #ece9e4;margin-bottom:24px">
+          <div style="font-size:40px;line-height:1;margin-bottom:10px">${emoji}</div>
+          <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#1a1c1b;
+                    font-family:Georgia,serif">${producto}</p>
+          <p style="margin:0;font-size:28px;font-weight:800;color:#506352;
+                    font-family:Georgia,serif">${precio}€</p>
+        </div>
+
+        <!-- Datos del pedido -->
+        <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:.1em;
+                  text-transform:uppercase;color:#506352;
+                  font-family:'Helvetica Neue',Arial,sans-serif">
+          Datos del pedido
+        </p>
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+               style="font-family:'Helvetica Neue',Arial,sans-serif">
+          ${fila('Destinatario', nombre)}
+          ${fila('Teléfono', `<a href="tel:${telefono.replace(/\s/g,'')}"
+            style="color:#506352;font-weight:700;text-decoration:none">${telefono}</a>`)}
+          ${emailCliente ? fila('Email cliente', `<a href="mailto:${emailCliente}"
+            style="color:#506352;text-decoration:none">${emailCliente}</a>`) : ''}
+          ${fila('Fecha entrega', `<span style="color:#7b535c;font-weight:800;
+            font-size:15px">${fecha}</span>`)}
+          ${direccion ? fila('Dirección', direccion) : fila('Recogida', 'En tienda')}
+          ${dedicatoria ? fila('Dedicatoria', `<em style="color:#7b535c">"${dedicatoria}"</em>`) : ''}
+          ${fila('Pago', tipoLabel)}
+          ${refSafe ? fila('Referencia', `<span style="font-family:monospace;background:#eef3ee;
+            padding:2px 8px;border-radius:4px;color:#3d5c40;font-size:13px">${refSafe}</span>`) : ''}
         </table>
+
       </td>
     </tr>
 
-    <!-- PIE -->
-    <tr>
-      <td style="background:#f4f4f2;border-top:1px solid #e8e8e6;
-                 padding:16px 32px;text-align:center">
-        <p style="margin:0;font-size:11px;color:#aaa">
-          Sistema de pedidos automático — Floristería Alameda
-        </p>
-      </td>
-    </tr>
+    ${footer()}
 
   </table>
 
