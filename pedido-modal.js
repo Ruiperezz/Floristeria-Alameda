@@ -162,8 +162,8 @@
       <div>
         <label style="font-family:'Montserrat';font-size:12px;font-weight:600;
                       letter-spacing:.05em;color:#434842;display:block;margin-bottom:5px">
-          Email
-          <span style="font-size:10px;font-weight:400;color:#888;margin-left:4px">(opcional — recibirás confirmación)</span>
+          Email <span style="color:#ba1a1a">*</span>
+          <span style="font-size:10px;font-weight:400;color:#888;margin-left:4px">(recibirás confirmación del pedido)</span>
         </label>
         <input id="m-email" type="email" placeholder="tu@email.com" autocomplete="email"
                style="width:100%;border:1.5px solid #c3c8c0;border-radius:.5rem;
@@ -290,17 +290,16 @@
         <div id="bizum-ref-wrap" style="display:none;margin-top:10px">
           <label style="font-family:'Montserrat';font-size:12px;font-weight:600;color:#434842;
                         display:block;margin-bottom:4px">
-            Localizador del Bizum
-            <span style="font-size:10px;font-weight:400;color:#888;margin-left:4px">(opcional)</span>
+            Localizador del Bizum <span style="color:#ba1a1a">*</span>
           </label>
-          <input id="bizum-ref" type="text" placeholder="Ej: 4KDTG1748 — déjalo vacío si no lo ves"
+          <input id="bizum-ref" type="text" placeholder="Ej: 4KDTG1748"
                  oninput="mValidarRef()" maxlength="30"
                  style="width:100%;border:1.5px solid #00C2A8;border-radius:.5rem;
                         padding:8px 12px;font-family:'Montserrat';font-size:13px;
                         color:#1a1c1b;background:#fff;outline:none;box-sizing:border-box"/>
           <p style="font-family:'Montserrat';font-size:11px;color:#666;margin-top:4px;line-height:1.5">
-            📱 En <strong>CaixaBank, BBVA, Santander</strong>: aparece tras confirmar el pago.<br/>
-            ⚠️ <strong>Revolut y N26</strong>: no muestran localizador — puedes dejar este campo vacío.
+            📱 Aparece en tu app bancaria tras confirmar el pago.<br/>
+            ⚠️ <strong>Revolut / N26</strong>: haz captura de pantalla del pago y envíala por WhatsApp.
           </p>
         </div>
       </div>
@@ -385,14 +384,7 @@
     _setupRT('m-telefono', v => /^[6789]\d{8}$/.test(v.replace(/[\s\-.]/g,'')));
     _setupRT('m-direccion',v => v.length >= 5);
     _setupRT('m-fecha',    v => v !== '');
-    const emailEl = document.getElementById('m-email');
-    if (emailEl) emailEl.addEventListener('blur', () => {
-      const v = emailEl.value.trim();
-      if (!v) { emailEl.classList.remove('m-ok','m-err'); return; }
-      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-      emailEl.classList.toggle('m-ok', ok);
-      emailEl.classList.toggle('m-err', !ok);
-    });
+    _setupRT('m-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
   }, 100);
 })();
 
@@ -559,17 +551,19 @@ function mCheckPago(tipo) {
     _pagoListo = false;
     _bloquear();
   } else {
-    // Localizador opcional: activar botón en cuanto el checkbox está marcado
-    _pagoListo = true;
-    _activar();
+    // Localizador obligatorio: no activar hasta que tenga al menos 4 caracteres
+    const ref = document.getElementById(tipo + '-ref')?.value.trim() || '';
+    if (ref.length >= 4) { _pagoListo = true; _activar(); }
+    else { _pagoListo = false; _bloquear(); }
   }
 }
 
 function mValidarRef() {
   if (!_metodo || _metodo === 'tarjeta') return;
   const checked = document.getElementById('check-' + _metodo)?.checked;
-  // El localizador es opcional — el botón se activa en cuanto el checkbox está marcado
-  if (checked) { _pagoListo = true; _activar(); }
+  if (!checked) { _pagoListo = false; _bloquear(); return; }
+  const ref = document.getElementById(_metodo + '-ref')?.value.trim() || '';
+  if (ref.length >= 4) { _pagoListo = true; _activar(); }
   else { _pagoListo = false; _bloquear(); }
 }
 
@@ -739,6 +733,10 @@ function _validar() {
     return '📱 El teléfono no es válido (ej: 600 123 456).';
   if (_tipoEntrega === 'domicilio' && !direccion)
     return '📍 Indica la dirección de entrega.';
+  const email = document.getElementById('m-email')?.value.trim() || '';
+  if (!email) return '📧 Indica tu email para recibir la confirmación del pedido.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return '📧 El email no es válido (ej: tu@email.com).';
   return null;
 }
 
