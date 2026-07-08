@@ -207,8 +207,8 @@ tailwind.config = {
 
             <div class="flex flex-col gap-xs">
               <label class="font-label-sm text-label-sm text-on-surface-variant">
-                Email
-                <span class="font-label-sm text-on-surface-variant opacity-60 normal-case" style="font-size:11px">&nbsp;(opcional — recibirás confirmación)</span>
+                Email <span class="text-error">*</span>
+                <span class="font-label-sm text-on-surface-variant opacity-60 normal-case" style="font-size:11px">&nbsp;(recibirás confirmación del pedido)</span>
               </label>
               <input id="f-email" type="email" placeholder="tu@email.com" autocomplete="email"
                      class="w-full border border-outline-variant rounded-lg px-sm py-xs font-body-md text-body-md text-on-surface bg-surface-container-low focus:outline-none focus:border-primary"/>
@@ -270,18 +270,17 @@ tailwind.config = {
               </label>
               <div id="cart-bizum-ref-wrap" style="display:none;margin-top:10px">
                 <label style="font-family:'Montserrat';font-size:12px;font-weight:600;color:#434842;display:block;margin-bottom:4px">
-                  Localizador del Bizum
-                  <span style="font-size:10px;font-weight:400;color:#888;margin-left:4px">(opcional)</span>
+                  Localizador del Bizum <span style="color:#ba1a1a">*</span>
                 </label>
                 <input id="cart-bizum-ref" type="text"
-                       placeholder="Ej: 4KDTG1748 — déjalo vacío si no lo ves"
+                       placeholder="Ej: 4KDTG1748"
                        oninput="cartValidarRef()" maxlength="30"
                        style="width:100%;border:1.5px solid #00C2A8;border-radius:.5rem;
                               padding:8px 12px;font-family:'Montserrat';font-size:13px;
                               color:#1a1c1b;background:#fff;outline:none;box-sizing:border-box"/>
                 <p style="font-family:'Montserrat';font-size:11px;color:#666;margin-top:4px;line-height:1.5">
-                  📱 <strong>CaixaBank, BBVA, Santander</strong>: aparece tras confirmar el pago.<br/>
-                  ⚠️ <strong>Revolut y N26</strong>: no muestran localizador — puedes dejarlo vacío.
+                  📱 Aparece en tu app bancaria tras confirmar el pago.<br/>
+                  ⚠️ <strong>Revolut / N26</strong>: haz captura de pantalla y envíala por WhatsApp.
                 </p>
               </div>
             </div>
@@ -471,19 +470,21 @@ document.addEventListener('click', e => {
       cartPagoListo = false;
       cartBloquear();
     } else {
-      // Localizador opcional: activar en cuanto el checkbox está marcado
-      cartPagoListo = true;
-      cartActivar();
+      // Localizador obligatorio: esperar a que tenga al menos 4 caracteres
+      const ref = document.getElementById('cart-' + tipo + '-ref')?.value.trim() || '';
+      if (ref.length >= 4) { cartPagoListo = true; cartActivar(); }
+      else { cartPagoListo = false; cartBloquear(); }
     }
   }
 
   function cartValidarRef() {
-    // El localizador es opcional — no bloquea el botón si está vacío
-    // Solo actúa si el checkbox ya está marcado (para mantener estado)
     const tipo = pagoType.toLowerCase();
     if (!tipo || tipo === 'tarjeta') return;
     const checked = document.getElementById('cart-check-' + tipo)?.checked;
-    if (checked) { cartPagoListo = true; cartActivar(); }
+    if (!checked) { cartPagoListo = false; cartBloquear(); return; }
+    const ref = document.getElementById('cart-' + tipo + '-ref')?.value.trim() || '';
+    if (ref.length >= 4) { cartPagoListo = true; cartActivar(); }
+    else { cartPagoListo = false; cartBloquear(); }
   }
 
   async function cartPagarStripe() {
@@ -610,7 +611,7 @@ document.addEventListener('click', e => {
       }
     });
 
-    // Validar formato del teléfono español (6xx, 7xx, 8xx, 9xx — 9 dígitos)
+    // Validar formato del teléfono español
     const telEl = document.getElementById('f-telefono');
     if (telEl && telEl.value.trim()) {
       const telNum = telEl.value.trim().replace(/[\s\-\.]/g, '');
@@ -622,6 +623,25 @@ document.addEventListener('click', e => {
         return false;
       }
     }
+
+    // Validar email obligatorio
+    const emailEl = document.getElementById('f-email');
+    const emailVal = emailEl ? emailEl.value.trim() : '';
+    if (!emailVal) {
+      emailEl && emailEl.classList.add('error');
+      const errEl = document.getElementById('form-error');
+      errEl.textContent = '📧 Indica tu email para recibir la confirmación del pedido.';
+      errEl.classList.remove('hidden');
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      emailEl && emailEl.classList.add('error');
+      const errEl = document.getElementById('form-error');
+      errEl.textContent = '📧 El email no es válido (ej: tu@email.com).';
+      errEl.classList.remove('hidden');
+      return false;
+    }
+    emailEl && emailEl.classList.remove('error');
 
     document.getElementById('form-error').classList.toggle('hidden', ok);
     return ok;
@@ -891,7 +911,7 @@ _Floristería Alameda · Cartagena_`;
   _rtSetup('f-nombre',    v => v.length >= 2);
   _rtSetup('f-telefono',  v => /^[6789]\d{8}$/.test(v.replace(/[\s\-.]/g,'')));
   _rtSetup('f-direccion', v => v.length >= 5);
-  _rtSetup('f-email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), true);
+  _rtSetup('f-email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
 
   renderCart();
   // Inicializar estado: botón bloqueado hasta pago
