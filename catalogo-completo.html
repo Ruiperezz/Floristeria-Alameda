@@ -13,7 +13,7 @@
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://floristeriaalameda.com/catalogo-completo.html"/>
 <meta property="og:title" content="Catálogo Completo | Floristería Alameda Cartagena"/>
-<meta property="og:description" content="31 arreglos florales artesanales. Rosas, orquídeas, mixtos y flores de temporada. Entrega a domicilio en Cartagena con portes incluidos."/>
+<meta property="og:description" content="52 arreglos florales artesanales. Rosas, orquídeas, mixtos, flores de temporada y centros de tanatorio. Entrega a domicilio en Cartagena con portes incluidos."/>
 <meta property="og:image" content="https://floristeriaalameda.com/local-floristeria.jpg"/>
 <meta property="og:image:width" content="2048"/>
 <meta property="og:image:height" content="1536"/>
@@ -23,6 +23,7 @@
 <meta property="og:site_name" content="Floristería Alameda"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="es_ES"/>
+<meta property="og:url" content="https://floristeriaalameda.com/catalogo-completo.html"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Catálogo de Flores en Cartagena","description":"Catálogo completo de flores y ramos artesanales de Floristería Alameda en Cartagena. Rosas, orquídeas, ramos mixtos, flores preservadas y flores para tanatorio con entrega a domicilio.","url":"https://floristeriaalameda.com/catalogo-completo.html","isPartOf":{"@type":"WebSite","name":"Floristería Alameda","url":"https://floristeriaalameda.com"},"provider":{"@type":"Florist","name":"Floristería Alameda","address":{"@type":"PostalAddress","streetAddress":"Alameda de San Antón, 15","addressLocality":"Cartagena","addressRegion":"Murcia","postalCode":"30205","addressCountry":"ES"},"telephone":"+34627546360","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"333"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://floristeriaalameda.com/"},{"@type":"ListItem","position":2,"name":"Catálogo Flores Cartagena","item":"https://floristeriaalameda.com/catalogo-completo.html"}]}}</script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -358,6 +359,29 @@ const PRODUCTOS = [
   { id:'p52', img:'imgs/p52.jpg', categoria:'tanatorio', nombre:'Corona de Paz · Corona Grande de Tanatorio Multicolor Otoñal', emoji:'⚱️', precio:300,
     descripcion:'Imponente corona grande de tanatorio en tonos azules, naranjas, amarillos y rosas, con hortensias azules y rosas, gerberas y girasoles naranjas y amarillos, crisantemos verdes y paniculata sobre una generosa base verde. Cinta personalizada incluida. Desplazamiento e instalación incluidos solo para Cartagena.' },
 ];
+
+(function injectItemListSchema() {
+  const BASE = 'https://floristeriaalameda.com';
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Catálogo de Flores — Floristería Alameda Cartagena",
+    "url": BASE + "/catalogo-completo.html",
+    "numberOfItems": PRODUCTOS.length,
+    "itemListElement": PRODUCTOS.map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": p.id === 'p31'
+        ? BASE + '/rosas-negras.html'
+        : BASE + '/producto.html?id=' + p.id,
+      "name": p.nombre
+    }))
+  };
+  const s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(schema);
+  document.head.appendChild(s);
+})();
 
 function renderImg(producto, wrapId, spinId) {
   const wrap = document.getElementById(wrapId);
