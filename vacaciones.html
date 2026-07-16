@@ -4,131 +4,191 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="robots" content="noindex"/>
-<title>Floristería Alameda · Cerrado por Vacaciones</title>
+<title>Floristería Alameda · Cerrado Temporalmente</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://floristeriaalameda.com/favicon-32.png?v=2"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
+html,body{
+  height:100%;
+  width:100%;
   font-family:'Helvetica Neue',Arial,sans-serif;
-  background:#f9f9f7;
-  min-height:100vh;
+}
+body{
+  position:relative;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:32px 16px;
+  min-height:100vh;
+  overflow:hidden;
 }
-.card{
-  background:#fff;
-  border-radius:24px;
-  padding:48px 40px 44px;
-  max-width:480px;
-  width:100%;
-  box-shadow:0 12px 48px rgba(80,99,82,.12);
+
+/* Foto de fondo a pantalla completa */
+.bg{
+  position:fixed;
+  inset:0;
+  background-image:url('local-floristeria.jpg');
+  background-size:cover;
+  background-position:center 30%;
+  background-repeat:no-repeat;
+  z-index:0;
+}
+
+/* Capa oscura para legibilidad */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    160deg,
+    rgba(30,42,31,0.72) 0%,
+    rgba(44,60,46,0.78) 50%,
+    rgba(20,30,21,0.82) 100%
+  );
+  z-index:1;
+}
+
+/* Contenido centrado */
+.content{
+  position:relative;
+  z-index:2;
   text-align:center;
+  color:#fff;
+  padding:32px 24px;
+  max-width:600px;
+  width:100%;
 }
-.logo-wrap{
-  width:88px;height:88px;border-radius:50%;
-  background:linear-gradient(160deg,#3d4f3f 0%,#506352 60%,#5e7360 100%);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 20px;overflow:hidden;
+
+/* Logo circular */
+.logo-ring{
+  width:96px;height:96px;border-radius:50%;
+  border:3px solid rgba(255,255,255,0.25);
+  overflow:hidden;margin:0 auto 28px;
 }
-.logo-wrap img{width:88px;height:88px;object-fit:cover;border-radius:50%;}
-.brand-sub{
-  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  color:#8da18e;font-weight:600;margin-bottom:4px;
+.logo-ring img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+
+/* Marca */
+.brand-sup{
+  font-size:10px;letter-spacing:.25em;text-transform:uppercase;
+  color:#a5c1a7;font-weight:600;margin-bottom:6px;
 }
 .brand-name{
-  font-size:26px;font-weight:800;color:#1a1c1b;letter-spacing:.04em;
-  font-family:Georgia,serif;margin-bottom:4px;
+  font-size:36px;font-weight:800;letter-spacing:.08em;
+  font-family:Georgia,serif;color:#fff;margin-bottom:4px;
 }
-.brand-city{font-size:11px;color:#aaa;letter-spacing:.15em;margin-bottom:32px;}
+.brand-city{
+  font-size:12px;letter-spacing:.2em;color:rgba(255,255,255,.5);
+  margin-bottom:40px;
+}
 
-.icon-wrap{font-size:52px;margin-bottom:20px;}
+/* Divisor */
+.line{
+  width:52px;height:2px;border-radius:9999px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+  margin:0 auto 40px;
+}
+
+/* Mensaje principal */
 h1{
-  font-size:24px;font-weight:700;color:#1a1c1b;
-  font-family:Georgia,serif;margin-bottom:12px;
+  font-size:clamp(28px,5vw,44px);
+  font-family:Georgia,serif;
+  font-weight:700;
+  color:#fff;
+  line-height:1.25;
+  margin-bottom:18px;
+  letter-spacing:-.3px;
 }
-.lead{
-  font-size:15px;color:#434842;line-height:1.7;margin-bottom:28px;
+.sub{
+  font-size:clamp(15px,2.5vw,18px);
+  color:rgba(255,255,255,.75);
+  line-height:1.7;
+  margin-bottom:48px;
+  font-weight:400;
 }
-.divider{
-  width:48px;height:3px;border-radius:9999px;
-  background:linear-gradient(90deg,#506352,#8da18e);
-  margin:0 auto 28px;
-}
+
+/* Botón WhatsApp */
 .wa-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  background:#25D366;color:#fff;border-radius:9999px;
-  padding:16px 36px;text-decoration:none;
-  font-size:15px;font-weight:700;letter-spacing:.02em;
-  box-shadow:0 6px 20px rgba(37,211,102,.3);
-  transition:opacity .2s,transform .1s;
-  margin-bottom:12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:#25D366;
+  color:#fff;
+  border-radius:9999px;
+  padding:16px 40px;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:.02em;
+  box-shadow:0 8px 28px rgba(37,211,102,.35);
+  transition:transform .15s,box-shadow .15s;
+  margin-bottom:40px;
 }
-.wa-btn:active{opacity:.9;transform:scale(.97);}
-.wa-hint{font-size:12px;color:#aaa;margin-bottom:32px;}
-
-.info-row{
-  background:#f9f9f7;border-radius:14px;padding:20px;
-  margin-bottom:28px;
+.wa-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 36px rgba(37,211,102,.45);
 }
-.info-row p{font-size:13px;color:#434842;line-height:1.8;margin:0;}
-.info-row strong{color:#506352;}
+.wa-btn:active{transform:scale(.97);}
 
-.footer-txt{font-size:11px;color:#bbb;line-height:1.8;}
-.footer-txt a{color:#bbb;text-decoration:none;}
+/* Info inferior */
+.info{
+  font-size:13px;
+  color:rgba(255,255,255,.45);
+  line-height:2;
+  letter-spacing:.02em;
+}
+.info a{
+  color:rgba(255,255,255,.6);
+  text-decoration:none;
+  font-weight:600;
+}
 
 @media(max-width:480px){
-  .card{padding:36px 24px 32px;}
-  h1{font-size:21px;}
+  .brand-name{font-size:28px;}
+  .wa-btn{padding:15px 32px;font-size:15px;width:100%;max-width:320px;}
 }
 </style>
 </head>
 <body>
-<div class="card">
 
-  <div class="logo-wrap">
-    <img src="https://floristeriaalameda.com/logo-floristeria.jpg" alt="Floristería Alameda" width="88" height="88"/>
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<div class="content">
+
+  <div class="logo-ring">
+    <img src="logo-floristeria.jpg" alt="Floristería Alameda" width="96" height="96"/>
   </div>
-  <p class="brand-sub">Floristería</p>
+
+  <p class="brand-sup">Floristería</p>
   <p class="brand-name">ALAMEDA</p>
   <p class="brand-city">· CARTAGENA ·</p>
 
-  <div class="icon-wrap">🌿</div>
-  <h1>Estamos de vacaciones</h1>
-  <p class="lead">
-    Por el momento la floristería está cerrada.<br>
-    Reabriremos pronto con las flores más bonitas para ti.
+  <div class="line"></div>
+
+  <h1>Cerrado temporalmente<br>por vacaciones</h1>
+  <p class="sub">
+    Volveremos pronto con todas las flores.<br>
+    Hasta nuevo aviso — ¡gracias por tu comprensión! 🌿
   </p>
 
-  <div class="divider"></div>
-
-  <a href="https://wa.me/34627546360?text=Hola%2C%20he%20visto%20que%20estáis%20de%20vacaciones.%20¿Cuándo%20reabríais%3F" class="wa-btn">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M10 0C4.477 0 0 4.477 0 10a9.955 9.955 0 001.388 5.084L.05 19.5l4.534-1.318A9.955 9.955 0 0010 20c5.523 0 10-4.477 10-10S15.523 0 10 0z" fill="#fff"/>
-      <path d="M14.73 12.794c-.23-.115-1.36-.671-1.57-.748-.21-.077-.363-.115-.515.115-.153.23-.59.748-.723.901-.133.153-.265.173-.495.058-.23-.115-.97-.357-1.849-1.14-.683-.61-1.144-1.362-1.278-1.592-.133-.23-.014-.354.1-.469.102-.101.23-.265.344-.397.115-.133.153-.23.23-.383.077-.153.038-.287-.019-.402-.058-.115-.516-1.244-.707-1.703-.186-.447-.376-.386-.515-.393l-.44-.008c-.153 0-.402.058-.612.287-.21.23-.8.782-.8 1.908s.819 2.213.933 2.366c.115.153 1.612 2.46 3.906 3.452.546.236.971.377 1.303.482.547.174 1.045.149 1.438.09.439-.065 1.35-.552 1.541-1.085.19-.533.19-.99.133-1.085-.057-.096-.21-.153-.44-.268z" fill="#25D366"/>
+  <a href="https://wa.me/34627546360?text=Hola%2C%20he%20visto%20que%20estáis%20de%20vacaciones.%20¿Cuándo%20reabríais%3F"
+     class="wa-btn">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 0C5.373 0 0 5.373 0 12a11.94 11.94 0 001.664 6.1L.06 23.4l5.42-1.578A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" fill="white"/>
+      <path d="M17.675 15.353c-.275-.138-1.631-.805-1.884-.896-.253-.092-.437-.138-.62.138-.184.276-.71.896-.87 1.08-.16.185-.32.207-.594.07-.276-.138-1.163-.428-2.217-1.37-.82-.73-1.374-1.633-1.535-1.909-.16-.276-.017-.425.12-.562.122-.122.276-.318.413-.477.138-.16.184-.276.276-.46.092-.184.046-.345-.023-.483-.07-.138-.62-1.492-.849-2.044-.223-.537-.45-.463-.62-.47l-.527-.01c-.184 0-.483.07-.736.345-.253.276-.96.938-.96 2.29 0 1.35.983 2.656 1.12 2.84.138.184 1.934 2.952 4.687 4.14.655.284 1.165.452 1.563.578.657.209 1.256.18 1.729.109.527-.079 1.62-.663 1.849-1.303.23-.64.23-1.188.16-1.303-.069-.115-.253-.184-.527-.322z" fill="#25D366"/>
     </svg>
     Escríbenos por WhatsApp
   </a>
-  <p class="wa-hint">Te respondemos en cuanto podamos 🌸</p>
 
-  <div class="info-row">
-    <p>
-      <strong>📍 Dirección</strong><br>
-      Alameda de San Antón, 15 · 30205 Cartagena<br>
-      <br>
-      <strong>📞 Teléfono</strong><br>
-      <a href="tel:627546360" style="color:#506352;font-weight:600">627 54 63 60</a>
-    </p>
-  </div>
-
-  <p class="footer-txt">
-    <a href="https://floristeriaalameda.com">floristeriaalameda.com</a><br>
-    © <span id="yr"></span> Floristería Alameda — Cartagena, Murcia
+  <p class="info">
+    📍 Alameda de San Antón, 15 · Cartagena, Murcia<br>
+    <a href="tel:627546360">627 54 63 60</a>
+    &nbsp;·&nbsp;
+    <a href="https://floristeriaalameda.com">floristeriaalameda.com</a>
   </p>
 
 </div>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+
 </body>
 </html>
