@@ -320,6 +320,25 @@ function floristaHtml({ emailCliente, emoji, producto, precio, nombre, telefono,
 
         ${badgePago}
 
+        <!-- Badge tipo entrega -->
+        ${direccion && direccion !== 'Recogida en tienda'
+          ? `<div style="background:#eef3ee;border:1.5px solid #506352;border-radius:10px;
+                         padding:14px 18px;margin-bottom:24px;font-family:'Helvetica Neue',Arial,sans-serif">
+              <p style="margin:0;font-size:13px;font-weight:800;color:#263829;letter-spacing:.03em">
+                🚚 ENTREGA A DOMICILIO — ${h(direccion)}
+              </p>
+             </div>`
+          : `<div style="background:#fff3f5;border:1.5px solid #7b535c;border-radius:10px;
+                         padding:14px 18px;margin-bottom:24px;font-family:'Helvetica Neue',Arial,sans-serif">
+              <p style="margin:0 0 4px;font-size:13px;font-weight:800;color:#7b535c;letter-spacing:.03em">
+                🏪 RECOGIDA EN TIENDA — Sin envío a domicilio
+              </p>
+              <p style="margin:0;font-size:12px;color:#7b535c;line-height:1.5">
+                El cliente vendrá a recoger a <strong>Alameda de San Antón, 15 · Cartagena</strong>
+              </p>
+             </div>`
+        }
+
         <!-- Producto destacado -->
         <div style="background:#f9f9f7;border-radius:16px;padding:20px;text-align:center;
                     border:1px solid #ece9e4;margin-bottom:24px">
