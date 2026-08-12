@@ -611,6 +611,13 @@ document.addEventListener('click', e => {
       }
     });
 
+    if (!ok) {
+      const errEl = document.getElementById('form-error');
+      errEl.textContent = '⚠️ Completa todos los campos obligatorios marcados en rojo.';
+      errEl.classList.remove('hidden');
+      return false;
+    }
+
     // Validar formato del teléfono español
     const telEl = document.getElementById('f-telefono');
     if (telEl && telEl.value.trim()) {

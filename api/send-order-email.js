@@ -5,6 +5,10 @@ const WA_LINK      = 'https://wa.me/34627546360';
 const TEL          = '627 54 63 60';
 const JSON_H       = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' };
 
+// Sanitizador XSS — a nivel de módulo para que lo usen los templates
+const h = s => String(s || '').slice(0, 400)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
 export default async function handler(request) {
   if (request.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 });
@@ -28,12 +32,8 @@ export default async function handler(request) {
 
   const clienteEmail = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null;
 
-  // Sanitizar todos los campos contra XSS en el HTML del email
-  const h = s => String(s || '').slice(0, 400)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
   const tipoLabel  = tipo === 'bizum' ? 'Bizum' : tipo === 'paypal' ? 'PayPal' : 'Tarjeta';
-  const hasRef     = ref && ref.trim().length >= 5;
+  const hasRef     = ref && ref.trim().length >= 4;
   const refSafe    = hasRef ? h(ref) : null;
   const isManual   = tipoLabel !== 'Tarjeta';
 
