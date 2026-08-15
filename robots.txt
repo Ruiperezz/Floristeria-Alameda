@@ -7,6 +7,8 @@ Disallow: /carrito.html
 Disallow: /pago-completado.html
 Disallow: /pago-cancelado.html
 Disallow: /bizum-pago.html
+Disallow: /admin.html
+Disallow: /vacaciones.html
 
 # Sitemap
 Sitemap: https://floristeriaalameda.com/sitemap.xml

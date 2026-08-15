@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel Alameda</title>
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --bg:            #f9f9f7;
+  --surface:       #ffffff;
+  --surface-2:     #f0f3f0;
+  --border:        #d6dbd6;
+  --border-subtle: #e6eae6;
+  --text-hi:       #1a1c1b;
+  --text-mid:      #434842;
+  --text-lo:       #7a8079;
+  --primary:       #506352;
+  --primary-hi:    #3d4f3e;
+  --primary-soft:  #e8eee8;
+  --accent:        #7b535c;
+  --accent-soft:   #f5eff0;
+  --header-bg:     #506352;
+  --header-text:   #ffffff;
+  --header-sub:    rgba(255,255,255,.65);
+  /* semantic */
+  --ok-text:       #2d6a3a;
+  --ok-bg:         #eaf4ec;
+  --warn-text:     #7a5200;
+  --warn-bg:       #fff8e0;
+  --err-text:      #8b1c2a;
+  --err-bg:        #fde8eb;
+  /* cat badges */
+  --cat-rosas-bg:      #fce4e8;
+  --cat-rosas-text:    #9b3a47;
+  --cat-mixtos-bg:     #e6f0e3;
+  --cat-mixtos-text:   #365429;
+  --cat-orquideas-bg:  #ede8f7;
+  --cat-orquideas-text:#5c3f8f;
+  --cat-primavera-bg:  #fdf6e0;
+  --cat-primavera-text:#7a5e00;
+  --cat-tanatorio-bg:  #ebebeb;
+  --cat-tanatorio-text:#525252;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:            #131a14;
+    --surface:       #1c2420;
+    --surface-2:     #222d24;
+    --border:        #2c3830;
+    --border-subtle: #243028;
+    --text-hi:       #edf2ed;
+    --text-mid:      #a0aba1;
+    --text-lo:       #667368;
+    --primary:       #82a988;
+    --primary-hi:    #a5c5aa;
+    --primary-soft:  #1c2d1e;
+    --accent:        #c49aa4;
+    --accent-soft:   #2a1f23;
+    --header-bg:     #1c2d1e;
+    --header-text:   #edf2ed;
+    --header-sub:    rgba(237,242,237,.5);
+    --ok-text:       #6ec97d;
+    --ok-bg:         #152418;
+    --warn-text:     #d4b040;
+    --warn-bg:       #2a2100;
+    --err-text:      #e89aa3;
+    --err-bg:        #321419;
+    --cat-rosas-bg:      #3a1c22;
+    --cat-rosas-text:    #e89aa3;
+    --cat-mixtos-bg:     #1a2e18;
+    --cat-mixtos-text:   #8fbc84;
+    --cat-orquideas-bg:  #24183d;
+    --cat-orquideas-text:#b09ed8;
+    --cat-primavera-bg:  #2a2100;
+    --cat-primavera-text:#d4b040;
+    --cat-tanatorio-bg:  #252525;
+    --cat-tanatorio-text:#a0a0a0;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:            #131a14;
+  --surface:       #1c2420;
+  --surface-2:     #222d24;
+  --border:        #2c3830;
+  --border-subtle: #243028;
+  --text-hi:       #edf2ed;
+  --text-mid:      #a0aba1;
+  --text-lo:       #667368;
+  --primary:       #82a988;
+  --primary-hi:    #a5c5aa;
+  --primary-soft:  #1c2d1e;
+  --accent:        #c49aa4;
+  --accent-soft:   #2a1f23;
+  --header-bg:     #1c2d1e;
+  --header-text:   #edf2ed;
+  --header-sub:    rgba(237,242,237,.5);
+  --ok-text:       #6ec97d;
+  --ok-bg:         #152418;
+  --warn-text:     #d4b040;
+  --warn-bg:       #2a2100;
+  --err-text:      #e89aa3;
+  --err-bg:        #321419;
+  --cat-rosas-bg:      #3a1c22;
+  --cat-rosas-text:    #e89aa3;
+  --cat-mixtos-bg:     #1a2e18;
+  --cat-mixtos-text:   #8fbc84;
+  --cat-orquideas-bg:  #24183d;
+  --cat-orquideas-text:#b09ed8;
+  --cat-primavera-bg:  #2a2100;
+  --cat-primavera-text:#d4b040;
+  --cat-tanatorio-bg:  #252525;
+  --cat-tanatorio-text:#a0a0a0;
+}
+
+/* ─── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body {
+  font-family: 'Helvetica Neue', Arial, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-hi);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 2px; }
+button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* ─── LOGIN ──────────────────────────────────────────────── */
+#screen-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px 40px 40px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 2px 16px rgba(0,0,0,.06);
+}
+.login-mark {
+  font-size: 32px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.login-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 4px;
+}
+.login-sub {
+  font-size: .8rem;
+  color: var(--text-lo);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.login-card label {
+  display: block;
+  text-align: left;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+.pw-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
+.pw-wrap input {
+  width: 100%;
+  padding: 10px 44px 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-hi);
+  font-size: 1rem;
+  transition: border-color .15s;
+}
+.pw-wrap input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.pw-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-lo);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+.login-error {
+  font-size: .82rem;
+  color: var(--err-text);
+  background: var(--err-bg);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.btn-primary {
+  width: 100%;
+  padding: 11px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+  margin-top: 4px;
+}
+.btn-primary:hover { background: var(--primary-hi); }
+.btn-primary:disabled { opacity: .6; cursor: default; }
+
+/* ─── DASHBOARD HEADER ───────────────────────────────────── */
+.dash-header {
+  background: var(--header-bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(0,0,0,.12);
+}
+.header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.header-leaf { font-size: 18px; flex-shrink: 0; }
+.header-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--header-text);
+  white-space: nowrap;
+}
+.header-sep {
+  color: var(--header-sub);
+  flex-shrink: 0;
+}
+.header-sub {
+  font-size: .78rem;
+  color: var(--header-sub);
+  letter-spacing: .04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.freshness {
+  font-size: .75rem;
+  color: var(--header-sub);
+}
+.btn-icon {
+  background: rgba(255,255,255,.12);
+  border: none;
+  border-radius: 6px;
+  color: var(--header-text);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background .15s;
+}
+.btn-icon:hover { background: rgba(255,255,255,.22); }
+.btn-ghost {
+  background: rgba(255,255,255,.12);
+  border: none;
+  border-radius: 6px;
+  color: var(--header-text);
+  padding: 0 14px;
+  height: 32px;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+  white-space: nowrap;
+}
+.btn-ghost:hover { background: rgba(255,255,255,.22); }
+
+/* ─── MAIN LAYOUT ────────────────────────────────────────── */
+.dash-main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── STATS ROW ──────────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+}
+.stat-value {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.stat-note {
+  font-size: .72rem;
+  color: var(--text-lo);
+  margin-top: 2px;
+}
+
+/* ─── TWO-COLUMN ─────────────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── SECTIONS ───────────────────────────────────────────── */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.section-head {
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.section-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 0;
+}
+
+/* ─── NOTICE STRIPE ──────────────────────────────────────── */
+.notice-stripe {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: .78rem;
+  color: var(--accent);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+.notice-icon {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-style: normal;
+  font-size: .85rem;
+}
+
+/* ─── TABLES ─────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .83rem;
+  font-variant-numeric: tabular-nums;
+}
+thead tr {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  white-space: nowrap;
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-mid);
+  vertical-align: middle;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--primary-soft); }
+td.date { white-space: nowrap; color: var(--text-lo); font-size: .8rem; }
+td.email { color: var(--text-lo); font-size: .78rem; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+td.amount { white-space: nowrap; font-weight: 600; color: var(--text-hi); }
+td.price { white-space: nowrap; font-weight: 600; color: var(--primary); }
+td.pid { color: var(--text-lo); font-size: .78rem; font-family: monospace; }
+td.empty, td.loading {
+  text-align: center;
+  padding: 32px 14px;
+  color: var(--text-lo);
+  font-style: italic;
+}
+
+/* ─── BADGES ─────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+.badge.paid   { background: var(--ok-bg);   color: var(--ok-text);   }
+.badge.pending{ background: var(--warn-bg);  color: var(--warn-text); }
+
+.cat-badge {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: .72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cat-badge.cat-rosas      { background: var(--cat-rosas-bg);      color: var(--cat-rosas-text);      }
+.cat-badge.cat-mixtos     { background: var(--cat-mixtos-bg);     color: var(--cat-mixtos-text);     }
+.cat-badge.cat-orquideas  { background: var(--cat-orquideas-bg);  color: var(--cat-orquideas-text);  }
+.cat-badge.cat-primavera  { background: var(--cat-primavera-bg);  color: var(--cat-primavera-text);  }
+.cat-badge.cat-tanatorio  { background: var(--cat-tanatorio-bg);  color: var(--cat-tanatorio-text);  }
+
+/* ─── INFO SECTION ───────────────────────────────────────── */
+.info-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.info-list dt {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  padding: 5px 16px 5px 0;
+  white-space: nowrap;
+}
+.info-list dd {
+  font-size: .83rem;
+  color: var(--text-mid);
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.info-list dt:last-of-type,
+.info-list dd:last-child { border-bottom: none; }
+
+.link-list {
+  padding: 14px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 6px;
+  padding: 4px 10px;
+  text-decoration: none;
+  transition: background .15s;
+}
+.quick-link:hover { background: var(--border); text-decoration: none; }
+.quick-link.ext { color: var(--accent); background: var(--accent-soft); }
+.quick-link.ext:hover { background: var(--border); }
+
+/* ─── HOURS TABLE ────────────────────────────────────────── */
+.hours-table {
+  width: 100%;
+  font-size: .83rem;
+}
+.hours-table td {
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.hours-table td:first-child {
+  font-weight: 600;
+  color: var(--text-hi);
+  white-space: nowrap;
+}
+.hours-table tr:last-child td { border-bottom: none; }
+
+/* ─── CATALOG SECTION ────────────────────────────────────── */
+.cat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cat-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cat-btn {
+  padding: 4px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  background: var(--bg);
+  color: var(--text-mid);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+}
+.cat-btn:hover { border-color: var(--primary); color: var(--primary); }
+.cat-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+.dash-footer {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .75rem;
+  color: var(--text-lo);
+}
+.footer-sep { color: var(--border); }
+
+/* ─── LOAD SPINNER ───────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; border-top-color: var(--primary); }
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .header-sub, .header-sep { display: none; }
+  .dash-main { padding: 16px 16px 40px; gap: 16px; }
+  .login-card { padding: 36px 24px 32px; }
+  .cat-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 380px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .stat-value { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     LOGIN
+════════════════════════════════════════════════════════ -->
+<div id="screen-login">
+  <div class="login-card">
+    <div class="login-mark">🌿</div>
+    <h1 class="login-title">Floristería Alameda</h1>
+    <p class="login-sub">Panel de administración</p>
+    <form id="login-form" novalidate>
+      <label for="pw-input">Contraseña de acceso</label>
+      <div class="pw-wrap">
+        <input id="pw-input" type="password" autocomplete="current-password"
+               placeholder="••••••••" required>
+        <button type="button" id="pw-toggle" class="pw-toggle" aria-label="Mostrar contraseña">
+          <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <p id="login-error" class="login-error" hidden></p>
+      <button type="submit" id="login-btn" class="btn-primary">Acceder</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     DASHBOARD
+════════════════════════════════════════════════════════ -->
+<div id="screen-dash" hidden>
+
+  <header class="dash-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-leaf">🌿</span>
+        <span class="header-title">Floristería Alameda</span>
+        <span class="header-sep">·</span>
+        <span class="header-sub">Panel de administración</span>
+      </div>
+      <div class="header-actions">
+        <span id="data-freshness" class="freshness"></span>
+        <button id="refresh-btn" class="btn-icon" title="Actualizar datos" aria-label="Actualizar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+          </svg>
+        </button>
+        <button id="logout-btn" class="btn-ghost">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-main">
+
+    <!-- STATS ROW -->
+    <section class="stats-row" aria-label="Resumen">
+      <div class="stat-card">
+        <span class="stat-label">Pedidos totales</span>
+        <span class="stat-value" id="s-total-orders">—</span>
+        <span class="stat-note">Solo tarjeta (Stripe)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Ingresos totales</span>
+        <span class="stat-value" id="s-revenue">—</span>
+        <span class="stat-note">Últimos 100 pedidos</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Este mes</span>
+        <span class="stat-value" id="s-month">—</span>
+        <span class="stat-note">Últimos 30 días</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Ticket medio</span>
+        <span class="stat-value" id="s-ticket">—</span>
+        <span class="stat-note">Por pedido</span>
+      </div>
+    </section>
+
+    <!-- TWO COLUMN -->
+    <div class="two-col">
+
+      <!-- ORDERS TABLE -->
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Pedidos recientes</h2>
+          <div class="notice-stripe">
+            <span class="notice-icon">ℹ</span>
+            Solo aparecen pagos por tarjeta (Stripe). Los pedidos por Bizum o PayPal no se reflejan aquí — solo en el email al florista y en WhatsApp.
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Email</th>
+                <th>Importe</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <tr><td colspan="5" class="loading"><span class="spinner"></span>Cargando pedidos…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="has-more-note" hidden style="padding:12px 20px;font-size:.78rem;color:var(--text-lo);border-top:1px solid var(--border-subtle);">
+          Mostrando los últimos 100 pedidos. Ver el resto en el
+          <a href="https://dashboard.stripe.com/payments" target="_blank">panel de Stripe</a>.
+        </div>
+      </section>
+
+      <!-- RIGHT SIDEBAR -->
+      <aside class="right-col">
+
+        <!-- WEB INFO -->
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">Información de la web</h2>
+          </div>
+          <dl class="info-list">
+            <dt>URL</dt>
+            <dd><a href="https://floristeriaalameda.com" target="_blank">floristeriaalameda.com</a></dd>
+            <dt>Dirección</dt>
+            <dd>Alameda de San Antón, 15, Cartagena</dd>
+            <dt>Teléfono</dt>
+            <dd><a href="tel:627546360">627 54 63 60</a></dd>
+            <dt>WhatsApp</dt>
+            <dd><a href="https://wa.me/34627546360" target="_blank">Abrir chat</a></dd>
+            <dt>Valoración</dt>
+            <dd>⭐ 4,9 · 333 reseñas</dd>
+            <dt>Entregas</dt>
+            <dd>+840 en Cartagena</dd>
+            <dt>Productos</dt>
+            <dd>52 referencias</dd>
+            <dt>Pagos</dt>
+            <dd>Stripe · PayPal · Bizum</dd>
+            <dt>Hosting</dt>
+            <dd>Vercel (GitHub auto-deploy)</dd>
+          </dl>
+          <div class="link-list">
+            <a href="/" target="_blank" class="quick-link">🏠 Inicio</a>
+            <a href="/catalogo-completo.html" target="_blank" class="quick-link">🌸 Catálogo</a>
+            <a href="/carrito.html" target="_blank" class="quick-link">🛒 Carrito</a>
+            <a href="/envios.html" target="_blank" class="quick-link">📦 Envíos</a>
+            <a href="https://dashboard.stripe.com" target="_blank" class="quick-link ext">💳 Stripe</a>
+            <a href="https://vercel.com/dashboard" target="_blank" class="quick-link ext">▲ Vercel</a>
+            <a href="https://www.facebook.com/alamedafloristeria" target="_blank" class="quick-link ext">📘 Facebook</a>
+            <a href="https://g.page/r/CQnT5A4Lv3FtEBE/review" target="_blank" class="quick-link ext">⭐ Reseñas</a>
+          </div>
+        </section>
+
+        <!-- HORARIO -->
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">Horario de atención</h2>
+          </div>
+          <table class="hours-table">
+            <tbody>
+              <tr><td>Lun – Vie</td><td>9:30–13:30 y 17:30–20:00</td></tr>
+              <tr><td>Sábados</td><td>9:30–13:30</td></tr>
+              <tr><td>Domingos</td><td>Cerrado</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- MÉTODOS DE PAGO -->
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">Cobertura del panel</h2>
+          </div>
+          <table class="hours-table">
+            <tbody>
+              <tr>
+                <td>💳 Tarjeta</td>
+                <td style="color:var(--ok-text);font-weight:600;">Visible aquí</td>
+              </tr>
+              <tr>
+                <td>🅿️ PayPal</td>
+                <td style="color:var(--text-lo);">Solo en PayPal</td>
+              </tr>
+              <tr>
+                <td>📱 Bizum</td>
+                <td style="color:var(--text-lo);">WhatsApp + email</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </aside>
+    </div>
+
+    <!-- CATALOG -->
+    <section class="section">
+      <div class="section-head cat-head">
+        <h2 class="section-title">Catálogo de productos</h2>
+        <div class="cat-filters" role="group" aria-label="Filtrar por categoría">
+          <button class="cat-btn active" data-cat="all">Todos (52)</button>
+          <button class="cat-btn" data-cat="rosas">Rosas</button>
+          <button class="cat-btn" data-cat="mixtos">Mixtos</button>
+          <button class="cat-btn" data-cat="orquideas">Orquídeas</button>
+          <button class="cat-btn" data-cat="primavera">Primavera</button>
+          <button class="cat-btn" data-cat="tanatorio">Tanatorio</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:56px">ID</th>
+              <th style="width:32px"></th>
+              <th>Nombre</th>
+              <th style="width:116px">Categoría</th>
+              <th style="width:88px">Precio</th>
+            </tr>
+          </thead>
+          <tbody id="catalog-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="dash-footer">
+    <span>Floristería Alameda · Cartagena</span>
+    <span class="footer-sep">·</span>
+    <span>Panel privado — no indexado por buscadores</span>
+  </footer>
+
+</div>
+
+<script>
+/* ─── PRODUCT DATA ───────────────────────────────────────── */
+const PRODUCTOS = [
+  {id:'p01',nombre:'Ternura · 12 Rosas Rosa',precio:95,cat:'rosas',emoji:'🌸'},
+  {id:'p02',nombre:'Devoción · 12 Rosas Blancas',precio:95,cat:'rosas',emoji:'🤍'},
+  {id:'p03',nombre:'Amistad · 12 Rosas Amarillas',precio:95,cat:'rosas',emoji:'💛'},
+  {id:'p04',nombre:'Pasión · 12 Rosas Rojas',precio:95,cat:'rosas',emoji:'🌹'},
+  {id:'p05',nombre:'Dulzura · 6 Rosas Rosa',precio:55,cat:'rosas',emoji:'🌸'},
+  {id:'p06',nombre:'Magia · 6 Rosas Azules Pintadas',precio:75,cat:'rosas',emoji:'💙'},
+  {id:'p07',nombre:'Deseo · 6 Rosas Rojas',precio:55,cat:'rosas',emoji:'🌹'},
+  {id:'p08',nombre:'Alegría · 6 Rosas Amarillas',precio:55,cat:'rosas',emoji:'💛'},
+  {id:'p09',nombre:'Sueño · 12 Rosas Azules',precio:120,cat:'rosas',emoji:'💙'},
+  {id:'p10',nombre:'Romance · Rosa Roja con Arreglo',precio:25,cat:'rosas',emoji:'🌹'},
+  {id:'p11',nombre:'Amor · Rosa Roja Clásica',precio:15,cat:'rosas',emoji:'🌹'},
+  {id:'p12',nombre:'Luz · Ramo de Girasoles',precio:55,cat:'primavera',emoji:'🌻'},
+  {id:'p13',nombre:'Encanto · Ramo Combinado',precio:55,cat:'mixtos',emoji:'💐'},
+  {id:'p14',nombre:'Querencia · Ramo Campestre',precio:55,cat:'primavera',emoji:'🌾'},
+  {id:'p15',nombre:'Ilusión · Ramo Variado de Flor',precio:65,cat:'mixtos',emoji:'🌺'},
+  {id:'p16',nombre:'Latido · Ramo Colores Rojos',precio:95,cat:'mixtos',emoji:'❤️'},
+  {id:'p17',nombre:'Caricia · Ramo Colores Rosas',precio:95,cat:'mixtos',emoji:'🌸'},
+  {id:'p18',nombre:'Suspiro · Ramo Colores Naranjas',precio:95,cat:'mixtos',emoji:'🧡'},
+  {id:'p19',nombre:'Armonía · Centro Colores Variados',precio:125,cat:'mixtos',emoji:'💐'},
+  {id:'p20',nombre:'Promesa · Ramo Colores Blancos',precio:95,cat:'mixtos',emoji:'🤍'},
+  {id:'p21',nombre:'Sonrisa · Ramo Margaritas Blancas',precio:45,cat:'primavera',emoji:'🌼'},
+  {id:'p22',nombre:'Perla · Orquídea Blanca',precio:45,cat:'orquideas',emoji:'🌸'},
+  {id:'p23',nombre:'Seducción · Orquídea Fucsia',precio:95,cat:'orquideas',emoji:'💜'},
+  {id:'p24',nombre:'Fortaleza · Centro Cactus Base Madera',precio:75,cat:'mixtos',emoji:'🌵'},
+  {id:'p25',nombre:'Complicidad · Ramo Combinado Especial',precio:55,cat:'mixtos',emoji:'💐'},
+  {id:'p26',nombre:'Esperanza · Ramo Variado Primaveral',precio:65,cat:'mixtos',emoji:'🌺'},
+  {id:'p27',nombre:'Felicidad · Ramo Variado Colorido',precio:65,cat:'mixtos',emoji:'🌈'},
+  {id:'p28',nombre:'Admiración · Gran Ramo Variado',precio:65,cat:'mixtos',emoji:'🌸'},
+  {id:'p29',nombre:'Eternidad · Centro Floral Premium',precio:125,cat:'mixtos',emoji:'💐'},
+  {id:'p30',nombre:'Poema · Centro Floral Especial',precio:125,cat:'mixtos',emoji:'🌷'},
+  {id:'p31',nombre:'Fascinación · 12 Rosas Color Negras',precio:120,cat:'rosas',emoji:'🖤'},
+  {id:'p32',nombre:'Recuerdo · Ramo de Tanatorio Clásico',precio:85,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p33',nombre:'Memoria · Ramo de Tanatorio Rosas Blancas',precio:95,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p34',nombre:'Cariño Eterno · Centro de Tanatorio Multicolor',precio:95,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p35',nombre:'Despedida · Centro de Tanatorio Blanco con Lirios',precio:95,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p36',nombre:'Homenaje · Centro de Tanatorio Blanco Premium',precio:95,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p37',nombre:'Tributo · Centro de Tanatorio Rosa y Lila',precio:95,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p38',nombre:'Luz Eterna · Centro Grande de Tanatorio Amarillo y Azul',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p39',nombre:'Serenidad · Centro Grande de Tanatorio Azul y Rojo',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p40',nombre:'En tu Memoria · Centro Grande de Tanatorio Rosa con Lirios',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p41',nombre:'Hasta Siempre · Centro Grande de Tanatorio Rojo y Blanco',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p42',nombre:'Paz Eterna · Centro Grande de Tanatorio Melocotón',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p43',nombre:'Siempre en Nuestro Corazón · Centro Grande de Tanatorio Rojo y Melocotón',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p44',nombre:'Descanso · Centro Grande de Tanatorio Melocotón y Blanco',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p45',nombre:'Consuelo · Centro Grande de Tanatorio Rosa y Lila Silvestre',precio:150,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p46',nombre:'Último Adiós · Corona Grande de Tanatorio Roja',precio:300,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p47',nombre:'Corona del Recuerdo · Corona Grande de Tanatorio Rosa y Lila',precio:300,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p48',nombre:'Gran Homenaje · Corona Grande de Tanatorio Multicolor',precio:300,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p49',nombre:'Eternidad · Corona Grande de Tanatorio Blanca y Lila',precio:300,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p50',nombre:'Tributo Floral · Corona Grande de Tanatorio Rosa y Amarillo',precio:300,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p51',nombre:'Última Despedida · Corona Grande de Tanatorio Rosa y Azul',precio:300,cat:'tanatorio',emoji:'⚱️'},
+  {id:'p52',nombre:'Corona de Paz · Corona Grande de Tanatorio Multicolor Otoñal',precio:300,cat:'tanatorio',emoji:'⚱️'},
+];
+
+/* ─── AUTH STATE ─────────────────────────────────────────── */
+let adminToken = sessionStorage.getItem('alameda_admin_token') || '';
+
+/* ─── DOM REFS ───────────────────────────────────────────── */
+const $login     = document.getElementById('screen-login');
+const $dash      = document.getElementById('screen-dash');
+const $loginForm = document.getElementById('login-form');
+const $pw        = document.getElementById('pw-input');
+const $loginBtn  = document.getElementById('login-btn');
+const $loginErr  = document.getElementById('login-error');
+const $pwToggle  = document.getElementById('pw-toggle');
+const $logoutBtn = document.getElementById('logout-btn');
+const $refresh   = document.getElementById('refresh-btn');
+const $freshness = document.getElementById('data-freshness');
+
+/* ─── LOGIN ──────────────────────────────────────────────── */
+$loginForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const token = $pw.value.trim();
+  if (!token) return;
+  await doLogin(token);
+});
+
+$pwToggle.addEventListener('click', () => {
+  const isText = $pw.type === 'text';
+  $pw.type = isText ? 'password' : 'text';
+  $pwToggle.setAttribute('aria-label', isText ? 'Mostrar contraseña' : 'Ocultar contraseña');
+});
+
+async function doLogin(token) {
+  $loginBtn.disabled = true;
+  $loginBtn.innerHTML = '<span class="spinner"></span>Verificando…';
+  $loginErr.hidden = true;
+
+  try {
+    const data = await fetchData(token);
+    adminToken = token;
+    sessionStorage.setItem('alameda_admin_token', token);
+    renderDashboard(data);
+    $login.hidden = true;
+    $dash.hidden = false;
+  } catch (err) {
+    showLoginError(err.message || 'Error al conectar. Inténtalo de nuevo.');
+  } finally {
+    $loginBtn.disabled = false;
+    $loginBtn.textContent = 'Acceder';
+  }
+}
+
+function showLoginError(msg) {
+  $loginErr.textContent = msg;
+  $loginErr.hidden = false;
+}
+
+/* ─── LOGOUT ─────────────────────────────────────────────── */
+$logoutBtn.addEventListener('click', () => {
+  sessionStorage.removeItem('alameda_admin_token');
+  adminToken = '';
+  $dash.hidden = true;
+  $login.hidden = false;
+  $pw.value = '';
+  $loginErr.hidden = true;
+});
+
+/* ─── REFRESH ────────────────────────────────────────────── */
+$refresh.addEventListener('click', async () => {
+  $refresh.disabled = true;
+  $freshness.textContent = 'Actualizando…';
+  try {
+    const data = await fetchData(adminToken);
+    renderDashboard(data);
+  } catch (err) {
+    $freshness.textContent = 'Error al actualizar';
+  } finally {
+    $refresh.disabled = false;
+  }
+});
+
+/* ─── API CALL ───────────────────────────────────────────── */
+async function fetchData(token) {
+  const res = await fetch('/api/admin-data', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const json = await res.json();
+  if (res.status === 401) throw new Error('Contraseña incorrecta.');
+  if (res.status === 503) throw new Error(json.error || 'Servicio no disponible.');
+  if (!res.ok) throw new Error(json.error || `Error ${res.status}.`);
+  return json;
+}
+
+/* ─── RENDER DASHBOARD ───────────────────────────────────── */
+function renderDashboard(data) {
+  const s = data.stats || {};
+
+  document.getElementById('s-total-orders').textContent = s.totalOrders ?? '—';
+  document.getElementById('s-revenue').textContent      = s.totalRevenue ? `${s.totalRevenue} €` : '—';
+  document.getElementById('s-month').textContent        = s.monthRevenue ? `${s.monthRevenue} €` : '—';
+  document.getElementById('s-ticket').textContent       = s.avgTicket    ? `${s.avgTicket} €`    : '—';
+
+  const now = new Date();
+  $freshness.textContent = `Actualizado: ${now.toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})}`;
+
+  renderOrders(data.recentOrders || [], data.hasMore);
+  renderCatalog('all');
+
+  if (data.warning) {
+    const notice = document.createElement('div');
+    notice.style.cssText = 'background:var(--warn-bg);color:var(--warn-text);padding:12px 20px;font-size:.82rem;border-radius:8px;margin-bottom:4px;';
+    notice.textContent = '⚠ ' + data.warning;
+    document.querySelector('.dash-main').insertBefore(notice, document.querySelector('.dash-main').firstChild);
+  }
+}
+
+/* ─── RENDER ORDERS ──────────────────────────────────────── */
+function renderOrders(orders, hasMore) {
+  const tbody = document.getElementById('orders-tbody');
+  const moreNote = document.getElementById('has-more-note');
+
+  if (!orders.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">Sin pedidos de tarjeta registrados todavía.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = orders.map(o => `
+    <tr>
+      <td class="date">${esc(o.date)}</td>
+      <td>${esc(o.customer)}</td>
+      <td class="email" title="${esc(o.email)}">${esc(o.email)}</td>
+      <td class="amount">${esc(o.amount)} €</td>
+      <td><span class="badge ${o.paid ? 'paid' : 'pending'}">${o.paid ? 'Pagado' : 'Pendiente'}</span></td>
+    </tr>
+  `).join('');
+
+  if (hasMore) moreNote.hidden = false;
+}
+
+/* ─── RENDER CATALOG ─────────────────────────────────────── */
+function renderCatalog(cat) {
+  const tbody = document.getElementById('catalog-tbody');
+  const list  = cat === 'all' ? PRODUCTOS : PRODUCTOS.filter(p => p.cat === cat);
+  const catLabels = { rosas:'Rosas', mixtos:'Mixtos', orquideas:'Orquídeas', primavera:'Primavera', tanatorio:'Tanatorio' };
+
+  const productUrl = p => p.id === 'p31' ? '/rosas-negras.html' : '/producto.html?id=' + p.id;
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td class="pid">${p.id}</td>
+      <td>${p.emoji}</td>
+      <td><a href="${productUrl(p)}" target="_blank"
+             style="color:var(--text-hi);text-decoration:none"
+             onmouseover="this.style.textDecoration='underline'"
+             onmouseout="this.style.textDecoration='none'">${esc(p.nombre)}</a></td>
+      <td><span class="cat-badge cat-${p.cat}">${catLabels[p.cat] || p.cat}</span></td>
+      <td class="price">${p.precio} €</td>
+    </tr>
+  `).join('');
+}
+
+/* ─── CAT FILTERS ────────────────────────────────────────── */
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCatalog(btn.dataset.cat);
+  });
+});
+
+/* ─── UTILS ──────────────────────────────────────────────── */
+function esc(s) {
+  return String(s ?? '—')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ─── AUTO-LOGIN ─────────────────────────────────────────── */
+if (adminToken) {
+  doLogin(adminToken);
+}
+
+/* ─── INITIAL CATALOG RENDER ─────────────────────────────── */
+renderCatalog('all');
+</script>
+</body>
+</html>
