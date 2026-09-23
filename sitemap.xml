@@ -665,6 +665,61 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p53</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p53.jpg</image:loc>
+      <image:title>Cuento Eterno · Cúpula Belle y la Bestia con Rosas Preservadas — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p54</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p54.jpg</image:loc>
+      <image:title>Bosque Mágico · Cúpula Casitas Árbol con Luces LED — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p55</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p55.jpg</image:loc>
+      <image:title>Jardín Mineral · Composición de Suculentas en Expositor — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p56</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p56.jpg</image:loc>
+      <image:title>Esencia Verde · Jardinera Escultórica con Plantas Naturales — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://floristeriaalameda.com/producto.html?id=p57</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://floristeriaalameda.com/imgs/p57.jpg</image:loc>
+      <image:title>Dark Rose · Cúpula Calavera Dorada con Rosa Negra Preservada — Floristería Alameda Cartagena</image:title>
+    </image:image>
+  </url>
+
   <!-- Páginas de información -->
   <url>
     <loc>https://floristeriaalameda.com/envios.html</loc>
