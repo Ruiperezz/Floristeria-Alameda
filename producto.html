@@ -629,7 +629,10 @@ function initPage() {
   document.getElementById('prod-estrellas').innerHTML = estrellas(5);
   document.getElementById('resumen-estrellas').innerHTML = estrellas(5);
 
-  document.getElementById('btn-pedir').onclick = () => abrirPedido(producto.nombre, producto.precio, producto.emoji, producto.img);
+  document.getElementById('btn-pedir').onclick = () => {
+    track('wa_click', producto.id);
+    abrirPedido(producto.nombre, producto.precio, producto.emoji, producto.img);
+  };
 
   injectProductSchema(producto, numResenas);
 
@@ -639,6 +642,8 @@ function initPage() {
   // Cargar imagen principal
   const wrap = document.getElementById('main-img-wrap');
   renderImg(producto, wrap, 'main-spinner');
+
+  track('view', producto.id);
 }
 
 function getRecomendados(idx) {
@@ -697,8 +702,19 @@ function renderRecomendados(idx) {
   if (window.fx3d) { window.fx3d.initTiltCards(); window.fx3d.initCardImageParallax(); }
 }
 
+function track(event, pid) {
+  if (!pid) return;
+  fetch('/api/track', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event, productId: pid }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function handleAddToCart() {
   addToCart({ id: producto.id, name: producto.nombre, price: producto.precio, quantity: 1, emoji: producto.emoji, image: producto.img });
+  track('cart_add', producto.id);
 }
 
 function addRecToCart(id) {

@@ -629,6 +629,150 @@ td.empty, td.loading {
   .stats-row { grid-template-columns: 1fr; }
   .stat-value { font-size: 1.5rem; }
 }
+
+/* ─── TABS ───────────────────────────────────────────────── */
+.tab-nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 13px 16px;
+  font-family: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-lo);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+  letter-spacing: .02em;
+}
+.tab-btn:hover { color: var(--text-hi); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+.tab-panel { display: none; }
+.tab-panel.active { display: contents; }
+
+/* ─── ANALYTICS TAB ──────────────────────────────────────── */
+.analitica-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.ranking-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.trend-bar-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 76px;
+}
+.trend-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.trend-bar {
+  width: 100%;
+  background: var(--primary);
+  border-radius: 3px 3px 0 0;
+  min-height: 2px;
+}
+.trend-date {
+  font-size: .6rem;
+  color: var(--text-lo);
+  text-align: center;
+}
+.kv-setup {
+  background: var(--warn-bg);
+  border: 1px solid #d6c060;
+  border-radius: 10px;
+  padding: 20px 24px;
+  font-size: .82rem;
+  color: var(--warn-text);
+  line-height: 1.65;
+}
+.kv-setup code {
+  background: rgba(0,0,0,.1);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  font-size: .8rem;
+}
+.rank-table { width: 100%; border-collapse: collapse; }
+.rank-table td { padding: 5px 4px; font-size: .78rem; border-bottom: 1px solid var(--border-subtle); }
+
+/* ─── ADD PRODUCT FORM ───────────────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 11px;
+  font-family: inherit;
+  font-size: .84rem;
+  color: var(--text-hi);
+  background: var(--surface);
+  transition: border-color .15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.snippet-box {
+  background: #1a2a1a;
+  color: #a8d8a8;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: .77rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+  word-break: break-all;
+}
+.form-hint {
+  font-size: .72rem;
+  color: var(--text-lo);
+  margin-top: 2px;
+}
+@media (max-width: 700px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .analitica-grid { grid-template-columns: 1fr; }
+  .ranking-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -687,7 +831,17 @@ td.empty, td.loading {
     </div>
   </header>
 
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="pedidos"    role="tab">📋 Pedidos</button>
+    <button class="tab-btn"        data-tab="analiticas" role="tab">📊 Analíticas</button>
+    <button class="tab-btn"        data-tab="catalogo"   role="tab">📦 Catálogo</button>
+    <button class="tab-btn"        data-tab="add"        role="tab">➕ Añadir producto</button>
+  </nav>
+
   <main class="dash-main">
+
+    <!-- ═══ TAB: PEDIDOS ═══ -->
+    <div id="tab-pedidos" class="tab-panel active">
 
     <!-- STATS ROW -->
     <section class="stats-row" aria-label="Resumen">
@@ -769,7 +923,7 @@ td.empty, td.loading {
             <dt>Entregas</dt>
             <dd>+840 en Cartagena</dd>
             <dt>Productos</dt>
-            <dd>52 referencias</dd>
+            <dd>57 referencias</dd>
             <dt>Pagos</dt>
             <dd>Stripe · PayPal · Bizum</dd>
             <dt>Hosting</dt>
@@ -827,34 +981,183 @@ td.empty, td.loading {
       </aside>
     </div>
 
-    <!-- CATALOG -->
-    <section class="section">
-      <div class="section-head cat-head">
-        <h2 class="section-title">Catálogo de productos</h2>
-        <div class="cat-filters" role="group" aria-label="Filtrar por categoría">
-          <button class="cat-btn active" data-cat="all">Todos (52)</button>
-          <button class="cat-btn" data-cat="rosas">Rosas</button>
-          <button class="cat-btn" data-cat="mixtos">Mixtos</button>
-          <button class="cat-btn" data-cat="orquideas">Orquídeas</button>
-          <button class="cat-btn" data-cat="primavera">Primavera</button>
-          <button class="cat-btn" data-cat="tanatorio">Tanatorio</button>
+    </div><!-- /tab-pedidos -->
+
+    <!-- ═══ TAB: ANALÍTICAS ═══ -->
+    <div id="tab-analiticas" class="tab-panel">
+
+      <div id="kv-notice" class="kv-setup" style="display:none">
+        <strong>📡 Analíticas no configuradas</strong><br>
+        Para activar el seguimiento de visitas, carritos y clics en WhatsApp necesitas conectar <strong>Vercel KV</strong>.<br><br>
+        Pasos:
+        <ol style="margin:8px 0 0 16px;padding:0">
+          <li>Ve a <a href="https://vercel.com/dashboard" target="_blank" style="color:var(--warn-text)">Vercel Dashboard</a> → tu proyecto → <strong>Storage</strong> → conecta un <strong>KV</strong>.</li>
+          <li>Vercel añade automáticamente <code>KV_REST_API_URL</code> y <code>KV_REST_API_TOKEN</code>.</li>
+          <li>Redespliega el proyecto para aplicar las variables.</li>
+          <li>Las analíticas empezarán a registrarse con las próximas visitas.</li>
+        </ol>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Resumen web</h2>
+          <button id="reload-analytics" class="btn-ghost" style="font-size:.75rem">↺ Recargar</button>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:56px">ID</th>
-              <th style="width:32px"></th>
-              <th>Nombre</th>
-              <th style="width:116px">Categoría</th>
-              <th style="width:88px">Precio</th>
-            </tr>
-          </thead>
-          <tbody id="catalog-tbody"></tbody>
-        </table>
-      </div>
-    </section>
+        <div class="analitica-grid">
+          <div class="stat-card">
+            <span class="stat-label">Visitas (productos)</span>
+            <span class="stat-value" id="a-views">—</span>
+            <span class="stat-note">Páginas de producto vistas</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Añadir al carrito</span>
+            <span class="stat-value" id="a-cart">—</span>
+            <span class="stat-note">Total de añadidos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Clics en WhatsApp</span>
+            <span class="stat-value" id="a-wa">—</span>
+            <span class="stat-note">Botón "Pedir por WhatsApp"</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2 class="section-title">Últimos 7 días</h2></div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:180px">
+            <div style="font-size:.7rem;font-weight:700;color:var(--primary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">Visitas</div>
+            <div class="trend-bar-wrap" id="trend-bars-views"></div>
+          </div>
+          <div style="flex:1;min-width:180px">
+            <div style="font-size:.7rem;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">Carrito</div>
+            <div class="trend-bar-wrap" id="trend-bars-cart"></div>
+          </div>
+          <div style="flex:1;min-width:180px">
+            <div style="font-size:.7rem;font-weight:700;color:#25D366;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">WhatsApp</div>
+            <div class="trend-bar-wrap" id="trend-bars-wa"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2 class="section-title">Top 10 productos</h2></div>
+        <div class="ranking-grid">
+          <div>
+            <div style="font-size:.7rem;font-weight:700;color:var(--primary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Más vistos</div>
+            <table class="rank-table"><tbody id="rank-views-tbody"></tbody></table>
+          </div>
+          <div>
+            <div style="font-size:.7rem;font-weight:700;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Más al carrito</div>
+            <table class="rank-table"><tbody id="rank-cart-tbody"></tbody></table>
+          </div>
+          <div>
+            <div style="font-size:.7rem;font-weight:700;color:#25D366;margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Más WhatsApp</div>
+            <table class="rank-table"><tbody id="rank-wa-tbody"></tbody></table>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /tab-analiticas -->
+
+    <!-- ═══ TAB: CATÁLOGO ═══ -->
+    <div id="tab-catalogo" class="tab-panel">
+
+      <section class="section">
+        <div class="section-head cat-head">
+          <h2 class="section-title">Catálogo de productos</h2>
+          <div class="cat-filters" role="group" aria-label="Filtrar por categoría">
+            <button class="cat-btn active" data-cat="all">Todos (57)</button>
+            <button class="cat-btn" data-cat="rosas">Rosas</button>
+            <button class="cat-btn" data-cat="mixtos">Mixtos</button>
+            <button class="cat-btn" data-cat="orquideas">Orquídeas</button>
+            <button class="cat-btn" data-cat="primavera">Primavera</button>
+            <button class="cat-btn" data-cat="tanatorio">Tanatorio</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:56px">ID</th>
+                <th style="width:32px"></th>
+                <th>Nombre</th>
+                <th style="width:116px">Categoría</th>
+                <th style="width:88px">Precio</th>
+              </tr>
+            </thead>
+            <tbody id="catalog-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div><!-- /tab-catalogo -->
+
+    <!-- ═══ TAB: AÑADIR PRODUCTO ═══ -->
+    <div id="tab-add" class="tab-panel">
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">Añadir producto nuevo</h2>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>ID del producto</label>
+            <input type="text" id="np-id" placeholder="p58" />
+          </div>
+          <div class="form-group">
+            <label>Emoji</label>
+            <input type="text" id="np-emoji" placeholder="🌹" maxlength="4" />
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label>Nombre personalizado · Descripción original</label>
+            <input type="text" id="np-nombre" placeholder="Romance Eterno · Ramo de 24 Rosas Rojas" />
+            <span class="form-hint">Formato: NombreCorto · Descripción (separados por · U+00B7 MIDDLE DOT)</span>
+          </div>
+          <div class="form-group">
+            <label>Categoría</label>
+            <select id="np-cat">
+              <option value="rosas">🌹 Rosas</option>
+              <option value="mixtos">💐 Mixtos</option>
+              <option value="orquideas">🌸 Orquídeas</option>
+              <option value="primavera">🌷 Primavera</option>
+              <option value="tanatorio">⚱️ Tanatorio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Precio (€)</label>
+            <input type="number" id="np-precio" placeholder="45" min="1" step="1" />
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label>Descripción larga (para la página de producto)</label>
+            <textarea id="np-desc" rows="3" placeholder="Ramo artesanal elaborado con cuidado y dedicación..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Imagen (nombre del archivo en /imgs/)</label>
+            <input type="text" id="np-img" placeholder="p58.jpg" />
+          </div>
+        </div>
+        <div style="margin-top:20px">
+          <button id="gen-snippet" class="btn-primary">Generar código JS</button>
+        </div>
+      </section>
+
+      <section class="section" id="snippet-section" style="display:none">
+        <div class="section-head">
+          <h2 class="section-title">Código generado</h2>
+          <button id="copy-snippet" class="btn-ghost">📋 Copiar</button>
+        </div>
+        <div class="snippet-box" id="snippet-output"></div>
+        <div style="margin-top:16px;font-size:.82rem;color:var(--text-mid);line-height:1.7;background:var(--surface-2);border-radius:8px;padding:16px 20px">
+          <strong>Instrucciones:</strong><br>
+          1. Copia el código de arriba.<br>
+          2. Pídele a Claude que añada este producto a <code style="background:rgba(0,0,0,.1);padding:2px 5px;border-radius:3px">catalogo-completo.html</code> y <code style="background:rgba(0,0,0,.1);padding:2px 5px;border-radius:3px">producto.html</code>.<br>
+          3. Sube la imagen del producto a <code style="background:rgba(0,0,0,.1);padding:2px 5px;border-radius:3px">imgs/<span id="hint-img">p58.jpg</span></code>.<br>
+          4. Actualiza el sitemap y despliega con <code style="background:rgba(0,0,0,.1);padding:2px 5px;border-radius:3px">npx vercel --prod --yes</code>.
+        </div>
+      </section>
+
+    </div><!-- /tab-add -->
 
   </main>
 
@@ -1107,6 +1410,157 @@ if (adminToken) {
 
 /* ─── INITIAL CATALOG RENDER ─────────────────────────────── */
 renderCatalog('all');
+
+/* ─── TABS ───────────────────────────────────────────────── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const panel = document.getElementById('tab-' + tab);
+    if (panel) panel.classList.add('active');
+    if (tab === 'analiticas') loadAnalytics();
+    if (tab === 'catalogo')   renderCatalog(document.querySelector('.cat-btn.active')?.dataset.cat || 'all');
+    if (tab === 'add')        initAddForm();
+  });
+});
+
+/* ─── ANALYTICS ──────────────────────────────────────────── */
+async function loadAnalytics() {
+  if (!adminToken) return;
+  ['a-views','a-cart','a-wa'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '…';
+  });
+  try {
+    const res = await fetch('/api/analytics', {
+      headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    const d = await res.json();
+
+    if (!d.configured) {
+      const notice = document.getElementById('kv-notice');
+      if (notice) notice.style.display = '';
+      ['a-views','a-cart','a-wa'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.textContent = '—';
+      });
+      return;
+    }
+
+    const kv = document.getElementById('kv-notice');
+    if (kv) kv.style.display = 'none';
+
+    const av = document.getElementById('a-views'); if (av) av.textContent = d.totals.views    ?? '—';
+    const ac = document.getElementById('a-cart');  if (ac) ac.textContent = d.totals.cartAdds ?? '—';
+    const aw = document.getElementById('a-wa');    if (aw) aw.textContent = d.totals.waClicks  ?? '—';
+
+    if (d.trends) {
+      renderTrendBars('trend-bars-views', d.trends.map(t => t.views));
+      renderTrendBars('trend-bars-cart',  d.trends.map(t => t.cartAdds), 'var(--accent)');
+      renderTrendBars('trend-bars-wa',    d.trends.map(t => t.waClicks), '#25D366');
+    }
+
+    renderRanking('rank-views-tbody', d.topViews);
+    renderRanking('rank-cart-tbody',  d.topCartAdds);
+    renderRanking('rank-wa-tbody',    d.topWAClicks);
+  } catch {
+    ['a-views','a-cart','a-wa'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.textContent = 'Error';
+    });
+  }
+}
+
+function renderTrendBars(id, values, color) {
+  const el = document.getElementById(id);
+  if (!el || !values) return;
+  color = color || 'var(--primary)';
+  const max = Math.max(...values, 1);
+  el.innerHTML = values.map(v => `
+    <div class="trend-bar-col">
+      <div class="trend-bar" style="height:${Math.max(2, Math.round((v / max) * 68))}px;background:${color}" title="${v}"></div>
+      <span class="trend-date">${v}</span>
+    </div>
+  `).join('');
+}
+
+function renderRanking(id, items) {
+  const tbody = document.getElementById(id);
+  if (!tbody) return;
+  if (!items || !items.length) {
+    tbody.innerHTML = '<tr><td colspan="3" style="font-size:.76rem;color:var(--text-lo);padding:8px 2px">Sin datos todavía</td></tr>';
+    return;
+  }
+  const nameFor = pid => {
+    const p = PRODUCTOS.find(x => x.id === pid);
+    return p ? (p.nombre.split(' · ')[0] || p.nombre) : pid;
+  };
+  tbody.innerHTML = items.slice(0, 10).map((item, i) => `
+    <tr>
+      <td style="color:var(--text-lo);width:18px">${i + 1}.</td>
+      <td style="color:var(--text-hi)">${esc(nameFor(item.id))}</td>
+      <td style="font-weight:600;color:var(--primary);text-align:right">${item.count}</td>
+    </tr>
+  `).join('');
+}
+
+document.getElementById('reload-analytics')?.addEventListener('click', loadAnalytics);
+
+/* ─── ADD PRODUCT FORM ───────────────────────────────────── */
+function nextId() {
+  const nums = PRODUCTOS.map(p => parseInt(p.id.replace('p', ''))).filter(n => !isNaN(n));
+  return 'p' + (Math.max(...nums) + 1);
+}
+
+function initAddForm() {
+  const idInput = document.getElementById('np-id');
+  if (idInput && !idInput.dataset.init) {
+    idInput.value = nextId();
+    idInput.dataset.init = '1';
+  }
+}
+
+document.getElementById('gen-snippet')?.addEventListener('click', () => {
+  const id     = (document.getElementById('np-id')?.value    || '').trim();
+  const nombre = (document.getElementById('np-nombre')?.value || '').trim();
+  const cat    = document.getElementById('np-cat')?.value    || 'rosas';
+  const precio = parseInt(document.getElementById('np-precio')?.value) || 0;
+  const emoji  = (document.getElementById('np-emoji')?.value  || '🌸').trim();
+  const desc   = (document.getElementById('np-desc')?.value   || '').trim();
+  const imgRaw = (document.getElementById('np-img')?.value    || '').trim();
+  const img    = imgRaw || id + '.jpg';
+
+  if (!id || !nombre || !precio) {
+    alert('Rellena al menos ID, nombre y precio.');
+    return;
+  }
+
+  const safeName = nombre.replace(/'/g, "\\'");
+  const safeDesc = desc.replace(/'/g, "\\'");
+  const snippet  = `{id:'${id}', nombre:'${safeName}', precio:${precio}, cat:'${cat}', emoji:'${emoji}', img:'${img}', descripcion:'${safeDesc}'},`;
+
+  const out = document.getElementById('snippet-output');
+  if (out) out.textContent = snippet;
+
+  const hint = document.getElementById('hint-img');
+  if (hint) hint.textContent = img;
+
+  const sec = document.getElementById('snippet-section');
+  if (sec) { sec.style.display = ''; sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+});
+
+document.getElementById('copy-snippet')?.addEventListener('click', () => {
+  const text = document.getElementById('snippet-output')?.textContent || '';
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-snippet');
+    if (!btn) return;
+    btn.textContent = '✅ Copiado';
+    setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+  }).catch(() => {
+    alert('Copia manualmente:\n\n' + text);
+  });
+});
 </script>
 </body>
 </html>

@@ -496,10 +496,21 @@ if (_urlCat && ['rosas','mixtos','orquideas','primavera','tanatorio'].includes(_
   renderizarProductos(PRODUCTOS);
 }
 
+function track(event, pid) {
+  if (!pid) return;
+  fetch('/api/track', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event, productId: pid }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function añadirAlCarrito(id, btn) {
   const p = PRODUCTOS.find(x => x.id === id);
   if (!p) return;
   addToCart({ id: p.id, name: p.nombre, price: p.precio, quantity: 1, emoji: p.emoji, image: p.img });
+  track('cart_add', id);
   if (btn) animateAddBtn(btn);
 }
 </script>
