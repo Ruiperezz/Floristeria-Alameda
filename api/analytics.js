@@ -20,33 +20,77 @@ export default async function handler(req) {
   });
 
   try {
-    const [rv, rc, rw, tv, tc, tw, ...daily] = await Promise.all([
+    const results = await Promise.all([
+      // rankings
       kv(`${kvUrl}/zrange/ranking:view/0/9?rev=true&withscores=true`, h),
       kv(`${kvUrl}/zrange/ranking:cart_add/0/9?rev=true&withscores=true`, h),
       kv(`${kvUrl}/zrange/ranking:wa_click/0/9?rev=true&withscores=true`, h),
+      // totals eventos
       kv(`${kvUrl}/get/total:view`, h),
       kv(`${kvUrl}/get/total:cart_add`, h),
       kv(`${kvUrl}/get/total:wa_click`, h),
-      ...days.flatMap(d => ['view', 'cart_add', 'wa_click'].map(ev =>
-        kv(`${kvUrl}/get/daily:${ev}:${d}`, h)
-      )),
+      // pedidos por método
+      kv(`${kvUrl}/get/order:stripe`, h),
+      kv(`${kvUrl}/get/order:paypal`, h),
+      kv(`${kvUrl}/get/order:bizum`, h),
+      kv(`${kvUrl}/get/order:wa`, h),
+      kv(`${kvUrl}/get/order:total`, h),
+      // tipo de entrega
+      kv(`${kvUrl}/get/delivery:domicilio`, h),
+      kv(`${kvUrl}/get/delivery:tienda`, h),
+      // ingresos por método
+      kv(`${kvUrl}/get/revenue:stripe`, h),
+      kv(`${kvUrl}/get/revenue:paypal`, h),
+      kv(`${kvUrl}/get/revenue:bizum`, h),
+      kv(`${kvUrl}/get/revenue:total`, h),
+      // daily: visitas + carrito + wa + pedidos (7 días × 4 eventos)
+      ...days.flatMap(d => [
+        kv(`${kvUrl}/get/daily:view:${d}`, h),
+        kv(`${kvUrl}/get/daily:cart_add:${d}`, h),
+        kv(`${kvUrl}/get/daily:wa_click:${d}`, h),
+        kv(`${kvUrl}/get/daily:order:${d}`, h),
+      ]),
     ]);
+
+    const [rv, rc, rw, tv, tc, tw,
+           oStripe, oPaypal, oBizum, oWa, oTotal,
+           dDomicilio, dTienda,
+           revStripe, revPaypal, revBizum, revTotal,
+           ...daily] = results;
 
     return resp(200, {
       configured: true,
       totals: {
-        views:    parseInt(tv?.result  || 0),
-        cartAdds: parseInt(tc?.result  || 0),
-        waClicks: parseInt(tw?.result  || 0),
+        views:    num(tv),
+        cartAdds: num(tc),
+        waClicks: num(tw),
+      },
+      orders: {
+        total:   num(oTotal),
+        stripe:  num(oStripe),
+        paypal:  num(oPaypal),
+        bizum:   num(oBizum),
+        wa:      num(oWa),
+      },
+      delivery: {
+        domicilio: num(dDomicilio),
+        tienda:    num(dTienda),
+      },
+      revenue: {
+        total:  flt(revTotal),
+        stripe: flt(revStripe),
+        paypal: flt(revPaypal),
+        bizum:  flt(revBizum),
       },
       topViews:    ranking(rv),
       topCartAdds: ranking(rc),
       topWAClicks: ranking(rw),
       trends: days.map((date, i) => ({
         date,
-        views:    parseInt(daily[i * 3]?.result     || 0),
-        cartAdds: parseInt(daily[i * 3 + 1]?.result || 0),
-        waClicks: parseInt(daily[i * 3 + 2]?.result || 0),
+        views:    num(daily[i * 4]),
+        cartAdds: num(daily[i * 4 + 1]),
+        waClicks: num(daily[i * 4 + 2]),
+        orders:   num(daily[i * 4 + 3]),
       })),
     });
   } catch {
@@ -57,6 +101,8 @@ export default async function handler(req) {
 function kv(url, headers) {
   return fetch(url, { headers }).then(r => r.json());
 }
+function num(d) { return parseInt(d?.result || 0) || 0; }
+function flt(d) { return parseFloat(d?.result || 0) || 0; }
 
 function ranking(raw) {
   const arr = raw?.result || [];

@@ -8,6 +8,7 @@ Disallow: /pago-completado.html
 Disallow: /pago-cancelado.html
 Disallow: /bizum-pago.html
 Disallow: /admin.html
+Disallow: /panel_floristeriaalameda.html
 Disallow: /vacaciones.html
 
 # Sitemap

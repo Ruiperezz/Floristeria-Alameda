@@ -814,6 +814,12 @@ _¡Gracias por confiar en nosotros!_ 🌿`;
   _waEnviando = true;
   window.open(`https://wa.me/34627546360?text=${encodeURIComponent(msg)}`, '_blank');
 
+  // Tracking analíticas: registrar pedido por método de pago
+  fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ event:'order', method: _metodo==='tarjeta' ? 'stripe' : (_metodo||'wa'),
+      delivery: _tipoEntrega==='tienda' ? 'tienda' : 'domicilio',
+      amount: _precio || 0 }) }).catch(()=>{});
+
   // Email de confirmación al cliente Y notificación al florista (no bloqueante)
   const email = document.getElementById('m-email')?.value.trim() || '';
   fetch('/api/send-order-email', {

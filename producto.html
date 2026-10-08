@@ -507,13 +507,26 @@ function renderImg(producto, wrapEl, spinId, lazy) {
 // --- Init ---
 const params = new URLSearchParams(window.location.search);
 const productId = params.get('id') || 'p01';
-const producto = PRODUCTOS.find(p => p.id === productId);
+let producto = PRODUCTOS.find(p => p.id === productId);
 
-if (!producto) {
-  window.location.href = 'catalogo-completo.html';
-} else {
-  initPage();
-}
+(async () => {
+  try {
+    const res = await fetch('/api/products-public');
+    if (res.ok) {
+      const { products: overrides } = await res.json();
+      if (overrides?.length) {
+        overrides.forEach(kp => {
+          const idx = PRODUCTOS.findIndex(p => p.id === kp.id);
+          if (idx >= 0) Object.assign(PRODUCTOS[idx], kp);
+          else PRODUCTOS.push(kp);
+        });
+        producto = PRODUCTOS.find(p => p.id === productId) || producto;
+      }
+    }
+  } catch {}
+  if (!producto) { window.location.href = 'catalogo-completo.html'; }
+  else { initPage(); }
+})();
 
 function injectSeoTags(producto) {
   const url = `https://floristeriaalameda.com/producto.html?id=${producto.id}`;
