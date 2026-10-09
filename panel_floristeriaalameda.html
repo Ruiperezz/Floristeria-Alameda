@@ -759,6 +759,7 @@ let PRODUCTOS = PRODUCTOS_BASE.map(p => ({...p}));
 let adminToken = '', adminUser = '', kvEnabled = false;
 let openEditId = null, searchQ = '', filterCat = 'all';
 let newProductImgData = null;
+let prodsReady = false;
 let chartTrend = null, chartAnalytics = null, chartTopViews = null, chartTopCart = null;
 
 /* ═══ DOM REFS ═══ */
@@ -839,7 +840,7 @@ async function loadAll(){
   await Promise.allSettled([
     loadStripeData(),
     loadAnalytics(),
-    loadKvProducts().then(() => { renderProds(); }),
+    loadKvProducts().then(() => { prodsReady = true; renderProds(); }),
   ]);
 }
 
@@ -1142,6 +1143,7 @@ document.getElementById('prod-search').addEventListener('input', e => { searchQ 
 document.getElementById('prod-filter-cat').addEventListener('change', e => { filterCat = e.target.value; renderProds(); });
 
 function renderProds(){
+  if (!prodsReady){ document.getElementById('prod-tbody').innerHTML='<tr class="empty-row"><td colspan="5">Cargando productos…</td></tr>'; return; }
   const list = PRODUCTOS.filter(p => {
     if (filterCat !== 'all' && p.cat !== filterCat) return false;
     if (searchQ && !p.nombre.toLowerCase().includes(searchQ) && !p.id.includes(searchQ)) return false;
