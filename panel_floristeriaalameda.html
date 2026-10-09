@@ -1100,7 +1100,10 @@ async function loadKvProducts(){
     const data = await res.json();
     kvEnabled = data.configured === true;
     if (kvEnabled && data.products?.length){
-      data.products.forEach(kp => {
+      data.products.forEach(raw => {
+        const kp = {...raw};
+        if (kp.categoria){ kp.cat = kp.categoria; delete kp.categoria; }
+        if (kp.img) kp.img = kp.img.replace(/^imgs\//,'');
         const i = PRODUCTOS.findIndex(p=>p.id===kp.id);
         if (i>=0) Object.assign(PRODUCTOS[i],kp); else PRODUCTOS.push(kp);
       });
@@ -1155,7 +1158,7 @@ function renderProds(){
         }
         <div class="td-img-ph" ${imgSrc?'style="display:none"':''}>${p.emoji||'🌸'}</div>
       </td>
-      <td style="font-weight:500;max-width:260px">${esc(p.nombre)}</td>
+      <td style="font-weight:500;max-width:260px">${esc(p.nombre)}${p.oculto?' <span class="badge badge-warn">Oculto en la web</span>':''}</td>
       <td><span class="badge badge-cat">${CAT_LABEL[p.cat]||p.cat}</span></td>
       <td style="font-weight:600;white-space:nowrap">${p.precio} €</td>
       <td style="white-space:nowrap">
@@ -1176,7 +1179,7 @@ function renderProds(){
           <button class="btn btn-primary efsave" data-pid="${p.id}">💾 Guardar</button>
           <button class="btn btn-ghost btn-sm etoggle" data-pid="${p.id}">Cancelar</button>
           <span class="save-status" id="es-${p.id}"></span>
-          <button class="btn btn-danger btn-sm efdel" data-pid="${p.id}" style="margin-left:auto">🗑 Eliminar</button>
+          <button class="btn btn-danger btn-sm efdel" data-pid="${p.id}" style="margin-left:auto">${PRODUCTOS_BASE.some(b=>b.id===p.id)?(p.oculto?'👁 Mostrar en la web':'🙈 Ocultar de la web'):'🗑 Eliminar'}</button>
         </div>
       </td>
     </tr>`);
@@ -1226,14 +1229,26 @@ function renderProds(){
   tb.querySelectorAll('.efdel').forEach(btn => btn.addEventListener('click', async () => {
     const pid = btn.dataset.pid;
     const p = PRODUCTOS.find(x=>x.id===pid);
-    if (!p || !confirm(`¿Eliminar "${p.nombre}"?\nEsta acción no se puede deshacer.`)) return;
-    if (kvEnabled){
-      try {
-        await fetch('/api/products-admin',{method:'DELETE',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({id:pid})});
-        toast('Producto eliminado');
-      } catch { toast('Error al eliminar','error'); return; }
-    }
-    PRODUCTOS = PRODUCTOS.filter(x=>x.id!==pid);
+    if (!p) return;
+    const isBase = PRODUCTOS_BASE.some(b=>b.id===pid);
+    const headers = {Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'};
+    try {
+      if (!kvEnabled) throw new Error('KV no disponible');
+      if (isBase){
+        const oculto = !p.oculto;
+        if (!confirm(oculto ? `¿Ocultar "${p.nombre}" de la web?\nPodrás volver a mostrarlo cuando quieras.` : `¿Mostrar "${p.nombre}" de nuevo en la web?`)) return;
+        const r = await fetch('/api/products-admin',{method:'POST',headers,body:JSON.stringify({product:{...p,oculto}})});
+        if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error||`Error ${r.status}`); }
+        p.oculto = oculto;
+        toast(oculto ? '🙈 Producto oculto en la web' : '👁 Producto visible en la web');
+      } else {
+        if (!confirm(`¿Eliminar "${p.nombre}"?\nEsta acción no se puede deshacer.`)) return;
+        const r = await fetch('/api/products-admin',{method:'DELETE',headers,body:JSON.stringify({id:pid})});
+        if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error||`Error ${r.status}`); }
+        PRODUCTOS = PRODUCTOS.filter(x=>x.id!==pid);
+        toast('🗑 Producto eliminado');
+      }
+    } catch(err) { toast('❌ '+err.message,'error'); return; }
     openEditId = null;
     setText('k-prods', PRODUCTOS.length);
     renderProds();
@@ -1331,12 +1346,13 @@ document.getElementById('add-form').addEventListener('submit', async e => {
   if (kvEnabled){
     try {
       const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product})});
-      if (!r.ok) throw new Error();
+      if (!r.ok) { const er = await r.json().catch(()=>({})); throw new Error(er.error||`Error ${r.status}`); }
       PRODUCTOS.push(product);
       setText('k-prods', PRODUCTOS.length);
+      renderProds();
       toast('✅ Producto añadido y publicado en la web');
       stEl.textContent = '✅ Publicado';
-    } catch { toast('Error al guardar','error'); stEl.textContent = '❌ Error'; }
+    } catch(err) { toast('❌ '+err.message,'error'); stEl.textContent = '❌ Error'; }
   } else {
     PRODUCTOS.push(product);
     setText('k-prods', PRODUCTOS.length);

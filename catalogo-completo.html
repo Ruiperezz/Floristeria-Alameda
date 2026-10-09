@@ -411,15 +411,18 @@ function renderImg(producto, wrapId, spinId) {
   };
   img.onerror = () => {
     if (img.src.endsWith('.webp')) {
-      img.src = producto.img; // fallback al JPG original
+      img.src = producto.img || ''; // fallback al JPG original
     } else {
       wrap.innerHTML = `<div style="font-size:56px;display:flex;align-items:center;justify-content:center;height:100%">${producto.emoji}</div>`;
     }
   };
   if (producto.imgData) {
     img.src = producto.imgData;
-  } else {
+  } else if (producto.img) {
     img.src = producto.img.replace(/\.jpe?g$/i, '.webp');
+  } else {
+    wrap.innerHTML = `<div style="font-size:56px;display:flex;align-items:center;justify-content:center;height:100%">${producto.emoji||'🌸'}</div>`;
+    return;
   }
   wrap.appendChild(img);
 }
@@ -514,6 +517,7 @@ if (_urlCat && ['rosas','mixtos','orquideas','primavera','tanatorio'].includes(_
       else { PRODUCTOS.push(kp); changed = true; }
     });
     if (!changed) return;
+    for (let i = PRODUCTOS.length - 1; i >= 0; i--) if (PRODUCTOS[i].oculto) PRODUCTOS.splice(i, 1);
     if (_urlCat && ['rosas','mixtos','orquideas','primavera','tanatorio'].includes(_urlCat)) filtrar(_urlCat);
     else renderizarProductos(PRODUCTOS);
   } catch {}

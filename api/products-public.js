@@ -1,32 +1,21 @@
+import { kvGetProducts } from './_products-kv.js';
+
 export const config = { runtime: 'edge' };
+
+const HEADERS = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' };
 
 export default async function handler(req) {
   if (req.method !== 'GET') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers: { 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers: HEADERS });
   }
 
   const kvUrl   = process.env.KV_REST_API_URL;
   const kvToken = process.env.KV_REST_API_TOKEN;
-
-  if (!kvUrl || !kvToken) {
-    return new Response(JSON.stringify({ products: [] }), {
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
-    });
-  }
+  if (!kvUrl || !kvToken) return new Response(JSON.stringify({ products: [] }), { headers: HEADERS });
 
   try {
-    const r = await fetch(`${kvUrl}/get/productos`, {
-      headers: { Authorization: `Bearer ${kvToken}` },
-    });
-    const d = await r.json();
-    const products = d?.result ? JSON.parse(d.result) : [];
-
-    return new Response(JSON.stringify({ products }), {
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache, no-store, must-revalidate' },
-    });
+    return new Response(JSON.stringify({ products: await kvGetProducts(kvUrl, kvToken) }), { headers: HEADERS });
   } catch {
-    return new Response(JSON.stringify({ products: [] }), {
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-    });
+    return new Response(JSON.stringify({ products: [] }), { headers: HEADERS });
   }
 }

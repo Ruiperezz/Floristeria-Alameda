@@ -153,10 +153,7 @@
 ╚══════════════════════╝\n\n✨ _Pedido del carrito_\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🛒 *PRODUCTOS:*\n\n${lineas}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n📋 *DATOS DE ENTREGA*\n\n📅 *Fecha:* ${fmtFecha(c.fecha)}\n👤 *Destinatario/a:* ${c.nombre}\n📱 *Teléfono:* ${c.telefono}\n${envio}${c.dedicatoria?`\n✍️ *Dedicatoria:* _"${c.dedicatoria}"_`:''}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n💶 *TOTAL: ${total}€*\n💻 *PAGO:* ✅ CONFIRMADO POR PAYPAL\n   Ref: ${refId}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n_¡Gracias por confiar en nosotros!_ 🌿`;
     document.getElementById('btn-whatsapp').href = `https://wa.me/34627546360?text=${encodeURIComponent(msgCarrito)}`;
     document.getElementById('pago-ok').style.display = 'block';
-    fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ event:'order', method:'paypal',
-        delivery: c.entrega==='Recogida en tienda' ? 'tienda' : 'domicilio',
-        amount: parseFloat(total)||0 }) }).catch(()=>{});
+    _trackOrder('paypal', c.entrega==='Recogida en tienda' ? 'tienda' : 'domicilio', total);
     _enviarEmailConfirmacion({ producto: items.map(i=>`${i.name} ×${i.quantity}`).join(', '), emoji:'🛒', precio:total, cliente:c.nombre, telefono:c.telefono, fecha:c.fecha, direccion:c.direccion, dedicatoria:c.dedicatoria }, 'paypal', refId);
     try { localStorage.removeItem('alameda_cart_order'); } catch {}
   }
@@ -231,13 +228,17 @@ _¡Gracias por confiar en nosotros!_ 🌿`;
     document.getElementById('pago-ok').style.display = 'block';
 
     // Tracking analíticas
-    fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ event:'order', method: payMethod||'stripe',
-        delivery: p.entrega==='tienda' ? 'tienda' : 'domicilio',
-        amount: parseFloat(p.precio)||0 }) }).catch(()=>{});
+    _trackOrder(payMethod||'stripe', p.entrega==='tienda' ? 'tienda' : 'domicilio', p.precio);
 
     // Enviar email de confirmación
     _enviarEmailConfirmacion(p, payMethod, sessionId);
+  }
+
+  function _trackOrder(method, delivery, amount) {
+    const key = 'alameda_tracked_' + location.search;
+    try { if (localStorage.getItem(key)) return; localStorage.setItem(key, '1'); } catch {}
+    fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ event:'order', method, delivery, amount: parseFloat(amount)||0 }), keepalive:true }).catch(()=>{});
   }
 
   function _enviarEmailConfirmacion(p, payMethod, refId) {
@@ -348,10 +349,7 @@ _¡Gracias por confiar en nosotros!_ 🌿`;
 ╚══════════════════════╝\n\n✨ _Pedido del carrito_\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🛒 *PRODUCTOS:*\n\n${lineas}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n📋 *DATOS DE ENTREGA*\n\n📅 *Fecha:* ${fmtFecha(c.fecha)}\n👤 *Destinatario/a:* ${c.nombre}\n📱 *Teléfono:* ${c.telefono}\n${envioCarrito}${c.dedicatoria?`\n✍️ *Dedicatoria:* _"${c.dedicatoria}"_`:''}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n💶 *TOTAL: ${total}€*\n💳 *PAGO:* ✅ CONFIRMADO POR STRIPE\n   Referencia: ${sessionId}\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n_¡Gracias por confiar en nosotros!_ 🌿`;
         document.getElementById('btn-whatsapp').href = `https://wa.me/34627546360?text=${encodeURIComponent(msgCarrito)}`;
         document.getElementById('pago-ok').style.display = 'block';
-        fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ event:'order', method:'stripe',
-            delivery: c.entrega==='Recogida en tienda' ? 'tienda' : 'domicilio',
-            amount: parseFloat(total)||0 }) }).catch(()=>{});
+        _trackOrder('stripe', c.entrega==='Recogida en tienda' ? 'tienda' : 'domicilio', total);
         _enviarEmailConfirmacion({ producto: items.map(i=>`${i.name} ×${i.quantity}`).join(', '), emoji:'🛒', precio:total, cliente:c.nombre, telefono:c.telefono, fecha:c.fecha, direccion:c.direccion, dedicatoria:c.dedicatoria }, 'stripe', sessionId);
         try { localStorage.removeItem('alameda_cart_order'); } catch {}
       } else {

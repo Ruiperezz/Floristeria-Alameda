@@ -40,18 +40,11 @@ export default async function handler(req) {
       post(`${kvUrl}/incr/delivery:${d}`, h),
       post(`${kvUrl}/incr/daily:order:${day}`, h),
     );
-    if (amt > 0) {
-      // INCRBYFLOAT para acumular importe
-      fetch(`${kvUrl}/incrbyfloat/revenue:${m}`, {
-        method: 'POST',
-        headers: { ...h, 'Content-Type': 'application/json' },
-        body: JSON.stringify([amt]),
-      }).catch(() => {});
-      fetch(`${kvUrl}/incrbyfloat/revenue:total`, {
-        method: 'POST',
-        headers: { ...h, 'Content-Type': 'application/json' },
-        body: JSON.stringify([amt]),
-      }).catch(() => {});
+    if (amt > 0 && amt < 100000) {
+      ops.push(
+        post(`${kvUrl}/incrbyfloat/revenue:${m}/${amt}`, h),
+        post(`${kvUrl}/incrbyfloat/revenue:total/${amt}`, h),
+      );
     }
   } else {
     const pid = String(productId ?? '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 20) || 'global';

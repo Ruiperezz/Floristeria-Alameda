@@ -495,12 +495,20 @@ function renderImg(producto, wrapEl, spinId, lazy) {
   };
   img.onerror = () => {
     if (img.src.endsWith('.webp')) {
-      img.src = producto.img; // fallback al JPG original
+      img.src = producto.img || ''; // fallback al JPG original
     } else {
       wrapEl.innerHTML = `<div style="font-size:64px;display:flex;align-items:center;justify-content:center;height:100%;padding:32px">${producto.emoji}</div>`;
     }
   };
-  img.src = producto.img.replace(/\.jpe?g$/i, '.webp');
+  if (producto.imgData) {
+    img.src = producto.imgData;
+  } else if (producto.img) {
+    img.src = producto.img.replace(/\.jpe?g$/i, '.webp');
+  } else {
+    wrapEl.innerHTML = `<div style="font-size:64px;display:flex;align-items:center;justify-content:center;height:100%;padding:32px">${producto.emoji||'🌸'}</div>`;
+    const spin = document.getElementById(spinId); if (spin) spin.remove();
+    return;
+  }
   wrapEl.appendChild(img);
 }
 
@@ -520,7 +528,8 @@ let producto = PRODUCTOS.find(p => p.id === productId);
           if (idx >= 0) Object.assign(PRODUCTOS[idx], kp);
           else PRODUCTOS.push(kp);
         });
-        producto = PRODUCTOS.find(p => p.id === productId) || producto;
+        for (let i = PRODUCTOS.length - 1; i >= 0; i--) if (PRODUCTOS[i].oculto) PRODUCTOS.splice(i, 1);
+        producto = PRODUCTOS.find(p => p.id === productId);
       }
     }
   } catch {}
@@ -552,7 +561,7 @@ function injectSeoTags(producto) {
 
   const ogImage = document.createElement('meta');
   ogImage.setAttribute('property', 'og:image');
-  ogImage.content = `https://floristeriaalameda.com/${producto.img}`;
+  ogImage.content = producto.img ? `https://floristeriaalameda.com/${producto.img}` : 'https://floristeriaalameda.com/logo-real.jpg';
   document.head.appendChild(ogImage);
 
   const ogUrl = document.createElement('meta');
@@ -566,7 +575,7 @@ function injectProductSchema(producto, numResenas) {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": producto.nombre,
-    "image": `https://floristeriaalameda.com/${producto.img}`,
+    "image": producto.img ? `https://floristeriaalameda.com/${producto.img}` : 'https://floristeriaalameda.com/logo-real.jpg',
     "description": producto.descripcion,
     "sku": producto.id,
     "brand": { "@type": "Brand", "name": "Floristería Alameda" },
