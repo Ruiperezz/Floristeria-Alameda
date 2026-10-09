@@ -1095,24 +1095,29 @@ function destroyCharts(){
 
 /* ═══ KV PRODUCTS ═══ */
 async function loadKvProducts(){
-  try {
-    const res  = await fetch('/api/products-admin',{headers:{Authorization:`Bearer ${adminToken}`}});
-    const data = await res.json();
-    kvEnabled = data.configured === true;
-    if (kvEnabled && data.products?.length){
-      data.products.forEach(raw => {
-        const kp = {...raw};
-        if (kp.categoria){ kp.cat = kp.categoria; delete kp.categoria; }
-        if (kp.img) kp.img = kp.img.replace(/^imgs\//,'');
-        const i = PRODUCTOS.findIndex(p=>p.id===kp.id);
-        if (i>=0) Object.assign(PRODUCTOS[i],kp); else PRODUCTOS.push(kp);
-      });
-      setText('k-prods', PRODUCTOS.length);
-    } else if (!kvEnabled){
-      const banner = document.getElementById('sync-banner');
-      if (banner) banner.style.display = 'flex';
-    }
-  } catch {}
+  for (let attempt=0; attempt<3; attempt++){
+    try {
+      const res  = await fetch('/api/products-admin',{headers:{Authorization:`Bearer ${adminToken}`},cache:'no-store'});
+      const data = await res.json();
+      kvEnabled = data.configured === true;
+      if (kvEnabled && data.products?.length){
+        data.products.forEach(raw => {
+          const kp = {...raw};
+          if (kp.categoria){ kp.cat = kp.categoria; delete kp.categoria; }
+          if (kp.img) kp.img = kp.img.replace(/^imgs\//,'');
+          const i = PRODUCTOS.findIndex(p=>p.id===kp.id);
+          if (i>=0) Object.assign(PRODUCTOS[i],kp); else PRODUCTOS.push(kp);
+        });
+        setText('k-prods', PRODUCTOS.length);
+      } else if (!kvEnabled){
+        const banner = document.getElementById('sync-banner');
+        if (banner) banner.style.display = 'flex';
+      }
+      if (res.ok) return;
+    } catch {}
+    await new Promise(r => setTimeout(r, 700*(attempt+1)));
+  }
+  toast('⚠️ No se pudieron cargar los cambios guardados. Recarga la página.','error');
 }
 
 /* ─ sync btn ─ */
@@ -1205,22 +1210,20 @@ function renderProds(){
     if (!nombre || isNaN(precio)) return;
     const idx = PRODUCTOS.findIndex(p=>p.id===pid);
     if (idx<0) return;
+    const prev = {...PRODUCTOS[idx]};
     Object.assign(PRODUCTOS[idx],{nombre,precio,cat,emoji,descripcion:desc});
     const st = document.getElementById('es-'+pid);
     if (st) st.textContent = 'Guardando…';
-    if (kvEnabled){
-      try {
-        const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product:PRODUCTOS[idx]})});
-        if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error||`Error ${r.status}`); }
-        if (st) st.textContent = '✅ Guardado';
-        toast('✅ Producto actualizado y publicado');
-      } catch(err) {
-        if (st) st.textContent = '❌ Error';
-        toast('❌ Error al guardar: '+err.message,'error');
-      }
-    } else {
-      if (st) st.textContent = '⚠️ Sin KV';
-      toast('⚠️ KV no disponible — el cambio es solo local hasta que sincronices','error');
+    try {
+      const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product:PRODUCTOS[idx]})});
+      if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error||`Error ${r.status}`); }
+      kvEnabled = true;
+      toast('✅ Producto actualizado y publicado en la web');
+    } catch(err) {
+      Object.assign(PRODUCTOS[idx],prev);
+      if (st) st.textContent = '❌ Error';
+      toast('❌ No se ha guardado: '+err.message,'error');
+      return;
     }
     openEditId = null;
     renderProds();
@@ -1233,7 +1236,6 @@ function renderProds(){
     const isBase = PRODUCTOS_BASE.some(b=>b.id===pid);
     const headers = {Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'};
     try {
-      if (!kvEnabled) throw new Error('KV no disponible');
       if (isBase){
         const oculto = !p.oculto;
         if (!confirm(oculto ? `¿Ocultar "${p.nombre}" de la web?\nPodrás volver a mostrarlo cuando quieras.` : `¿Mostrar "${p.nombre}" de nuevo en la web?`)) return;
@@ -1343,21 +1345,19 @@ document.getElementById('add-form').addEventListener('submit', async e => {
   btn.disabled = true; btn.textContent = '⏳ Guardando…';
   stEl.textContent = '';
 
-  if (kvEnabled){
-    try {
-      const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product})});
-      if (!r.ok) { const er = await r.json().catch(()=>({})); throw new Error(er.error||`Error ${r.status}`); }
-      PRODUCTOS.push(product);
-      setText('k-prods', PRODUCTOS.length);
-      renderProds();
-      toast('✅ Producto añadido y publicado en la web');
-      stEl.textContent = '✅ Publicado';
-    } catch(err) { toast('❌ '+err.message,'error'); stEl.textContent = '❌ Error'; }
-  } else {
+  try {
+    const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product})});
+    if (!r.ok) { const er = await r.json().catch(()=>({})); throw new Error(er.error||`Error ${r.status}`); }
+    kvEnabled = true;
     PRODUCTOS.push(product);
     setText('k-prods', PRODUCTOS.length);
-    toast('Añadido localmente — sincroniza KV para publicar en la web');
-    stEl.textContent = '⚠️ Solo local';
+    renderProds();
+    toast('✅ Producto añadido y publicado en la web');
+    stEl.textContent = '✅ Publicado';
+  } catch(err) {
+    toast('❌ No se ha guardado: '+err.message,'error'); stEl.textContent = '❌ Error';
+    btn.disabled=false; btn.textContent='💾 Guardar producto';
+    return;
   }
 
   /* reset form */
