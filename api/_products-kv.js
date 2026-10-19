@@ -19,6 +19,8 @@ export function normalize(p) {
   if (typeof out.img === 'string' && out.img && !out.img.includes('/') && !out.img.startsWith('data:')) {
     out.img = 'imgs/' + out.img;
   }
+  delete out.imgData;
+  if (typeof out.img === 'string' && out.img.startsWith('data:')) delete out.img;
   if (!out.img) delete out.img;
   for (const k of ['descripcion', 'emoji']) {
     if (typeof out[k] !== 'string' || !out[k].trim()) delete out[k];
@@ -61,4 +63,35 @@ export async function kvSetProducts(url, token, products) {
   });
   const d = await r.json().catch(() => ({}));
   if (!r.ok || d.error || d.result !== 'OK') throw new Error(d.error || `KV set failed: ${r.status}`);
+}
+
+const IMG_RE = /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/;
+export const MAX_IMG_CHARS = 700_000;
+
+export function isImageData(v) {
+  return typeof v === 'string' && v.length <= MAX_IMG_CHARS && IMG_RE.test(v);
+}
+
+async function kvCommand(url, token, command) {
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(command),
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok || d.error) throw new Error(d.error || `KV ${command[0]} failed: ${r.status}`);
+  return d.result;
+}
+
+export async function kvSetImage(url, token, id, dataUrl) {
+  const res = await kvCommand(url, token, ['SET', `img:${id}`, dataUrl]);
+  if (res !== 'OK') throw new Error('No se pudo guardar la imagen');
+}
+
+export async function kvGetImage(url, token, id) {
+  return kvCommand(url, token, ['GET', `img:${id}`]);
+}
+
+export async function kvDelImage(url, token, id) {
+  await kvCommand(url, token, ['DEL', `img:${id}`]);
 }

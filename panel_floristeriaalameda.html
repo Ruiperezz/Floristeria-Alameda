@@ -183,6 +183,39 @@ tr:hover td{background:#f9faf9}
 /* ── SYNC BANNER ── */
 .sync-banner{background:var(--amber-light);border:1px solid #fde68a;border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;font-size:13px;gap:12px}
 
+/* ── CIERRE DE LA WEB ── */
+.sb-dot{width:8px;height:8px;border-radius:50%;margin-left:auto;background:#4ade80;flex-shrink:0}
+.sb-dot.closed{background:#f87171}
+.sb-dot.scheduled{background:#fbbf24}
+.state-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:600;background:var(--green-light);color:var(--green)}
+.state-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.state-pill.closed{background:var(--red-light);color:var(--red)}
+.state-pill.scheduled{background:var(--amber-light);color:var(--amber)}
+.cl-wrap{max-width:760px;display:flex;flex-direction:column;gap:18px}
+.cl-hero{border-radius:var(--radius);padding:24px;display:flex;gap:18px;align-items:flex-start;box-shadow:var(--shadow);background:var(--green-light);border:1.5px solid #bbf7d0}
+.cl-hero.closed{background:var(--red-light);border-color:#fecaca}
+.cl-hero.scheduled{background:var(--amber-light);border-color:#fde68a}
+.cl-pulse{width:14px;height:14px;border-radius:50%;background:var(--green);margin-top:7px;flex-shrink:0;animation:clpulse 2s infinite}
+.cl-hero.closed .cl-pulse{background:var(--red);animation:none}
+.cl-hero.scheduled .cl-pulse{background:var(--amber);animation:none}
+@keyframes clpulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.45)}70%{box-shadow:0 0 0 10px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.cl-hero h2{font-size:20px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.cl-hero p{font-size:14px;color:var(--text-2);line-height:1.55;white-space:pre-line}
+.cl-hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:500;transition:all .12s}
+.chip:hover{border-color:var(--accent)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip:focus-visible,.btn:focus-visible,.sb-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cl-dates{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.cl-dates small,.cl-hint{font-size:11px;color:var(--text-2);margin-top:4px;display:block}
+.cl-summary{background:var(--bg);border-radius:8px;padding:12px 14px;font-size:13px;line-height:1.55;margin:16px 0}
+.cl-summary.err{background:var(--red-light);color:var(--red)}
+.cl-check{display:flex;align-items:center;gap:8px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500;color:var(--text);cursor:pointer;margin-top:14px}
+.cl-check input{width:auto}
+@media(max-width:600px){.cl-dates{grid-template-columns:1fr}.cl-hero{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.cl-pulse{animation:none}}
+
 /* ── MISC ── */
 .section-title{font-size:16px;font-weight:700;margin-bottom:16px}
 .link-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -262,6 +295,11 @@ tr:hover td{background:#f9faf9}
         Añadir producto
       </button>
       <div class="sb-section">Sistema</div>
+      <button class="sb-item" data-tab="closure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+        Cerrar o reabrir web
+        <span class="sb-dot" id="sb-closure-dot"></span>
+      </button>
       <button class="sb-item" data-tab="config">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
         Configuración
@@ -282,6 +320,7 @@ tr:hover td{background:#f9faf9}
     <div class="top-bar">
       <h1 id="page-title">Inicio</h1>
       <div class="top-bar-right">
+        <button class="state-pill" id="top-state" title="Estado de la web" style="display:none"></button>
         <span class="tb-time" id="top-time"></span>
         <button class="btn btn-ghost btn-sm" id="refresh-btn">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -624,7 +663,7 @@ tr:hover td{background:#f9faf9}
             </div>
             <div class="form-group">
               <label>Precio (€)</label>
-              <input id="np-precio" type="number" min="1" step="1" placeholder="45">
+              <input id="np-precio" type="number" min="5" max="2000" step="0.01" placeholder="45">
             </div>
             <div class="form-group form-full">
               <label>Descripción completa (opcional)</label>
@@ -638,6 +677,68 @@ tr:hover td{background:#f9faf9}
             <span id="add-status" style="font-size:13px;color:var(--green)"></span>
           </div>
         </form>
+      </div>
+    </section>
+
+    <!-- ══ TAB: CERRAR O REABRIR WEB ══ -->
+    <section id="tab-closure" class="tab-content">
+      <div class="cl-wrap">
+
+        <div class="cl-hero" id="cl-hero">
+          <span class="cl-pulse" aria-hidden="true"></span>
+          <div style="flex:1;min-width:0">
+            <h2 id="cl-title">Comprobando…</h2>
+            <p id="cl-sub"></p>
+            <div class="cl-hero-actions" id="cl-actions"></div>
+          </div>
+        </div>
+
+        <div class="form-card" style="max-width:none">
+          <div class="section-title">Cerrar la web</div>
+          <label>¿Hasta cuándo?</label>
+          <div class="chips" id="cl-chips" role="group" aria-label="Duración del cierre">
+            <button type="button" class="chip" data-mode="1">1 hora</button>
+            <button type="button" class="chip" data-mode="2">2 horas</button>
+            <button type="button" class="chip" data-mode="4">4 horas</button>
+            <button type="button" class="chip" data-mode="next">Hasta la próxima apertura</button>
+            <button type="button" class="chip" data-mode="custom">Elegir fecha y hora</button>
+            <button type="button" class="chip" data-mode="manual">Hasta que yo la reabra</button>
+          </div>
+
+          <div class="cl-dates" id="cl-dates" style="display:none">
+            <div>
+              <label for="cl-from">Cerrar desde</label>
+              <input id="cl-from" type="datetime-local">
+              <small>Vacío = cerrar ahora</small>
+            </div>
+            <div>
+              <label for="cl-until">Reabrir el</label>
+              <input id="cl-until" type="datetime-local">
+              <small>A esa hora la web se reabre sola</small>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:18px">
+            <label for="cl-message">Mensaje para los clientes (opcional)</label>
+            <textarea id="cl-message" rows="3" maxlength="300" placeholder="Ej.: Estamos de vacaciones. Gracias por tu paciencia, ¡volvemos pronto!"></textarea>
+            <div class="chips" style="margin-top:8px">
+              <button type="button" class="chip cl-tpl" data-msg="Estamos de vacaciones. Gracias por tu paciencia, ¡volvemos pronto!">Vacaciones</button>
+              <button type="button" class="chip cl-tpl" data-msg="Hacemos una pausa para descansar. Gracias por tu comprensión.">Descanso</button>
+              <button type="button" class="chip cl-tpl" data-msg="Estamos mejorando la tienda. Volvemos enseguida.">Reforma</button>
+            </div>
+          </div>
+
+          <label class="cl-check"><input type="checkbox" id="cl-contact" checked> Mostrar teléfono y WhatsApp en el aviso</label>
+
+          <div class="cl-summary" id="cl-summary" role="status"></div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" class="btn btn-primary" id="cl-submit">Cerrar la web ahora</button>
+            <button type="button" class="btn btn-ghost" id="cl-preview">Ver cómo lo verán los clientes</button>
+          </div>
+          <span class="cl-hint">Mientras la web esté cerrada, este panel sigue funcionando con normalidad. Los pagos que ya se hayan iniciado se completan.</span>
+        </div>
+
       </div>
     </section>
 
@@ -759,6 +860,7 @@ let PRODUCTOS = PRODUCTOS_BASE.map(p => ({...p}));
 let adminToken = '', adminUser = '', kvEnabled = false;
 let openEditId = null, searchQ = '', filterCat = 'all';
 let newProductImgData = null;
+const pendingImg = {};
 let prodsReady = false;
 let chartTrend = null, chartAnalytics = null, chartTopViews = null, chartTopCart = null;
 
@@ -841,6 +943,7 @@ async function loadAll(){
     loadStripeData(),
     loadAnalytics(),
     loadKvProducts().then(() => { prodsReady = true; renderProds(); }),
+    loadClosure(),
   ]);
 }
 
@@ -870,7 +973,7 @@ document.getElementById('refresh-btn').addEventListener('click', async () => {
 });
 
 /* ═══ TAB SWITCHING ═══ */
-const TITLES = {inicio:'Inicio',analytics:'Analíticas',orders:'Pedidos',products:'Productos',add:'Añadir producto',config:'Configuración'};
+const TITLES = {inicio:'Inicio',analytics:'Analíticas',orders:'Pedidos',products:'Productos',add:'Añadir producto',closure:'Cerrar o reabrir web',config:'Configuración'};
 document.querySelectorAll('.sb-item[data-tab]').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
@@ -880,6 +983,7 @@ document.querySelectorAll('.sb-item[data-tab]').forEach(btn => {
     document.getElementById('tab-'+tab)?.classList.add('active');
     setText('page-title', TITLES[tab] || tab);
     if (tab === 'add') suggestNextId();
+    if (tab === 'closure') { loadClosure(); clUpdateForm(); }
   });
 });
 
@@ -1156,7 +1260,7 @@ function renderProds(){
   const rows = [];
   list.forEach(p => {
     const isOpen = openEditId === p.id;
-    const imgSrc = p.imgData || (p.img ? '/imgs/'+p.img : null);
+    const imgSrc = imgUrl(p);
     rows.push(`<tr>
       <td>
         ${imgSrc
@@ -1176,11 +1280,18 @@ function renderProds(){
       <td colspan="5">
         <div class="edit-grid">
           <div class="edit-full"><label>Nombre · Descripción</label><input class="ef-nombre" value="${esc(p.nombre)}"></div>
-          <div><label>Precio (€)</label><input class="ef-precio" type="number" min="1" step="1" value="${p.precio}"></div>
+          <div><label>Precio (€)</label><input class="ef-precio" type="number" min="5" max="2000" step="0.01" value="${p.precio}"></div>
           <div><label>Categoría</label><select class="ef-cat">${Object.entries(CAT_LABEL).map(([v,l])=>`<option value="${v}"${p.cat===v?' selected':''}>${l}</option>`).join('')}</select></div>
           <div><label>Emoji</label><input class="ef-emoji" value="${esc(p.emoji||'')}" maxlength="4"></div>
           <div><label>ID</label><input value="${esc(p.id)}" disabled style="background:var(--bg);color:var(--text-2)"></div>
           <div class="edit-full"><label>Descripción larga (opcional)</label><textarea class="ef-desc" rows="2">${esc(p.descripcion||'')}</textarea></div>
+          <div class="edit-full"><label>Foto</label>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              ${imgSrc ? `<img class="ef-thumb td-img" style="width:56px;height:56px" src="${esc(imgSrc)}" alt="">` : `<div class="ef-thumb td-img-ph" style="width:56px;height:56px">${p.emoji||'🌸'}</div>`}
+              <input type="file" class="ef-file" accept="image/*" style="max-width:300px">
+              <small class="ef-file-note" style="color:var(--text-2)">Opcional: sube otra foto para cambiarla</small>
+            </div>
+          </div>
         </div>
         <div class="edit-actions">
           <button class="btn btn-primary efsave" data-pid="${p.id}">💾 Guardar</button>
@@ -1196,9 +1307,23 @@ function renderProds(){
 
   tb.querySelectorAll('.etoggle').forEach(btn => btn.addEventListener('click', () => {
     const pid = btn.dataset.pid;
+    Object.keys(pendingImg).forEach(k => delete pendingImg[k]);
     openEditId = openEditId===pid ? null : pid;
     renderProds();
     if (openEditId) document.querySelector('.edit-row')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }));
+
+  tb.querySelectorAll('.ef-file').forEach(inp => inp.addEventListener('change', async () => {
+    const row = inp.closest('.edit-row'), note = row.querySelector('.ef-file-note');
+    const file = inp.files[0]; if (!file) return;
+    try {
+      const data = await compressImage(file);
+      pendingImg[openEditId] = data;
+      const th = row.querySelector('.ef-thumb');
+      if (th.tagName === 'IMG') th.src = data;
+      else { const im = document.createElement('img'); im.className = 'ef-thumb td-img'; im.style.cssText = 'width:56px;height:56px'; im.alt = ''; im.src = data; th.replaceWith(im); }
+      note.textContent = 'Foto nueva lista: se publicará al pulsar Guardar';
+    } catch(err) { inp.value = ''; delete pendingImg[openEditId]; toast('❌ '+err.message,'error'); }
   }));
 
   tb.querySelectorAll('.efsave').forEach(btn => btn.addEventListener('click', async () => {
@@ -1209,7 +1334,8 @@ function renderProds(){
     const cat     = row.querySelector('.ef-cat').value;
     const emoji   = row.querySelector('.ef-emoji').value.trim();
     const desc    = row.querySelector('.ef-desc').value.trim();
-    if (!nombre || isNaN(precio)) return;
+    if (!nombre){ toast('❌ El nombre no puede estar vacío','error'); return; }
+    if (isNaN(precio) || precio < 5 || precio > 2000){ toast('❌ El precio debe estar entre 5 y 2000 €','error'); return; }
     const idx = PRODUCTOS.findIndex(p=>p.id===pid);
     if (idx<0) return;
     const prev = {...PRODUCTOS[idx]};
@@ -1217,8 +1343,11 @@ function renderProds(){
     const st = document.getElementById('es-'+pid);
     if (st) st.textContent = 'Guardando…';
     try {
-      const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product:PRODUCTOS[idx]})});
+      const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product: pendingImg[pid] ? {...PRODUCTOS[idx], imgData: pendingImg[pid]} : PRODUCTOS[idx]})});
       if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error||`Error ${r.status}`); }
+      const saved = await r.json().catch(()=>({}));
+      if (saved.product?.img) PRODUCTOS[idx].img = saved.product.img.replace(/^imgs\//,'');
+      delete pendingImg[pid];
       kvEnabled = true;
       toast('✅ Producto actualizado y publicado en la web');
     } catch(err) {
@@ -1270,22 +1399,40 @@ function suggestNextId(){
 document.getElementById('np-id').addEventListener('input', e => { e.target.dataset.touched = '1'; });
 
 /* image upload */
-async function compressImage(file, maxPx=700, quality=0.78){
-  return new Promise(resolve => {
+function readImage(file){
+  return new Promise((resolve, reject) => {
+    if (!file || !/^image\//.test(file.type)) return reject(new Error('El archivo no es una imagen. Sube una foto JPG, PNG o WEBP.'));
     const reader = new FileReader();
+    reader.onerror = () => reject(new Error('No se ha podido leer el archivo.'));
     reader.onload = ev => {
       const img = new Image();
-      img.onload = () => {
-        let w=img.width, h=img.height;
-        if(w>maxPx||h>maxPx){ if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;} }
-        const c=document.createElement('canvas'); c.width=w; c.height=h;
-        c.getContext('2d').drawImage(img,0,0,w,h);
-        resolve(c.toDataURL('image/jpeg',quality));
-      };
+      img.onerror = () => reject(new Error('No se ha podido abrir la foto. Prueba con otra en formato JPG o PNG.'));
+      img.onload = () => resolve(img);
       img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   });
+}
+
+async function compressImage(file){
+  const img = await readImage(file);
+  for (const [maxPx, quality] of [[1000,.82],[800,.74],[600,.66]]){
+    let w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+    if (w > maxPx || h > maxPx){ if (w > h){ h = Math.round(h*maxPx/w); w = maxPx; } else { w = Math.round(w*maxPx/h); h = maxPx; } }
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);
+    ctx.drawImage(img,0,0,w,h);
+    const out = c.toDataURL('image/jpeg',quality);
+    if (out.length <= 600000) return out;
+  }
+  throw new Error('La foto es demasiado grande incluso comprimida. Prueba con otra.');
+}
+
+function imgUrl(p){
+  const v = p.img;
+  if (!v) return null;
+  return /^(\/|https?:|data:)/.test(v) ? v : '/imgs/'+v;
 }
 
 const uploadZone = document.getElementById('upload-zone');
@@ -1294,25 +1441,27 @@ const imgPreviewWrap = document.getElementById('img-preview-wrap');
 const imgPreview = document.getElementById('img-preview');
 const imgNameTag = document.getElementById('img-name-tag');
 
-imgFile.addEventListener('change', async () => {
-  const file = imgFile.files[0]; if (!file) return;
-  const compressed = await compressImage(file);
-  newProductImgData = compressed;
-  imgPreview.src = compressed;
-  imgNameTag.textContent = file.name + ' (comprimida automáticamente)';
-  imgPreviewWrap.style.display = 'block';
-});
+async function handleAddFile(file){
+  const errEl = document.getElementById('add-err');
+  try {
+    const compressed = await compressImage(file);
+    newProductImgData = compressed;
+    imgPreview.src = compressed;
+    imgNameTag.textContent = file.name + ' · ' + Math.round(compressed.length*0.75/1024) + ' KB tras comprimir';
+    imgPreviewWrap.style.display = 'block';
+    errEl.style.display = 'none';
+  } catch(err) {
+    newProductImgData = null; imgFile.value = ''; imgPreviewWrap.style.display = 'none';
+    errEl.textContent = err.message; errEl.style.display = 'block';
+  }
+}
 
+imgFile.addEventListener('change', () => { const f = imgFile.files[0]; if (f) handleAddFile(f); });
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
-uploadZone.addEventListener('drop', async e => {
+uploadZone.addEventListener('drop', e => {
   e.preventDefault(); uploadZone.classList.remove('drag');
-  const file = e.dataTransfer.files[0]; if (!file||!file.type.startsWith('image/')) return;
-  const compressed = await compressImage(file);
-  newProductImgData = compressed;
-  imgPreview.src = compressed;
-  imgNameTag.textContent = file.name + ' (comprimida automáticamente)';
-  imgPreviewWrap.style.display = 'block';
+  const f = e.dataTransfer.files[0]; if (f) handleAddFile(f);
 });
 
 document.getElementById('img-clear').addEventListener('click', () => {
@@ -1334,13 +1483,26 @@ document.getElementById('add-form').addEventListener('submit', async e => {
     errEl.textContent = 'Completa ID, nombre y precio correctamente.';
     errEl.style.display = 'block'; return;
   }
+  if (!/^[A-Za-z0-9_-]{2,20}$/.test(id)){
+    errEl.textContent = 'El ID solo puede llevar letras, números, guion y guion bajo (ejemplo: p58).';
+    errEl.style.display = 'block'; return;
+  }
   if (PRODUCTOS.find(p=>p.id===id)){
     errEl.textContent = `El ID "${id}" ya existe.`;
     errEl.style.display = 'block'; return;
   }
+  if (!nombre.includes(' · ')){
+    errEl.textContent = 'El nombre necesita el formato «Nombre · Descripción corta», con un punto medio (·) entre las dos partes. Ejemplo: Romance Eterno · Ramo de 24 Rosas Rojas';
+    errEl.style.display = 'block'; return;
+  }
+  if (precio < 5 || precio > 2000){
+    errEl.textContent = 'El precio debe estar entre 5 y 2000 €.';
+    errEl.style.display = 'block'; return;
+  }
   errEl.style.display = 'none';
+  if (!newProductImgData && !confirm('Este producto no tiene foto: en la web se verá solo el emoji.\n¿Guardarlo así?')) return;
 
-  const product = {id, nombre, precio, cat, emoji, descripcion: desc};
+  const product = {id, nombre, precio, cat, emoji: emoji || '🌸', descripcion: desc};
   if (newProductImgData) product.imgData = newProductImgData;
 
   const btn = document.getElementById('add-btn');
@@ -1351,11 +1513,18 @@ document.getElementById('add-form').addEventListener('submit', async e => {
     const r = await fetch('/api/products-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify({product})});
     if (!r.ok) { const er = await r.json().catch(()=>({})); throw new Error(er.error||`Error ${r.status}`); }
     kvEnabled = true;
+    const saved = await r.json().catch(()=>({}));
+    delete product.imgData;
+    if (saved.product?.img) product.img = saved.product.img.replace(/^imgs\//,'');
     PRODUCTOS.push(product);
     setText('k-prods', PRODUCTOS.length);
     renderProds();
     toast('✅ Producto añadido y publicado en la web');
-    stEl.textContent = '✅ Publicado';
+    stEl.textContent = '✅ Publicado · ';
+    const link = document.createElement('a');
+    link.href = '/producto.html?id=' + encodeURIComponent(product.id);
+    link.target = '_blank'; link.rel = 'noopener'; link.className = 'config-link'; link.textContent = 'Ver en la web →';
+    stEl.appendChild(link);
   } catch(err) {
     toast('❌ No se ha guardado: '+err.message,'error'); stEl.textContent = '❌ Error';
     btn.disabled=false; btn.textContent='💾 Guardar producto';
@@ -1369,6 +1538,182 @@ document.getElementById('add-form').addEventListener('submit', async e => {
   suggestNextId();
   btn.disabled=false; btn.textContent='💾 Guardar producto';
 });
+
+/* ═══ CERRAR O REABRIR WEB ═══ */
+const byId = id => document.getElementById(id);
+const OPENING = {0:[],1:[[9.5,13.5],[17.5,20]],2:[[9.5,13.5],[17.5,20]],3:[[9.5,13.5],[17.5,20]],4:[[9.5,13.5],[17.5,20]],5:[[9.5,13.5],[17.5,20]],6:[[9.5,13.5]]};
+let clStatus = null, clMode = 'next', clOffset = 0;
+
+const clNow = () => Date.now() + clOffset;
+const clFmt = d => d.toLocaleString('es-ES',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+const clLocalInput = d => new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+
+function clIn(ms){
+  const min = Math.round(ms/60000);
+  if (min < 1) return 'en menos de un minuto';
+  if (min < 60) return `en ${min} min`;
+  const h = Math.floor(min/60);
+  if (h < 48) return `en ${h} h ${min%60} min`;
+  return `en ${Math.floor(h/24)} días`;
+}
+
+function nextOpening(from){
+  for (let d = 0; d < 8; d++){
+    const day = new Date(from.getFullYear(), from.getMonth(), from.getDate()+d);
+    for (const [start] of (OPENING[day.getDay()] || [])){
+      const t = new Date(day.getFullYear(), day.getMonth(), day.getDate(), Math.floor(start), Math.round((start%1)*60));
+      if (t.getTime() > from.getTime() + 60000) return t;
+    }
+  }
+  return new Date(from.getTime() + 864e5);
+}
+
+async function loadClosure(){
+  try {
+    const r = await fetch('/api/site-admin',{headers:{Authorization:`Bearer ${adminToken}`},cache:'no-store'});
+    if (!r.ok) throw new Error();
+    clStatus = await r.json();
+    clOffset = Date.parse(clStatus.view.now) - Date.now();
+  } catch { clStatus = null; }
+  clRender();
+}
+
+async function clSave(body){
+  const r = await fetch('/api/site-admin',{method:'POST',headers:{Authorization:`Bearer ${adminToken}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data = await r.json().catch(()=>({}));
+  if (!r.ok) throw new Error(data.error || `Error ${r.status}`);
+  clStatus = data;
+  clOffset = Date.parse(data.view.now) - Date.now();
+  clRender();
+}
+
+function clButton(text, cls, handler){
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'btn ' + cls; b.textContent = text;
+  b.addEventListener('click', handler);
+  return b;
+}
+
+function clRender(){
+  const v = clStatus && clStatus.view;
+  const state = v ? v.state : 'unknown';
+  byId('cl-hero').className = 'cl-hero' + (state === 'closed' ? ' closed' : state === 'scheduled' ? ' scheduled' : '');
+  const title = byId('cl-title'), sub = byId('cl-sub'), acts = byId('cl-actions');
+  acts.replaceChildren();
+  let pillText = '', pillCls = '';
+
+  if (state === 'unknown'){
+    title.textContent = 'No se pudo comprobar el estado de la web';
+    sub.textContent = 'Revisa tu conexión e inténtalo de nuevo.';
+    acts.append(clButton('Reintentar', 'btn-ghost', loadClosure));
+  } else if (state === 'open'){
+    title.textContent = 'La web está abierta';
+    sub.textContent = 'Los clientes pueden ver el catálogo y hacer pedidos con normalidad.';
+    pillText = 'Web abierta';
+  } else {
+    const until = v.until ? new Date(v.until) : null, from = v.from ? new Date(v.from) : null;
+    let text;
+    if (state === 'closed'){
+      title.textContent = 'La web está cerrada';
+      text = until ? `Se reabrirá sola el ${clFmt(until)} (${clIn(until.getTime() - clNow())}).` : 'Seguirá cerrada hasta que pulses «Reabrir ahora».';
+      acts.append(clButton('Reabrir ahora', 'btn-primary', clReopen));
+      pillText = 'Web cerrada'; pillCls = 'closed';
+    } else {
+      title.textContent = 'Cierre programado';
+      text = `La web se cerrará el ${clFmt(from)}` + (until ? ` y se reabrirá sola el ${clFmt(until)}.` : ' y seguirá cerrada hasta que la reabras tú.');
+      acts.append(clButton('Cancelar cierre programado', 'btn-ghost', clReopen));
+      pillText = 'Cierre programado'; pillCls = 'scheduled';
+    }
+    sub.textContent = v.message ? `${text}\nMensaje para los clientes: «${v.message}»` : text;
+  }
+
+  byId('sb-closure-dot').className = 'sb-dot' + (pillCls ? ' ' + pillCls : '');
+  const pill = byId('top-state');
+  pill.style.display = pillText ? '' : 'none';
+  pill.textContent = pillText;
+  pill.className = 'state-pill' + (pillCls ? ' ' + pillCls : '');
+}
+
+async function clReopen(){
+  const scheduled = clStatus && clStatus.view.state === 'scheduled';
+  if (!confirm(scheduled ? '¿Cancelar el cierre programado?' : '¿Reabrir la web ahora?\n\nLos clientes podrán volver a hacer pedidos.')) return;
+  try {
+    await clSave({closed:false});
+    toast(scheduled ? '✅ Cierre programado cancelado' : '✅ Web reabierta: los clientes ya pueden hacer pedidos');
+  } catch(err) { toast('❌ '+err.message,'error'); }
+}
+
+function clCompute(){
+  const now = new Date(clNow());
+  if (clMode === 'manual') return {from:null, until:null};
+  if (['1','2','4'].includes(clMode)) return {from:null, until:new Date(now.getTime() + Number(clMode)*3600e3)};
+  if (clMode === 'next') return {from:null, until:nextOpening(now)};
+  const fv = byId('cl-from').value, uv = byId('cl-until').value;
+  if (!uv) return {error:'Elige la fecha y hora de reapertura, o usa «Hasta que yo la reabra».'};
+  const from = fv ? new Date(fv) : null, until = new Date(uv);
+  if (isNaN(until) || (from && isNaN(from))) return {error:'Revisa las fechas: no son válidas.'};
+  const start = from && from > now ? from : now;
+  if (until.getTime() <= start.getTime() + 60000) return {error:'La reapertura tiene que ser posterior al cierre.'};
+  return {from: from && from.getTime() > now.getTime() + 60000 ? from : null, until};
+}
+
+function clUpdateForm(){
+  document.querySelectorAll('#cl-chips .chip').forEach(c => c.classList.toggle('on', c.dataset.mode === clMode));
+  byId('cl-dates').style.display = clMode === 'custom' ? '' : 'none';
+  const min = clLocalInput(new Date(clNow()));
+  byId('cl-from').min = min; byId('cl-until').min = min;
+  const c = clCompute(), sum = byId('cl-summary'), btn = byId('cl-submit');
+  if (c.error){ sum.className = 'cl-summary err'; sum.textContent = c.error; btn.disabled = true; return; }
+  btn.disabled = false; sum.className = 'cl-summary';
+  const start = c.from ? `se cerrará el ${clFmt(c.from)}` : 'se cerrará ahora';
+  const end = c.until ? `se reabrirá sola el ${clFmt(c.until)}` : 'seguirá cerrada hasta que la reabras tú';
+  sum.textContent = `La web ${start} y ${end}.`;
+  btn.textContent = c.from ? 'Programar cierre' : 'Cerrar la web ahora';
+}
+
+document.querySelectorAll('#cl-chips .chip').forEach(chip => chip.addEventListener('click', () => {
+  clMode = chip.dataset.mode;
+  if (clMode === 'custom' && !byId('cl-until').value){
+    const d = new Date(clNow() + 24*3600e3);
+    byId('cl-until').value = clLocalInput(nextOpening(d));
+  }
+  clUpdateForm();
+}));
+['cl-from','cl-until'].forEach(id => byId(id).addEventListener('input', clUpdateForm));
+document.querySelectorAll('.cl-tpl').forEach(b => b.addEventListener('click', () => { byId('cl-message').value = b.dataset.msg; }));
+byId('top-state').addEventListener('click', () => document.querySelector('.sb-item[data-tab="closure"]').click());
+
+byId('cl-submit').addEventListener('click', async () => {
+  const c = clCompute();
+  if (c.error) return;
+  const ask = (c.from ? `¿Programar el cierre de la web?\n\nSe cerrará el ${clFmt(c.from)}.` : '¿Cerrar la web ahora?\n\nLos clientes verán un aviso de cierre y no podrán ver el catálogo ni hacer pedidos.')
+    + '\n' + (c.until ? `Se reabrirá sola el ${clFmt(c.until)}.` : 'Tendrás que reabrirla tú desde este panel.');
+  if (!confirm(ask)) return;
+  const btn = byId('cl-submit');
+  btn.disabled = true;
+  try {
+    await clSave({closed:true, from:c.from ? c.from.toISOString() : null, until:c.until ? c.until.toISOString() : null, message:byId('cl-message').value.trim(), showContact:byId('cl-contact').checked});
+    toast(c.from ? '✅ Cierre programado' : '✅ Web cerrada: los clientes ven el aviso');
+  } catch(err) { toast('❌ '+err.message,'error'); }
+  clUpdateForm();
+});
+
+byId('cl-preview').addEventListener('click', () => {
+  const c = clCompute(), p = new URLSearchParams({preview:'1'});
+  if (c.until) p.set('until', c.until.toISOString());
+  const msg = byId('cl-message').value.trim();
+  if (msg) p.set('msg', msg);
+  p.set('contact', byId('cl-contact').checked ? '1' : '0');
+  window.open('/cerrado.html?' + p.toString(), '_blank', 'noopener');
+});
+
+setInterval(() => {
+  if (!adminToken || !clStatus) return;
+  const v = clStatus.view;
+  const edge = v.state === 'scheduled' ? Date.parse(v.from) : v.state === 'closed' && v.until ? Date.parse(v.until) : null;
+  if (edge && clNow() >= edge) loadClosure(); else clRender();
+}, 30000);
+clUpdateForm();
 
 /* ═══ SESSION RESTORE ═══ */
 const _t = sessionStorage.getItem('alameda_token'), _u = sessionStorage.getItem('alameda_user');

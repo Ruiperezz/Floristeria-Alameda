@@ -529,6 +529,10 @@ let producto = PRODUCTOS.find(p => p.id === productId);
           else PRODUCTOS.push(kp);
         });
         for (let i = PRODUCTOS.length - 1; i >= 0; i--) if (PRODUCTOS[i].oculto) PRODUCTOS.splice(i, 1);
+        PRODUCTOS.forEach(p => {
+          if (!p.emoji) p.emoji = '🌸';
+          if (!p.descripcion) p.descripcion = (p.nombre.split(' · ')[1] || p.nombre) + '. Elaborado a mano en Floristería Alameda, con entrega a domicilio en Cartagena.';
+        });
         producto = PRODUCTOS.find(p => p.id === productId);
       }
     }
@@ -536,6 +540,10 @@ let producto = PRODUCTOS.find(p => p.id === productId);
   if (!producto) { window.location.href = 'catalogo-completo.html'; }
   else { initPage(); }
 })();
+
+function absImg(p) {
+  return p.img ? new URL(p.img, 'https://floristeriaalameda.com/').href : 'https://floristeriaalameda.com/logo-real.jpg';
+}
 
 function injectSeoTags(producto) {
   const url = `https://floristeriaalameda.com/producto.html?id=${producto.id}`;
@@ -561,7 +569,7 @@ function injectSeoTags(producto) {
 
   const ogImage = document.createElement('meta');
   ogImage.setAttribute('property', 'og:image');
-  ogImage.content = producto.img ? `https://floristeriaalameda.com/${producto.img}` : 'https://floristeriaalameda.com/logo-real.jpg';
+  ogImage.content = absImg(producto);
   document.head.appendChild(ogImage);
 
   const ogUrl = document.createElement('meta');
@@ -575,7 +583,7 @@ function injectProductSchema(producto, numResenas) {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": producto.nombre,
-    "image": producto.img ? `https://floristeriaalameda.com/${producto.img}` : 'https://floristeriaalameda.com/logo-real.jpg',
+    "image": absImg(producto),
     "description": producto.descripcion,
     "sku": producto.id,
     "brand": { "@type": "Brand", "name": "Floristería Alameda" },
@@ -745,6 +753,7 @@ function addRecToCart(id) {
   addToCart({ id: p.id, name: p.nombre, price: p.precio, quantity: 1, emoji: p.emoji, image: p.img });
 }
 </script>
+<script defer src="/site-status.js"></script>
 <script src="cookie-consent.js"></script>
 </body>
 </html>

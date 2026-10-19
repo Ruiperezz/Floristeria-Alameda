@@ -773,7 +773,7 @@ function mEnviarWhatsApp() {
     : `🚚 *Entrega a domicilio*\n📍 *Dirección:* ${direccion}`;
 
   const modeloLinea = _imagen
-    ? `\n🔗 *Ver modelo:* https://floristeriaalameda.com/${_imagen}`
+    ? `\n🔗 *Ver modelo:* https://floristeriaalameda.com/${String(_imagen).replace(/^\//, '')}`
     : '';
 
   // Solo Bizum llega aquí — PayPal y Tarjeta van por su propia página de confirmación

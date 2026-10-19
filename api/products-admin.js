@@ -1,6 +1,11 @@
-import { kvGetProducts, kvSetProducts, sanitizeList, normalize, isValid } from './_products-kv.js';
+import {
+  kvGetProducts, kvSetProducts, sanitizeList, normalize, isValid,
+  isImageData, kvSetImage, kvDelImage,
+} from './_products-kv.js';
 
 export const config = { runtime: 'edge' };
+
+const now = () => Date.now();
 
 function resp(status, data) {
   return new Response(JSON.stringify(data), {
@@ -33,8 +38,17 @@ export default async function handler(req) {
         return resp(200, { ok: true, count: list.length });
       }
 
-      const product = body.product && normalize(body.product);
+      const raw = body.product;
+      const newImage = raw && raw.imgData;
+      if (newImage !== undefined && newImage !== null && !isImageData(newImage)) {
+        return resp(400, { error: 'La foto no es válida o pesa demasiado. Prueba con otra imagen.' });
+      }
+      const product = raw && normalize(raw);
       if (!isValid(product)) return resp(400, { error: 'Producto no válido: revisa ID, nombre y precio' });
+      if (newImage) {
+        await kvSetImage(kvUrl, kvToken, product.id, newImage);
+        product.img = `/api/product-image?id=${product.id}&v=${now()}`;
+      }
       const all = await kvGetProducts(kvUrl, kvToken);
       const idx = all.findIndex(p => p.id === product.id);
       if (idx >= 0) all[idx] = product; else all.push(product);
@@ -48,6 +62,7 @@ export default async function handler(req) {
       if (!body.id) return resp(400, { error: 'Missing id' });
       const all = await kvGetProducts(kvUrl, kvToken);
       await kvSetProducts(kvUrl, kvToken, all.filter(p => p.id !== body.id));
+      await kvDelImage(kvUrl, kvToken, String(body.id).replace(/[^A-Za-z0-9_-]/g, '')).catch(() => {});
       return resp(200, { ok: true });
     }
 

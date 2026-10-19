@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex"/>
+<title>Cerrado temporalmente | Floristería Alameda</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://floristeriaalameda.com/favicon-32.png?v=2"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://floristeriaalameda.com/favicon-180.png?v=2"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%;font-family:'Helvetica Neue',Arial,sans-serif}
+body{position:relative;display:flex;align-items:center;justify-content:center;min-height:100vh;overflow-x:hidden;background:#1e2a1f}
+.bg{position:fixed;inset:0;background:url('/local-floristeria.jpg') center 30%/cover no-repeat;z-index:0}
+.overlay{position:fixed;inset:0;background:linear-gradient(160deg,rgba(30,42,31,.74) 0%,rgba(44,60,46,.8) 50%,rgba(20,30,21,.84) 100%);z-index:1}
+.content{position:relative;z-index:2;text-align:center;color:#fff;padding:32px 24px;max-width:600px;width:100%}
+.logo-ring{width:96px;height:96px;border-radius:50%;border:3px solid rgba(255,255,255,.25);overflow:hidden;margin:0 auto 24px}
+.logo-ring img{width:100%;height:100%;object-fit:cover;display:block}
+.brand-sup{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#a5c1a7;font-weight:600;margin-bottom:6px}
+.brand-name{font-size:36px;font-weight:800;letter-spacing:.08em;font-family:Georgia,serif;margin-bottom:4px}
+.brand-city{font-size:12px;letter-spacing:.2em;color:rgba(255,255,255,.55);margin-bottom:32px}
+.line{width:52px;height:2px;border-radius:9999px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);margin:0 auto 32px}
+h1{font-size:clamp(28px,5vw,44px);font-family:Georgia,serif;font-weight:700;line-height:1.25;margin-bottom:20px;letter-spacing:-.3px;text-wrap:balance}
+.when{font-size:clamp(17px,3vw,21px);color:#fff;line-height:1.5;margin-bottom:8px;font-weight:600;text-wrap:balance}
+.count{font-size:14px;color:#a5c1a7;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.sub{font-size:clamp(15px,2.5vw,17px);color:rgba(255,255,255,.78);line-height:1.7;margin:20px auto 40px;max-width:480px;white-space:pre-line;overflow-wrap:anywhere}
+.wa-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;border-radius:9999px;padding:16px 40px;text-decoration:none;font-size:16px;font-weight:700;letter-spacing:.02em;box-shadow:0 8px 28px rgba(37,211,102,.35);transition:transform .15s,box-shadow .15s;margin-bottom:36px}
+.wa-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(37,211,102,.45)}
+.wa-btn:active{transform:scale(.97)}
+.wa-btn:focus-visible,.info a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.info{font-size:13px;color:rgba(255,255,255,.55);line-height:2;letter-spacing:.02em}
+.info a{color:rgba(255,255,255,.75);text-decoration:none;font-weight:600}
+.preview-tag{position:fixed;top:0;left:0;right:0;z-index:5;background:#fef3c7;color:#92400e;text-align:center;font-size:13px;font-weight:600;padding:8px 12px}
+@media(max-width:480px){.brand-name{font-size:28px}.wa-btn{padding:15px 28px;font-size:15px;width:100%;max-width:320px}}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="overlay"></div>
+<div class="preview-tag" id="preview-tag" style="display:none">Vista previa: así verán el aviso tus clientes</div>
+
+<main class="content">
+  <div class="logo-ring"><img src="/logo-real.jpg" alt="Floristería Alameda" width="96" height="96"/></div>
+  <p class="brand-sup">Floristería</p>
+  <p class="brand-name">ALAMEDA</p>
+  <p class="brand-city">· CARTAGENA ·</p>
+  <div class="line"></div>
+
+  <h1>Cerrado temporalmente</h1>
+  <p class="when" id="cl-when">Volveremos a abrir en cuanto podamos.</p>
+  <p class="count" id="cl-count" style="display:none"></p>
+  <p class="sub" id="cl-msg">Ahora mismo no podemos atender pedidos desde la web. Gracias por tu paciencia.</p>
+
+  <div id="cl-contact">
+    <a class="wa-btn" href="https://wa.me/34627546360?text=Hola%2C%20he%20visto%20que%20la%20web%20est%C3%A1%20cerrada%20temporalmente.%20%C2%BFMe%20pod%C3%A9is%20atender%20por%20aqu%C3%AD%3F">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 0C5.373 0 0 5.373 0 12a11.94 11.94 0 001.664 6.1L.06 23.4l5.42-1.578A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" fill="white"/>
+        <path d="M17.675 15.353c-.275-.138-1.631-.805-1.884-.896-.253-.092-.437-.138-.62.138-.184.276-.71.896-.87 1.08-.16.185-.32.207-.594.07-.276-.138-1.163-.428-2.217-1.37-.82-.73-1.374-1.633-1.535-1.909-.16-.276-.017-.425.121-.562.124-.124.276-.322.414-.483.138-.16.184-.276.276-.46.092-.184.046-.345-.023-.483-.069-.138-.62-1.495-.85-2.047-.224-.537-.451-.464-.62-.473l-.529-.009c-.184 0-.483.069-.736.345-.253.276-.966.943-.966 2.3 0 1.357.989 2.668 1.127 2.852.138.184 1.946 2.972 4.716 4.168.659.284 1.173.454 1.574.581.661.21 1.263.18 1.738.109.53-.079 1.631-.667 1.862-1.311.23-.644.23-1.196.16-1.311-.069-.115-.253-.184-.529-.322z" fill="#25D366"/>
+      </svg>
+      Escríbenos por WhatsApp
+    </a>
+    <p class="info">
+      Alameda de San Antón, 15 · Cartagena, Murcia<br>
+      <a href="tel:627546360">627 54 63 60</a>
+    </p>
+  </div>
+</main>
+
+<script>
+(function () {
+  var qs = new URLSearchParams(location.search);
+  var preview = qs.get('preview') === '1';
+  var $ = function (id) { return document.getElementById(id); };
+  var offset = 0, until = null, lastCheck = 0;
+
+  function dayKey(d) { return d.toLocaleDateString('en-CA', { timeZone: 'Europe/Madrid' }); }
+
+  function fmtWhen(d) {
+    var now = new Date(Date.now() + offset);
+    var tomorrow = new Date(now.getTime() + 864e5);
+    var key = dayKey(d);
+    var time = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
+    if (key === dayKey(now)) return 'hoy a las ' + time;
+    if (key === dayKey(tomorrow)) return 'mañana a las ' + time;
+    var date = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Madrid' });
+    return 'el ' + date + ' a las ' + time;
+  }
+
+  function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+  function countdown(ms) {
+    var min = Math.floor(ms / 60000);
+    if (min < 1) return 'Reabrimos en unos instantes';
+    if (min < 60) return 'Faltan ' + plural(min, 'minuto', 'minutos');
+    var h = Math.floor(min / 60);
+    if (h < 48) {
+      var m = min % 60;
+      return 'Faltan ' + plural(h, 'hora', 'horas') + (m ? ' y ' + plural(m, 'minuto', 'minutos') : '');
+    }
+    var d = Math.floor(h / 24);
+    return 'Faltan ' + plural(d, 'día', 'días') + ' y ' + plural(h % 24, 'hora', 'horas');
+  }
+
+  function reopen() {
+    if (location.pathname === '/cerrado.html') location.replace('/');
+    else location.reload();
+  }
+
+  function tick() {
+    var when = $('cl-when'), count = $('cl-count');
+    if (until === null) {
+      when.textContent = 'Volveremos a abrir en cuanto podamos.';
+      count.style.display = 'none';
+      return;
+    }
+    var left = until - (Date.now() + offset);
+    when.textContent = 'Reabrimos ' + fmtWhen(new Date(until));
+    if (left > 0) {
+      count.textContent = countdown(left);
+      count.style.display = '';
+    } else {
+      count.style.display = 'none';
+      if (!preview) check();
+    }
+  }
+
+  function apply(s) {
+    until = s.until ? Date.parse(s.until) : null;
+    if (Number.isNaN(until)) until = null;
+    if (s.now) offset = Date.parse(s.now) - Date.now();
+    if (s.message) $('cl-msg').textContent = s.message;
+    $('cl-contact').style.display = s.showContact === false ? 'none' : '';
+    tick();
+  }
+
+  function check() {
+    if (Date.now() - lastCheck < 5000) return;
+    lastCheck = Date.now();
+    fetch('/api/site-status', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (s) {
+        if (s.state === 'open') reopen();
+        else apply(s);
+      })
+      .catch(function () {});
+  }
+
+  if (preview) {
+    $('preview-tag').style.display = 'block';
+    apply({ until: qs.get('until'), message: qs.get('msg'), showContact: qs.get('contact') !== '0', now: null });
+    setInterval(tick, 15000);
+  } else {
+    check();
+    setInterval(tick, 15000);
+    setInterval(check, 30000);
+    window.addEventListener('pageshow', function (e) { if (e.persisted) check(); });
+  }
+})();
+</script>
+</body>
+</html>
