@@ -407,6 +407,7 @@ function renderImg(producto, wrapId, spinId) {
   img.decoding = 'async';
   img.onload = () => {
     const spin = document.getElementById(spinId); if (spin) spin.remove();
+    if (img.naturalWidth > img.naturalHeight * 1.05) img.style.objectFit = 'contain';
     img.style.opacity = '1';
   };
   img.onerror = () => {

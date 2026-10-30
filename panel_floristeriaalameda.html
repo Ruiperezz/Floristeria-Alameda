@@ -159,7 +159,7 @@ tr:hover td{background:#f9faf9}
 .img-upload-icon{font-size:32px;margin-bottom:8px}
 .img-upload-text{font-size:13px;color:var(--text-2)}
 .img-preview-wrap{margin-top:12px;display:none}
-.img-preview{width:120px;height:120px;object-fit:cover;border-radius:10px;border:2px solid var(--border)}
+.img-preview{width:120px;height:160px;object-fit:cover;border-radius:10px;border:2px solid var(--border)}
 .img-name-tag{font-size:12px;color:var(--text-2);margin-top:6px}
 
 /* ── ANALYTICS ── */
@@ -182,6 +182,22 @@ tr:hover td{background:#f9faf9}
 
 /* ── SYNC BANNER ── */
 .sync-banner{background:var(--amber-light);border:1px solid #fde68a;border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;font-size:13px;gap:12px}
+
+/* ── ENCUADRE DE FOTOS ── */
+.fr-overlay{position:fixed;inset:0;background:rgba(15,26,16,.6);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.fr-card{background:var(--card);border-radius:14px;max-width:660px;width:100%;max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.fr-head{padding:20px 24px 0}
+.fr-head h3{font-size:17px;font-weight:700}
+.fr-head p{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.5}
+.fr-body{display:flex;gap:24px;padding:20px 24px;align-items:flex-start}
+#fr-canvas{width:300px;height:400px;border-radius:10px;border:1.5px solid var(--border);cursor:grab;touch-action:none;flex-shrink:0;background:#f4f4f2}
+#fr-canvas:active{cursor:grabbing}
+#fr-canvas:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fr-controls{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.fr-controls input[type=range]{padding:0;border:0;background:none}
+.fr-hint{font-size:12px;color:var(--text-2);line-height:1.5}
+.fr-actions{display:flex;justify-content:flex-end;gap:10px;padding:0 24px 20px}
+@media(max-width:620px){.fr-body{flex-direction:column;align-items:center}#fr-canvas{width:240px;height:320px}.fr-controls{width:100%}}
 
 /* ── CIERRE DE LA WEB ── */
 .sb-dot{width:8px;height:8px;border-radius:50%;margin-left:auto;background:#4ade80;flex-shrink:0}
@@ -632,6 +648,7 @@ tr:hover td{background:#f9faf9}
             <div class="img-preview-wrap" id="img-preview-wrap">
               <img id="img-preview" class="img-preview" src="" alt="Preview">
               <div class="img-name-tag" id="img-name-tag"></div>
+              <button type="button" class="btn btn-ghost btn-sm" id="img-reframe" style="margin-top:6px">✎ Reencuadrar</button>
               <button type="button" class="btn btn-ghost btn-sm" id="img-clear" style="margin-top:6px">✕ Quitar imagen</button>
             </div>
           </div>
@@ -791,6 +808,32 @@ tr:hover td{background:#f9faf9}
 </div>
 
 <!-- TOAST -->
+<div id="framer" class="fr-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="fr-title">
+  <div class="fr-card">
+    <div class="fr-head">
+      <h3 id="fr-title">Encuadra la foto</h3>
+      <p>Así la verán los clientes. En la web todas las fotos son verticales (3:4), por eso hay que elegir cómo encaja la tuya.</p>
+    </div>
+    <div class="fr-body">
+      <canvas id="fr-canvas" width="450" height="600" tabindex="0" aria-label="Vista previa del encuadre. Arrastra para mover la foto"></canvas>
+      <div class="fr-controls">
+        <div class="chips" role="group" aria-label="Modo de encuadre">
+          <button type="button" class="chip" data-fr="fit">Foto entera</button>
+          <button type="button" class="chip" data-fr="fill">Rellenar el marco</button>
+        </div>
+        <p class="fr-hint" id="fr-hint"></p>
+        <label for="fr-zoom">Zoom</label>
+        <input id="fr-zoom" type="range" min="1" max="3" step="0.01" value="1">
+        <p class="fr-hint">Arrastra la foto con el ratón o el dedo para moverla (también con las flechas del teclado).</p>
+      </div>
+    </div>
+    <div class="fr-actions">
+      <button type="button" class="btn btn-ghost" id="fr-cancel">Cancelar</button>
+      <button type="button" class="btn btn-primary" id="fr-ok">Usar esta foto</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
@@ -1317,7 +1360,8 @@ function renderProds(){
     const row = inp.closest('.edit-row'), note = row.querySelector('.ef-file-note');
     const file = inp.files[0]; if (!file) return;
     try {
-      const data = await compressImage(file);
+      const data = await frameImage(file);
+      if (!data){ inp.value = ''; return; }
       pendingImg[openEditId] = data;
       const th = row.querySelector('.ef-thumb');
       if (th.tagName === 'IMG') th.src = data;
@@ -1414,19 +1458,106 @@ function readImage(file){
   });
 }
 
-async function compressImage(file){
-  const img = await readImage(file);
-  for (const [maxPx, quality] of [[1000,.82],[800,.74],[600,.66]]){
-    let w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
-    if (w > maxPx || h > maxPx){ if (w > h){ h = Math.round(h*maxPx/w); w = maxPx; } else { w = Math.round(w*maxPx/h); h = maxPx; } }
-    const c = document.createElement('canvas'); c.width = w; c.height = h;
-    const ctx = c.getContext('2d');
-    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);
-    ctx.drawImage(img,0,0,w,h);
-    const out = c.toDataURL('image/jpeg',quality);
-    if (out.length <= 600000) return out;
+const FR_W = 450, FR_H = 600;
+
+function frBase(st, iw, ih, W, H){
+  return st.mode === 'fit' ? Math.min(W/iw, H/ih) : Math.max(W/iw, H/ih);
+}
+
+function frClamp(st, iw, ih){
+  const base = frBase(st, iw, ih, FR_W, FR_H);
+  const dw = iw*base*st.zoom, dh = ih*base*st.zoom;
+  const mx = Math.max(0, (dw - FR_W)/2) / FR_W, my = Math.max(0, (dh - FR_H)/2) / FR_H;
+  st.px = Math.max(-mx, Math.min(mx, st.px));
+  st.py = Math.max(-my, Math.min(my, st.py));
+}
+
+function drawFramed(ctx, img, W, H, st){
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.fillStyle = '#f4f4f2'; ctx.fillRect(0, 0, W, H);
+  if (st.mode === 'fit'){
+    const tw = Math.max(8, Math.round(W/24)), th = Math.max(8, Math.round(H/24));
+    const t = document.createElement('canvas'); t.width = tw; t.height = th;
+    const cs = Math.max(tw/iw, th/ih);
+    t.getContext('2d').drawImage(img, (tw - iw*cs)/2, (th - ih*cs)/2, iw*cs, ih*cs);
+    ctx.drawImage(t, 0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(0, 0, W, H);
   }
-  throw new Error('La foto es demasiado grande incluso comprimida. Prueba con otra.');
+  const s = frBase(st, iw, ih, W, H) * st.zoom;
+  const dw = iw*s, dh = ih*s;
+  ctx.drawImage(img, (W - dw)/2 + st.px*W, (H - dh)/2 + st.py*H, dw, dh);
+}
+
+function frameImage(file){
+  return new Promise(async (resolve, reject) => {
+    let img;
+    try { img = await readImage(file); } catch(err) { return reject(err); }
+    const ov = document.getElementById('framer'), cv = document.getElementById('fr-canvas');
+    const zoom = document.getElementById('fr-zoom'), hint = document.getElementById('fr-hint');
+    const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+    const st = {mode: iw/ih > 0.9 ? 'fit' : 'fill', zoom: 1, px: 0, py: 0};
+    const prevFocus = document.activeElement;
+    const HINTS = {
+      fit: 'Se ve la foto completa. El fondo es un desenfoque de la propia foto.',
+      fill: 'La foto llena todo el marco y lo que sobresale se recorta. Muévela para elegir qué se ve.'
+    };
+
+    function render(){
+      frClamp(st, iw, ih);
+      drawFramed(cv.getContext('2d'), img, FR_W, FR_H, st);
+      document.querySelectorAll('[data-fr]').forEach(c => c.classList.toggle('on', c.dataset.fr === st.mode));
+      hint.textContent = HINTS[st.mode];
+      zoom.value = st.zoom;
+    }
+
+    function done(result){
+      ov.style.display = 'none';
+      document.removeEventListener('keydown', onKey);
+      cv.onpointerdown = cv.onpointermove = cv.onpointerup = cv.onpointercancel = null;
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+      resolve(result);
+    }
+
+    function onKey(e){
+      if (e.key === 'Escape') { e.preventDefault(); done(null); }
+    }
+
+    let drag = null;
+    cv.onpointerdown = e => { cv.setPointerCapture(e.pointerId); drag = {x:e.clientX, y:e.clientY}; };
+    cv.onpointermove = e => {
+      if (!drag) return;
+      const r = cv.getBoundingClientRect();
+      st.px += (e.clientX - drag.x) / r.width; st.py += (e.clientY - drag.y) / r.height;
+      drag = {x:e.clientX, y:e.clientY}; render();
+    };
+    cv.onpointerup = cv.onpointercancel = () => { drag = null; };
+    cv.onkeydown = e => {
+      const step = .03, d = {ArrowLeft:[-step,0], ArrowRight:[step,0], ArrowUp:[0,-step], ArrowDown:[0,step]}[e.key];
+      if (!d) return;
+      e.preventDefault(); st.px += d[0]; st.py += d[1]; render();
+    };
+    zoom.oninput = () => { st.zoom = parseFloat(zoom.value); render(); };
+    document.querySelectorAll('[data-fr]').forEach(c => { c.onclick = () => { st.mode = c.dataset.fr; st.zoom = 1; st.px = st.py = 0; render(); }; });
+    document.getElementById('fr-cancel').onclick = () => done(null);
+    ov.onclick = e => { if (e.target === ov) done(null); };
+    document.getElementById('fr-ok').onclick = () => {
+      for (const [w, q] of [[840,.84],[720,.78],[600,.7]]){
+        const h = Math.round(w*4/3), out = document.createElement('canvas');
+        out.width = w; out.height = h;
+        drawFramed(out.getContext('2d'), img, w, h, st);
+        const data = out.toDataURL('image/jpeg', q);
+        if (data.length <= 600000) return done(data);
+      }
+      toast('❌ La foto es demasiado grande incluso comprimida. Prueba con otra.','error');
+      done(null);
+    };
+
+    document.addEventListener('keydown', onKey);
+    render();
+    ov.style.display = 'flex';
+    document.getElementById('fr-ok').focus();
+  });
 }
 
 function imgUrl(p){
@@ -1441,13 +1572,16 @@ const imgPreviewWrap = document.getElementById('img-preview-wrap');
 const imgPreview = document.getElementById('img-preview');
 const imgNameTag = document.getElementById('img-name-tag');
 
+let lastAddFile = null;
 async function handleAddFile(file){
   const errEl = document.getElementById('add-err');
   try {
-    const compressed = await compressImage(file);
-    newProductImgData = compressed;
-    imgPreview.src = compressed;
-    imgNameTag.textContent = file.name + ' · ' + Math.round(compressed.length*0.75/1024) + ' KB tras comprimir';
+    const framed = await frameImage(file);
+    if (!framed){ if (!newProductImgData) imgFile.value = ''; return; }
+    lastAddFile = file;
+    newProductImgData = framed;
+    imgPreview.src = framed;
+    imgNameTag.textContent = file.name + ' · encuadrada en vertical 3:4 · ' + Math.round(framed.length*0.75/1024) + ' KB';
     imgPreviewWrap.style.display = 'block';
     errEl.style.display = 'none';
   } catch(err) {
@@ -1464,7 +1598,9 @@ uploadZone.addEventListener('drop', e => {
   const f = e.dataTransfer.files[0]; if (f) handleAddFile(f);
 });
 
+document.getElementById('img-reframe').addEventListener('click', () => { if (lastAddFile) handleAddFile(lastAddFile); });
 document.getElementById('img-clear').addEventListener('click', () => {
+  lastAddFile = null;
   newProductImgData = null; imgPreviewWrap.style.display='none'; imgPreview.src=''; imgFile.value='';
 });
 
